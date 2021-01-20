@@ -22,18 +22,39 @@ def help_menu():
     help_3 = Label(top, text=" instruction guide for more help").grid(row = 8, column = 1)
     leave_button = Button(top, text = "EXIT", command = top.destroy).grid(row = 9, column = 1)
 
-def start():
+
+def save_team2_names():
+    global team_2
+    team_2 = t2_entry.get()
+    confirm_screen = confirm_win = Toplevel(master)
+
+
+
+def start_team1():
     top_1 = Toplevel(master)
+    master.withdraw()
     top_1.title("Hows That?")
-    def submit():
+    def start_team2():
         global team_1
         team_1 = t1_entry.get()
-    #top_1 = Frame(top_1, height=200, width=200)
+        top_2 = Toplevel(master)
+        top_1.withdraw()
+        top_2.title("Hows That?")
+        team2_name = Label(top_2, text="Enter Team 2's team name: ").grid(row=0, column=1)
+        previous = "Team 1: " + team_1
+        previouslb = Label(top_2, text = previous).grid(row=2, column=1)
+        t2_entry = Entry(top_2, width=20)
+        t2_entry.grid(row=1, column=1)
+        ws_2 = Label(top_2, text=" ").grid(row=3, column=1)
+        submit_button = Button(top_2, text="SUBMIT", command=save_team2_names).grid(row=4, column=1)
+
     team1_name = Label(top_1, text = "Enter Team 1's team name: ").grid(row = 0, column = 1)
     t1_entry = Entry(top_1, width = 20)
     t1_entry.grid(row = 1, column = 1)
     ws_1 = Label(top_1, text = " ").grid(row = 2, column = 1)
-    submit_button = Button(top_1, text = "SUBMIT", command = submit).grid(row = 3, column = 1)
+    submit_button = Button(top_1, text = "SUBMIT", command = start_team2).grid(row = 3, column = 1)
+
+#def team1_names():
 
 
 
@@ -45,7 +66,7 @@ white_space_welcome2 = Label(master, text = " ")
 white_space_welcome3 = Label(master, text = " ")
 
 help_menu_button = Button(master, text = "HELP", command = help_menu)
-start_button = Button(master, text = "START", command = start)
+start_button = Button(master, text = "START", command = start_team1)
 exit_button = Button(master, text = "EXIT", command = sys.exit)
 
 
