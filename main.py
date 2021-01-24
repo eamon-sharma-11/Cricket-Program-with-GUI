@@ -25,9 +25,6 @@ def help_menu():
     leave_button = Button(top, text = "EXIT", command = top.destroy).grid(row = 9, column = 1)
 
 
-
-
-
 def start_team1():
     global t1_entry
     top_1 = Toplevel(master)
@@ -55,6 +52,8 @@ def start_team1():
     #ws_1 = Label(top_1, text = " ").grid(row = 2, column = 1)
     submit_button = Button(top_1, text = "SUBMIT", command = start_team2).grid(row = 3, column = 1)
 
+
+
 def save_team2_names():
     global team_2
     global confirm_screen
@@ -67,10 +66,12 @@ def save_team2_names():
         ws_2 = Label(confirm_screen, text=" ").grid(row=1, column=0)
         ws_2 = Label(confirm_screen, text=" ").grid(row=2, column=0)
         t1_name = Label(confirm_screen, text = "Team 1: " + team_1).grid(row = 1, column = 1)
-        t2_name = Label(confirm_screen, text="Team 2: " + team_2).grid(row = 2, column = 1)
-        confirm_button = Button(confirm_screen, text = "Submit", command = lambda: team_names(team_1)).grid(row = 4, column = 1)
+        t2_name = Label(confirm_screen, text="Team 2: " + team_2).grid(row = 1, column = 2)
+        confirm_button = Button(confirm_screen, text = "Submit", width = 10, command = lambda: team_names(team_1)).grid(row = 4, column = 1)
+        redo = Button(confirm_screen, text="Redo", width=10, command= lambda: [start_team1(), clear()]).grid(row=4, column=2)
 
-
+def clear():
+    confirm_screen.withdraw()
 
 
 
