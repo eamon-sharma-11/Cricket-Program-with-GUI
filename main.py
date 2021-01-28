@@ -1,344 +1,140 @@
-Team1 = []
-Team2 = []
-fin_T1 = False
-fin_T2 = False
-first_bowl = False
-out = False
-batsmen = []
-Team1_facing = False
-Team2_facing = False
-new_bowler = False
-balls = 0
-start_teams = " "
-ball = 0
-amount_out = 0
-out_flag = False
-batsmen_out = []
-team_out = 0
-same = True
-over = 0
-play_complete = False
-facing_players = [None] * 2
-out_array = [None] * 10
-total_runs = 0
-innings = 1
-batsmen_1 = ""
-batsmen_2 = ""
-out_full = False
-team_select = False
-
-
-####FUNCTIONS####
-
-###SETTING SIDES DEPENDING ON WHAT THE USER HAS CHOOSEN
-def side_set(Batting, Fielding):
-    # Fielding Team set
-    global batting_team
-    global fielding_team
-    global batting_team_copy
-
-    fielding_team = [None] * len(Fielding)
-    for i in range(0, len(Fielding)):
-        fielding_team[i] = Fielding[i]
-
-    ###COPY OF BATTING TEAM
-    batting_team_copy = [None] * len(Batting)
-    for i in range(0, len(Batting)):
-        batting_team_copy[i] = Batting[i]
-
-    for i in range(0, len(fielding_team)):
-        print(f"Fielding Team: {fielding_team[i]}")
-
-    # Batting Team set
-    batting_team = [None] * len(Batting)
-    for i in range(0, len(Batting)):
-        batting_team[i] = Batting[i]
-
-    for i in range(0, len(batting_team)):
-        print(f"Batting Team: {batting_team[i]}")
-
-
-###SETTING PLAYER NAMES IN RESPECTIVE TEAMS
-def player_input(current_team, num_team, allowed_amount):
-    print("Team player input")
-    while allowed_amount == False:
-        elem = int(input("Amount of players(Between 2 and 11): "))
-        if elem > 11 or elem < 2:
-            print("Incorrect amount, try again")
-        else:
-            allowed_amount = True
-    for i in range(0, elem):
-        p = None
-        while not p or p in current_team:
-            p = input(f'Enter player number {num_team} name (In batting order) eg J.Smith: ')
-            if p in current_team: print('That player has already been entered, please retry...: ')
-        current_team.append(p)
-        num_team = num_team + 1
-    print(current_team)
-
-
-###CAHNGING BOWLER IN FIELDING TEAM
-def bowler_change(bowler):
-    if over == 1:
-        new_bowler_pos = int(
-            input(f"You must now select a new bowler from {fielding_team}. Enter the postition of your new bowler: "))
-        new_bowler_pos = new_bowler_pos - 1
-        bowler_moving_in = fielding_team[new_bowler_pos]
-        bowler_moving_out = bowler
-        bowler = bowler_moving_in
-        fielding_team[new_bowler_pos] = bowler_moving_out
-
-    print(f'Our new bowler is {bowler}')
-    print(f"{fielding_team}")
-
-
-###CODE FOR REMOVING PLAYER
-def remove_player(player, team_array):
-    for players in team_array:
-        if players == player:
-            team_array.remove(player)
-
-
-###SELECTING BATSMEN
-def choosing_batsmen(batsmen, location, pos_select):
-    length_of_team = len(batting_team)
-    while pos_select == False:
-        pos = int(input(f"For our first batsmen, enter the postion they are in in the list:{batting_team}: ")) - 1
-        if pos < length_of_team and pos >= 0:
-            pos_select = True
-        else:
-            print("Invalid position")
-    batsmen = batting_team[pos]
-    facing_players[location] = batsmen
-    print(f"You have selected {batsmen} as a batsmen")
-    for players in batting_team:
-        if players == batsmen:
-            batting_team.remove(batsmen)
-
-
-# Start Program
-def start():
-    global match_type
-    global over_type
-
-
-match_type_setup = False
-print("""Welcome to the cricket scoring program
-The program can switch between T20 or One day. Please choose""")
-match_type = input("T20/1D: ")
-match_type = match_type.lower()
-while match_type_setup == False:
-    if match_type == "t20":
-        over_type = 20
-        break
-    if match_type == "1d":
-        over_type = 50
-        break
-    else:
-        match_type = input("Invalid match type. Please try again. T20/1D: ")
-
-
-# MOVING AROUND RESULTS
-def moving_results():
-    global out_array_1
-    global out_array_2
-    global out_array
-    global overall_runs_1
-    global overall_runs_2
-    global team_out_1
-    global team_out_2
-    ###MOVING OUT PLAYERS INTO DIFFEERENT LIST IF TEAM 1 IS BATTING
-    if current_facing_team == "team1":
-        out_array_1 = [None] * len(out_array)
-        for i in range(0, len(out_array)):
-            out_array_1[i] = out_array[i]
-        out_array = [None] * 10
-        team_out_1 = team_out
-        overall_runs_1 = total_runs
-        ###MOVING OUT PLAYERS INTO DIFFEERENT LIST IF TEAM 1 IS BATTING
-    if start_teams == "team2":
-        out_array_2 = [None] * len(out_array)
-        for i in range(0, len(out_array)):
-            out_array_2[i] = out_array[i]
-        out_array = [None] * 10
-        team_out_2 = team_out
-        overall_runs_2 = total_runs
-        
-
-
-###START
-
-start()
-print(f"Each team will play {over_type} overs")
-
-###ASK USER TO INPUT TEAMS
-print("Input player names")
-player_input(Team1, 1, False)
-player_input(Team2, 1, False)
-
-print(f'Team 1 consists of {Team1}')
-print(f'Team 2 consists of {Team2}')
-
-###SELECTING TEAM SIDES
-start_teams = input("What team is batting first? Team1/Team2: ")
-
-while team_select == False:
-    if start_teams.lower() == "team1" or start_teams.lower() == "1":
-        side_set(Team1, Team2)
-        current_facing_team = "team1"
-        team_select = True
-        break
-
-    if start_teams.lower() == "team2" or start_teams.lower() == "2":
-        side_set(Team2, Team1)
-        current_facing_team = "team2"
-        team_select = True
-        break
-    else:
-        start_teams = input("Invalid team, try agian. Team1/Team2: ")
-        start_teams = start_teams.lower()
-
-print("Flag")
-
-#####CHOOSING BATSMEN####
-choosing_batsmen(batsmen_1, 0, False)
-choosing_batsmen(batsmen_2, 1, False)
-
-###CHOOSING BOWLER###
-pos_select_bowler = False
-length_of_fieldteam = len(fielding_team)
-while pos_select_bowler == False:
-    current_bowler_pos = int(input(f'For our first bowler, please enter the postion that they are in the list:{fielding_team}: ')) - 1
-    if current_bowler_pos < length_of_fieldteam and current_bowler_pos >= 0:
-        pos_select_bowler = True
-        break
-    else:
-        print("Invalid position, try again")
-
-bowler = fielding_team[current_bowler_pos]
-print(f"You have selected {bowler} as the first bowler")
-remove_player(bowler, fielding_team)
-
-print(f'Our starting batting lineup include {batsmen_1} and {batsmen_2}')
-print(f'They will be facing off against {bowler}')
-
-team_length = len(batting_team)
-
-####START OF MAIN GAME####
-while innings != 3:
-    facing_input = int(input(f"Enter position of the batsmen that is facing: {facing_players}: ")) - 1
-    current_facing_player_pos_in_list = facing_input + 1
-    facing = facing_players[facing_input]
-    ###DUMB VARIABLE NAME CHANGE LATER
-    facing_length = len(facing_players)
-    while over != over_type or out_full == True or facing_length <= 1:
-        print(f"This is innings {innings}")
-        print("Please enter the following fields after the bowl is complete")
-        play_out = input(f"Did {facing} get out? Y/N: ")
-        play_out = play_out.lower()
-        if play_out == "y":
-            team_out = team_out + 1
-            array_out = int(team_out)
-            out_array[array_out - 1] = facing
-            if not batting_team:
-                out_full = True
-                break
-            new_batsmen_pos = int(input(f"Select the position of the new batsmen {batting_team}: ")) - 1
-            facing_players[facing_input] = batting_team[new_batsmen_pos]
-            for players in batting_team:
-                for facing in facing_players:
-                    if players == facing:
-                        batting_team.remove(players)
-                        facing_players.remove(players)
-            print(f"The players who are out now include: {out}")
-            print(f"The remaining players are {batting_team}")
-            
-
-        ###IF PLAYER IS NOT OUT
-        if play_out == "n":
-            current_play_runs = int(input("Please enter the amount of runs scored in that play: "))
-            total_runs = current_play_runs + total_runs
-            print(f"The current run total is {total_runs}")
-            ball = ball + 1
-            over = ball / 6
-            ###wHICH PLAYER IS FACING NEXT BASED OF RUNS
-            if current_play_runs % 2 == 0:
-                print("Batsmen is same")
-            if current_play_runs % 2 != 0:
-                if current_facing_player_pos_in_list == 1:
-                    facing = facing_players[1]
-                    current_facing_player_pos_in_list = 2
-                elif current_facing_player_pos_in_list == 2:
-                    facing = facing_players[0]
-                    current_facing_player_pos_in_list = 1
-        ###CHANGES BOWLER IF OVER IS FINISHED
-        if over == 1:
-            bowler_change(bowler)
-            print(f"Your new bowler is {bowler}")
+from tkinter import *
+import sys
+
+team_1_array= []
+double = False
+t1_amount = 0
+t2_amount = 0
+
+
+master = Tk()
+
+###WS = White space
+####HELP MENU
+
+def help_menu():
+    top = Toplevel(master)
+    top.title("Help Menu")
+    heading = Label(top, text = "Help Menu").grid(row = 0, column = 1)
+    headin_ws = Label(top, text = " ").grid(row = 1, column = 1)
+    help_1 = Label(top, text = "-This program is designed to keep track").grid(row = 2, column = 1)
+    help_1 = Label(top, text=" of scores during a cricket game").grid(row = 3, column = 1)
+    help_2 = Label(top, text = "-Any issues that you may think").grid(row = 4, column = 1)
+    help_2 = Label(top, text=" areise from the code of the game, contact").grid(row = 5, column = 1)
+    help_2 = Label(top, text=" the developer").grid(row = 6, column = 1)
+    help_3 = Label(top, text= "-Please reffer to the included").grid(row = 7, column = 1)
+    help_3 = Label(top, text=" instruction guide for more help").grid(row = 8, column = 1)
+    leave_button = Button(top, text = "EXIT", command = top.destroy).grid(row = 9, column = 1)
+
+
+def start_team1():
+    global t1_entry
+    top_1 = Toplevel(master)
+    master.withdraw()
+    top_1.title("Hows That?")
+    def start_team2():
+        global team_1
+        global t2_entry
+        global top_2
+        team_1 = t1_entry.get()
+        top_2 = Toplevel(master)
+        top_1.withdraw()
+        top_2.title("Hows That?")
+        team2_name = Label(top_2, text="Enter Team 2's team name: ").grid(row=0, column=1)
+        previous = "Team 1: " + team_1
+        previouslb = Label(top_2, text = previous).grid(row=2, column=1)
+        t2_entry = Entry(top_2, width=20)
+        t2_entry.grid(row=1, column=1)
+        ws_2 = Label(top_2, text=" ").grid(row=3, column=1)
+        submit_button = Button(top_2, text="SUBMIT", command=save_team2_names).grid(row=4, column=1)
+
+    team1_name = Label(top_1, text = "Enter Team 1's team name: ").grid(row = 0, column = 1)
+    t1_entry = Entry(top_1, width = 20)
+    t1_entry.grid(row = 1, column = 1)
+    #ws_1 = Label(top_1, text = " ").grid(row = 2, column = 1)
+    submit_button = Button(top_1, text = "SUBMIT", command = start_team2).grid(row = 3, column = 1)
 
-    innings = innings + 1
-    # print(f"The first innings has been completed. The score was {team_out}/{total_runs}")
-    # print(f"The batsmen who got out were {out_array}")
-    if innings == 2:
-        ###RESETING VARIABLES FOR NEXT INNINGS
-        print("FLAG FOR END OF INNINGS")
 
-        moving_results()
 
-        ###MOVES PLAYERS BETWEEN SIDES
-        ###MOVING CURRENT BOWLER BACK INTO LIST
-        fielding_team.append(bowler)
+def save_team2_names():
+    global team_2
+    global confirm_screen
+    if t2_entry.get() == team_1:
+        error = Label(top_2, text = "Invalid Team Name, try again").grid(row = 2, column = 1)
+    elif t2_entry.get() != team_1:
+        team_2 = t2_entry.get()
+        top_2.withdraw()
+        confirm_screen = Toplevel(master)
+        t1_name = Label(confirm_screen, text = "Team 1: " + team_1).grid(row = 1, column = 1)
+        t2_name = Label(confirm_screen, text="Team 2: " + team_2).grid(row = 1, column = 2)
+        confirm_button = Button(confirm_screen, text = "Submit", width = 10, command = team_name_1).grid(row = 4, column = 1)
+        redo = Button(confirm_screen, text="Redo", width=10, command= lambda: [start_team1(), clear()]).grid(row=4, column=2)
 
-        print(f"Current fielding team : {fielding_team}")
-        print(f"Current batting team : {batting_team}")
+def clear():
+    confirm_screen.withdraw()
 
-        ###MOVING CURRENT BATTING TEAM INTO TEMP LIST BEFORE MOVING TO MAIN LIST OF FIELDING TEAM
-        new_fielding_team = [None] * len(batting_team_copy)
-        for i in range(0, len(batting_team_copy)):
-            new_fielding_team[i] = batting_team_copy[i]
 
-        ###MOVING CURRENT FIELDING TEAM INTO TEMP LIST BEFORE MOVING TO MAIN LIST OF BATTING TEAM
-        new_batting_team = [None] * len(fielding_team)
-        for i in range(0, len(fielding_team)):
-            new_batting_team[i] = fielding_team[i]
 
-        ###MOVING NEW FIELDING TEAM FROM LIST "NEW FIELDING TEAM"
-        fielding_team = [None] * len(new_fielding_team)
-        for i in range(0, len(new_fielding_team)):
-            fielding_team[i] = new_fielding_team[i]
+#SETTING UP MAIN SCREEN
+welcome_label = Label(master, text = 'Welcome to "Hows That?"')
+white_space_welcome = Label(master, text = " ")
+white_space_welcome2 = Label(master, text = " ")
+white_space_welcome3 = Label(master, text = " ")
 
-        ###MOVING NEW BATTING TEAM FROM LIST "NEW BATTING TEAM"
-        batting_team = [None] * len(new_batting_team)
-        for i in range(0, len(new_batting_team)):
-            batting_team[i] = new_batting_team[i]
+help_menu_button = Button(master, text = "HELP", command = help_menu)
+start_button = Button(master, text = "START", command = start_team1)
+exit_button = Button(master, text = "EXIT", command = sys.exit)
 
-        print(f"Current fielding team : {fielding_team}")
-        print(f"Current batting team : {batting_team}")
 
-###CLEARING BATSMEN FROM LAST INNINGS
+welcome_label.grid(row = 0, column = 1)
+white_space_welcome.grid(row = 1, column = 1)
+white_space_welcome2.grid(row = 2, column = 1)
+white_space_welcome3.grid(row = 3, column = 1)
+help_menu_button.grid(row = 4, column = 0)
+start_button.grid(row = 4, column = 1)
+exit_button.grid(row = 4, column = 2)
 
-        batsmen.clear()
-        facing_players = [None] * 2
 
-        choosing_batsmen(batsmen_1, 0, False)
-        choosing_batsmen(batsmen_2, 1, False)
+####AFTER CONFIRMING TEAMS
 
-        current_bowler_pos = int(
-            input(f'For our first bowler, please enter the postion that they are in the list:{fielding_team}: ')) - 1
-        bowler = fielding_team[current_bowler_pos]
-        print(f"You have selected {bowler} as the first bowler")
-        remove_player(bowler, fielding_team)
+def team_name_1():
+    global team_name_input
+    global team_amount_test
+    team_name_input = Toplevel(master)
+    confirm_screen.withdraw()
+    enter_names = Label(team_name_input, text = "Enter amount of players in " + team_1).grid(row = 0, column = 1)
+    enter_names2 = Label(team_name_input, text="(Between 2 and 11)").grid(row=1, column=1)
+    team_amount_test = Entry(team_name_input, width = 20)
+    team_amount_test.grid(row = 2, column = 1)
+    submit_amount = Button(team_name_input, text="Submit", command= amount_validation_1).grid(row=3, column=1)
 
-        print(f'Our starting batting lineup for innigs 2 include {batsmen_1} and {batsmen_2}')
-        print(f'They will be facing off against {bowler}')
-        total_runs = 0
 
-    if innings == 3:
-        moving_results()
-        print("Results:")
-        print(f"Team 1 final score: {team_out_1}/{overall_runs_1}")
-        print(f"Team 2 final score: {team_out_2}/{overall_runs_2}")
+def amount_validation_1():
+    team_amount = int(team_amount_test.get())
+    if team_amount < 2 or team_amount > 11:
+        error = Label(team_name_input, text = "Invalid amount, try again").grid(row = 4, column = 1)
+    elif team_amount > 2 or team_amount < 11:
+        t1_amount = team_amount
+        global team_name_input2
+        global team_amount_test2
+        team_name_input2 = Toplevel(master)
+        team_name_input.withdraw()
+        enter_names = Label(team_name_input2, text="Enter amount of players in " + team_2).grid(row=0, column=1)
+        enter_names2 = Label(team_name_input2, text="(Between 2 and 11)").grid(row=1, column=1)
+        team_amount_test2 = Entry(team_name_input2, width=20)
+        team_amount_test2.grid(row=2, column=1)
+        submit_amount = Button(team_name_input2, text="Submit", command= final_confirm).grid(row=3, column=1)
 
+def final_confirm():
+    t2_amount = int(team_amount_test2.get())
+    if t2_amount < 2 or t2_amount > 11:
+        error = Label(team_name_input2, text = "Invalid amount, try again").grid(row = 4, column = 1)
+    elif t2_amount > 2 or t2_amount < 11:
+        final_confirm = Toplevel(master)
+        team_name_input2.withdraw()
+        con_title = Label(final_confirm, text = "Please ensure that all information is correct").grid(row = 0, column = 1)
+        t1_con = Label(final_confirm, text = str(team_1) + ": " + str(t1_amount) + " players").grid(row = 1, column = 1)
+        t2_con = Label(final_confirm, text = str(team_2) + ": " + str(t2_amount) + " players").grid(row = 2, column = 1)
 
 
 
@@ -354,20 +150,4 @@ while innings != 3:
 
 
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-    
-
+mainloop()
