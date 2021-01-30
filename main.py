@@ -2,12 +2,15 @@ from tkinter import *
 import sys
 
 team_1_array= []
+team_2_array = []
 double = False
 t1_amount = 0
 t2_amount = 0
 
 
 master = Tk()
+
+master.attributes("-topmost", True)
 
 ###WS = White space
 ####HELP MENU
@@ -110,6 +113,7 @@ def team_name_1():
 
 
 def amount_validation_1():
+    global t1_amount
     team_amount = int(team_amount_test.get())
     if team_amount < 2 or team_amount > 11:
         error = Label(team_name_input, text = "Invalid amount, try again").grid(row = 4, column = 1)
@@ -126,6 +130,7 @@ def amount_validation_1():
         submit_amount = Button(team_name_input2, text="Submit", command= final_confirm).grid(row=3, column=1)
 
 def final_confirm():
+    global final_confirm
     t2_amount = int(team_amount_test2.get())
     if t2_amount < 2 or t2_amount > 11:
         error = Label(team_name_input2, text = "Invalid amount, try again").grid(row = 4, column = 1)
@@ -135,10 +140,51 @@ def final_confirm():
         con_title = Label(final_confirm, text = "Please ensure that all information is correct").grid(row = 0, column = 1)
         t1_con = Label(final_confirm, text = str(team_1) + ": " + str(t1_amount) + " players").grid(row = 1, column = 1)
         t2_con = Label(final_confirm, text = str(team_2) + ": " + str(t2_amount) + " players").grid(row = 2, column = 1)
+        button_con = Button(final_confirm, text = "Confirm", command = t1_stub).grid(row = 3, column = 1)
+        button_redo = Button(final_confirm, text="Redo", command = save_team2_names).grid(row=3, column=2)
+
+
+
+player_num = 0
+display_num = 1
+def t1_stub():
+    global player_num
+    global name_entry
+    global display_num
+    if player_num != t1_amount - 1:
+        t1_input = Toplevel(master)
+        final_confirm.withdraw()
+        title = Label(t1_input, text = "Team 1 Input").grid(row = 0, column = 1)
+        request = Label(t1_input, text = "Please enter player " + str(display_num) + " name").grid(row = 1, column = 1)
+        name_entry = Entry(t1_input)
+        name_entry.grid(row = 2, column = 1)
+        display_num = display_num + 1
+        valid_button = Button(t1_input, text = "Submit", command = lambda: t1_validation(team_1_array)).grid(row = 4, column = 1)
+        def t1_validation(current_team):
+            global player_num
+            global display_num
+            elem = t1_amount
+            current_player_trans = name_entry.get()
+            current_team.append(current_player_trans)
+            player_num = player_num + 1
+            t1_stub()
+            t1_input.destroy()
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+#TEST COMMIT
 
 
 
