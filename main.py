@@ -144,14 +144,14 @@ def final_confirm():
         button_redo = Button(final_confirm, text="Redo", command = save_team2_names).grid(row=3, column=2)
 
 
-
 player_num = 0
 display_num = 1
 def t1_stub():
     global player_num
     global name_entry
     global display_num
-    if player_num != t1_amount - 1:
+    global t1_input
+    if player_num != t1_amount:
         t1_input = Toplevel(master)
         final_confirm.withdraw()
         title = Label(t1_input, text = "Team 1 Input").grid(row = 0, column = 1)
@@ -163,12 +163,30 @@ def t1_stub():
         def t1_validation(current_team):
             global player_num
             global display_num
+            global team_1_array
             elem = t1_amount
             current_player_trans = name_entry.get()
             current_team.append(current_player_trans)
             player_num = player_num + 1
-            t1_stub()
-            t1_input.destroy()
+            if player_num != t1_amount:
+                t1_input.destroy()
+                t1_stub()
+            elif player_num == t1_amount:
+                t1_confirm = Toplevel(master)
+                t1_input.withdraw()
+                t1_confirm.geometry("200x200")
+                player_count = 1
+                for i in range(len(team_1_array)):
+                    exec('Label%d=Label(t1_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_1_array[i], i))
+                    player_count = player_count + 1
+                confirm_button = Button(t1_confirm, text = "Confirm Team 1", command = stub).pack()
+
+
+def stub():
+    stub = Toplevel(master)
+
+
+
 
 
 
