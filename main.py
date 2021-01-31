@@ -131,6 +131,7 @@ def amount_validation_1():
 
 def final_confirm():
     global final_confirm
+    global t2_amount
     t2_amount = int(team_amount_test2.get())
     if t2_amount < 2 or t2_amount > 11:
         error = Label(team_name_input2, text = "Invalid amount, try again").grid(row = 4, column = 1)
@@ -140,17 +141,18 @@ def final_confirm():
         con_title = Label(final_confirm, text = "Please ensure that all information is correct").grid(row = 0, column = 1)
         t1_con = Label(final_confirm, text = str(team_1) + ": " + str(t1_amount) + " players").grid(row = 1, column = 1)
         t2_con = Label(final_confirm, text = str(team_2) + ": " + str(t2_amount) + " players").grid(row = 2, column = 1)
-        button_con = Button(final_confirm, text = "Confirm", command = t1_stub).grid(row = 3, column = 1)
+        button_con = Button(final_confirm, text = "Confirm", command = input_stub).grid(row = 3, column = 1)
         button_redo = Button(final_confirm, text="Redo", command = save_team2_names).grid(row=3, column=2)
 
 
 player_num = 0
 display_num = 1
-def t1_stub():
+
+##TEAM 1 Input
+def input_stub():
     global player_num
     global name_entry
     global display_num
-    global t1_input
     if player_num != t1_amount:
         t1_input = Toplevel(master)
         final_confirm.withdraw()
@@ -164,13 +166,13 @@ def t1_stub():
             global player_num
             global display_num
             global team_1_array
-            elem = t1_amount
+            global t1_confirm
             current_player_trans = name_entry.get()
             current_team.append(current_player_trans)
             player_num = player_num + 1
             if player_num != t1_amount:
                 t1_input.destroy()
-                t1_stub()
+                input_stub()
             elif player_num == t1_amount:
                 t1_confirm = Toplevel(master)
                 t1_input.withdraw()
@@ -179,11 +181,67 @@ def t1_stub():
                 for i in range(len(team_1_array)):
                     exec('Label%d=Label(t1_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_1_array[i], i))
                     player_count = player_count + 1
-                confirm_button = Button(t1_confirm, text = "Confirm Team 1", command = stub).pack()
+                confirm_button = Button(t1_confirm, text = "Confirm Team 1", command = lambda: input_stub_2()).pack()
 
 
-def stub():
-    stub = Toplevel(master)
+player_num_2 = 0
+display_num_2 = 1
+
+##TEAM 2 INPUT
+def input_stub_2():
+    global player_num_2
+    global name_entry
+    global display_num_2
+    if player_num_2 != t2_amount:
+        t2_input = Toplevel(master)
+        t1_confirm.withdraw()
+        title = Label(t2_input, text = "Team 2 Input").grid(row = 0, column = 1)
+        request = Label(t2_input, text = "Please enter player " + str(display_num_2) + " name").grid(row = 1, column = 1)
+        name_entry = Entry(t2_input)
+        name_entry.grid(row = 2, column = 1)
+        display_num_2 = display_num_2 + 1
+        valid_button = Button(t2_input, text = "Submit", command = lambda: t2_validation(team_2_array)).grid(row = 4, column = 1)
+        def t2_validation(current_team):
+            global t2_confirm
+            global player_num_2
+            global display_num_2
+            global team_2_array
+            elem = t2_amount
+            current_player_trans = name_entry.get()
+            current_team.append(current_player_trans)
+            player_num_2 = player_num_2 + 1
+            if player_num_2 != t2_amount:
+                t2_input.destroy()
+                input_stub_2()
+            elif player_num_2 == t2_amount:
+                t2_confirm = Toplevel(master)
+                t2_input.withdraw()
+                t2_confirm.geometry("200x200")
+                player_count_2 = 1
+                for i in range(len(team_2_array)):
+                    exec('Label%d=Label(t2_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count_2) + " : " + team_2_array[i], i))
+                    player_count_2 = player_count_2 + 1
+                confirm_button = Button(t2_confirm, text = "Confirm Team 2", command = full_confirm).pack()
+
+
+
+
+def full_confirm():
+    player_count_1 = 1
+    player_count_2 = 1
+    full_confirm = Toplevel(master)
+    t2_confirm.withdraw()
+    t1_label = Label(full_confirm, text = "Team: " + team_1).pack()
+    for i in range(len(team_1_array)):
+        exec('Label%d=Label(full_confirm,text="%s")\nLabel%d.pack()' % (
+        i, "Player " + str(player_count_1) + " : " + team_1_array[i], i))
+        player_count_1 = player_count_1 + 1
+    line = Label(full_confirm, text = "------------").pack()
+    t2_label = Label(full_confirm, text= "Team: " + team_2).pack()
+    for i in range(len(team_2_array)):
+        exec('Label%d=Label(full_confirm,text="%s")\nLabel%d.pack()' % (
+        i, "Player " + str(player_count_2) + " : " + team_2_array[i], i))
+        player_count_2 = player_count_2 + 1
 
 
 
