@@ -149,13 +149,15 @@ def final_confirm():
 
 player_num = 0
 display_num = 1
-dupe = False
 ##TEAM 1 Input
 def input_stub():
     global player_num
     global name_entry
     global display_num
+    global dupe
+    global t1_input
     if player_num != t1_amount:
+        dupe = False
         t1_input = Toplevel(master)
         final_confirm.withdraw()
         title = Label(t1_input, text = "Team 1 Input").grid(row = 0, column = 1)
@@ -164,7 +166,7 @@ def input_stub():
         name_entry.grid(row = 2, column = 1)
         display_num = display_num + 1
         valid_button = Button(t1_input, text = "Submit", command = lambda: t1_validation(team_1_array)).grid(row = 4, column = 1)
-        def t1_validation(current_team):
+def t1_validation(current_team):
             global t1_confirm
             global player_num
             global display_num
@@ -184,14 +186,14 @@ def input_stub():
                         if (team_1_array[i] == team_1_array[j]):
                             dupe = True
                 if dupe == True:
-                    team_1_array = []
-                    error = Label(t1_input, text = "Error").grid(row = 4, column = 1)
+                    team_1_array.clear()
+                    error = Toplevel(t1_input)
                     display_num = 1
                     player_num = 0
-                    sleep(4)
+                    error.destroy()
                     t1_input.destroy()
                     input_stub()
-                if dupe == False:
+                elif dupe == False:
                     t1_confirm = Toplevel(master)
                     t1_input.withdraw()
                     t1_confirm.geometry("200x200")
@@ -203,68 +205,73 @@ def input_stub():
 
 
 
-player_num_2 = 0
-display_num_2 = 1
 
 ##TEAM 2 INPUT
 
 player_num2 = 0
 display_num2 = 1
-dupe = False
 ##TEAM 1 Input
 def input_stub_2():
-    global player_num2
+    print("Flag")
+    global player_num
     global name_entry
-    global display_num2
-    if player_num != t2_amount:
+    global display_num
+    global dupe
+    global t2_input
+    if player_num2 != t2_amount:
+        dupe = False
         t2_input = Toplevel(master)
-        t1_input.withdraw()
+        t1_confirm.withdraw()
         title = Label(t2_input, text = "Team 2 Input").grid(row = 0, column = 1)
         request = Label(t2_input, text = "Please enter player " + str(display_num2) + " name").grid(row = 1, column = 1)
         name_entry = Entry(t2_input)
         name_entry.grid(row = 2, column = 1)
-        display_num2 = display_num2 + 1
+        display_num = display_num + 1
         valid_button = Button(t2_input, text = "Submit", command = lambda: t2_validation(team_2_array)).grid(row = 4, column = 1)
-        def t1_validation(current_team):
+def t2_validation(current_team):
             global t2_confirm
             global player_num2
-            global display_num2
+            global display_num
             global team_2_array
+            global player_num2
             global dupe
             elem = t2_amount
             current_player_trans = name_entry.get()
             current_team.append(current_player_trans)
             player_num2 = player_num2 + 1
-            if player_num != t2_amount:
+            if player_num2 != t2_amount:
                 t2_input.destroy()
                 input_stub_2()
-            elif player_num == t2_amount:
+            elif player_num2 == t2_amount:
                 for i in range(0, len(team_2_array)):
                     for j in range(i + 1, len(team_2_array)):
                         if (team_2_array[i] == team_2_array[j]):
                             dupe = True
                 if dupe == True:
-                    team_2_array = []
-                    error = Label(t2_input, text = "Error").grid(row = 5, column = 1)
+                    team_2_array.clear()
+                    error = Toplevel(t2_input)
                     display_num2 = 1
                     player_num2 = 0
-                    sleep(4)
+                    error.destroy()
                     t2_input.destroy()
                     input_stub_2()
-                if dupe == False:
+                elif dupe == False:
                     t2_confirm = Toplevel(master)
                     t2_input.withdraw()
                     t2_confirm.geometry("200x200")
-                    player_count2 = 1
-                    for i in range(len(team_1_array)):
-                        exec('Label%d=Label(t2_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count2) + " : " + team_2_array[i], i))
-                        player_count2 = player_count2 + 1
-                    confirm_button = Button(t2_confirm, text = "Confirm Team 2", command = full_confirm).pack()
+                    player_count = 1
+                    for i in range(len(team_2_array)):
+                        exec('Label%d=Label(t2_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_2_array[i], i))
+                        player_count = player_count + 1
+                    confirm_button = Button(t2_confirm, text = "Confirm Team 2", command = full_confirm_func).pack()
 
 
 
 
-def full_confirm():
+def full_confirm_func():
+    global full_confirm
+    global team_1_array
+    global team_2_array
     player_count_1 = 1
     player_count_2 = 1
     full_confirm = Toplevel(master)
@@ -280,12 +287,76 @@ def full_confirm():
         exec('Label%d=Label(full_confirm,text="%s")\nLabel%d.pack()' % (
         i, "Player " + str(player_count_2) + " : " + team_2_array[i], i))
         player_count_2 = player_count_2 + 1
+    submit = Button(full_confirm, text = "Submit", command = choosing_sides_func).pack()
+
+
+def choosing_sides_func():
+    global choosing_sides
+    choosing_sides = Toplevel(master)
+    full_confirm.withdraw()
+    title = Label(choosing_sides, text = "Which team is batting first?").grid(row = 0, column = 1)
+    t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: t1_batting(team_1_array, team_2_array)).grid(row = 1,column = 1)
+    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: t2_batting(team_2_array, team_1_array)).grid(row=1, column=2)
+
+def t1_batting(Batting, Fielding):
+    global batting_team
+    global fielding_team
+    global batting_team_copy
+
+    fielding_team = [None] * len(Fielding)
+    for i in range(0, len(Fielding)):
+        fielding_team[i] = Fielding[i]
+
+    ###COPY OF BATTING TEAM
+    batting_team_copy = [None] * len(Batting)
+    for i in range(0, len(Batting)):
+        batting_team_copy[i] = Batting[i]
+
+
+    # Batting Team set
+    batting_team = [None] * len(Batting)
+    for i in range(0, len(Batting)):
+        batting_team[i] = Batting[i]
+
+    list_teams(batting_team, fielding_team)
 
 
 
+def t2_batting(Batting,Fielding):
+    global batting_team
+    global fielding_team
+    global batting_team_copy
 
+    fielding_team = [None] * len(Fielding)
+    for i in range(0, len(Fielding)):
+        fielding_team[i] = Fielding[i]
 
-#ADD A FEATURE AFTER THE USER HAS FINSIHED INPUTTING ARRAY TO COMPRE THE ARRY FOR REPEEATS
+    ###COPY OF BATTING TEAM
+    batting_team_copy = [None] * len(Batting)
+    for i in range(0, len(Batting)):
+        batting_team_copy[i] = Batting[i]
+
+    # Batting Team set
+    batting_team = [None] * len(Batting)
+    for i in range(0, len(Batting)):
+        batting_team[i] = Batting[i]
+
+    list_teams(batting_team, fielding_team)
+
+player_count_3 = 1
+player_count_4 = 1
+def list_teams(bt, ft):
+    list_teams = Toplevel(master)
+    choosing_sides.withdraw()
+    batting = Label(list_teams, text = "Batting Team:").pack()
+    for i in range(len(bt)):
+        exec('Label%d=Label(list_teams,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count_3) + " : " + bt[i], i))
+        player_count_3 = player_count_3 + 1
+    line = Label(list_teams, text="------------").pack()
+    fielding = Label(list_teams, text="Fielding Team:").pack()
+    for i in range(len(ft)):
+        exec('Label%d=Label(list_teams,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count_4) + " : " + ft[i], i))
+        player_count_4 = player_count_4 + 1
 
 
 
