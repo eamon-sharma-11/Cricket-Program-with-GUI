@@ -1,11 +1,13 @@
 from tkinter import *
 import sys
+from time import sleep
 
 team_1_array= []
 team_2_array = []
 double = False
 t1_amount = 0
 t2_amount = 0
+
 
 
 master = Tk()
@@ -147,7 +149,7 @@ def final_confirm():
 
 player_num = 0
 display_num = 1
-
+dupe = False
 ##TEAM 1 Input
 def input_stub():
     global player_num
@@ -163,10 +165,13 @@ def input_stub():
         display_num = display_num + 1
         valid_button = Button(t1_input, text = "Submit", command = lambda: t1_validation(team_1_array)).grid(row = 4, column = 1)
         def t1_validation(current_team):
+            global t1_confirm
             global player_num
             global display_num
             global team_1_array
-            global t1_confirm
+            global player_num
+            global dupe
+            elem = t1_amount
             current_player_trans = name_entry.get()
             current_team.append(current_player_trans)
             player_num = player_num + 1
@@ -174,54 +179,87 @@ def input_stub():
                 t1_input.destroy()
                 input_stub()
             elif player_num == t1_amount:
-                t1_confirm = Toplevel(master)
-                t1_input.withdraw()
-                t1_confirm.geometry("200x200")
-                player_count = 1
-                for i in range(len(team_1_array)):
-                    exec('Label%d=Label(t1_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_1_array[i], i))
-                    player_count = player_count + 1
-                confirm_button = Button(t1_confirm, text = "Confirm Team 1", command = lambda: input_stub_2()).pack()
+                for i in range(0, len(team_1_array)):
+                    for j in range(i + 1, len(team_1_array)):
+                        if (team_1_array[i] == team_1_array[j]):
+                            dupe = True
+                if dupe == True:
+                    team_1_array = []
+                    error = Label(t1_input, text = "Error").grid(row = 4, column = 1)
+                    display_num = 1
+                    player_num = 0
+                    sleep(4)
+                    t1_input.destroy()
+                    input_stub()
+                if dupe == False:
+                    t1_confirm = Toplevel(master)
+                    t1_input.withdraw()
+                    t1_confirm.geometry("200x200")
+                    player_count = 1
+                    for i in range(len(team_1_array)):
+                        exec('Label%d=Label(t1_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_1_array[i], i))
+                        player_count = player_count + 1
+                    confirm_button = Button(t1_confirm, text = "Confirm Team 1", command = input_stub_2).pack()
+
 
 
 player_num_2 = 0
 display_num_2 = 1
 
 ##TEAM 2 INPUT
+
+player_num2 = 0
+display_num2 = 1
+dupe = False
+##TEAM 1 Input
 def input_stub_2():
-    global player_num_2
+    global player_num2
     global name_entry
-    global display_num_2
-    if player_num_2 != t2_amount:
+    global display_num2
+    if player_num != t2_amount:
         t2_input = Toplevel(master)
-        t1_confirm.withdraw()
+        t1_input.withdraw()
         title = Label(t2_input, text = "Team 2 Input").grid(row = 0, column = 1)
-        request = Label(t2_input, text = "Please enter player " + str(display_num_2) + " name").grid(row = 1, column = 1)
+        request = Label(t2_input, text = "Please enter player " + str(display_num2) + " name").grid(row = 1, column = 1)
         name_entry = Entry(t2_input)
         name_entry.grid(row = 2, column = 1)
-        display_num_2 = display_num_2 + 1
+        display_num2 = display_num2 + 1
         valid_button = Button(t2_input, text = "Submit", command = lambda: t2_validation(team_2_array)).grid(row = 4, column = 1)
-        def t2_validation(current_team):
+        def t1_validation(current_team):
             global t2_confirm
-            global player_num_2
-            global display_num_2
+            global player_num2
+            global display_num2
             global team_2_array
+            global dupe
             elem = t2_amount
             current_player_trans = name_entry.get()
             current_team.append(current_player_trans)
-            player_num_2 = player_num_2 + 1
-            if player_num_2 != t2_amount:
+            player_num2 = player_num2 + 1
+            if player_num != t2_amount:
                 t2_input.destroy()
                 input_stub_2()
-            elif player_num_2 == t2_amount:
-                t2_confirm = Toplevel(master)
-                t2_input.withdraw()
-                t2_confirm.geometry("200x200")
-                player_count_2 = 1
-                for i in range(len(team_2_array)):
-                    exec('Label%d=Label(t2_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count_2) + " : " + team_2_array[i], i))
-                    player_count_2 = player_count_2 + 1
-                confirm_button = Button(t2_confirm, text = "Confirm Team 2", command = full_confirm).pack()
+            elif player_num == t2_amount:
+                for i in range(0, len(team_2_array)):
+                    for j in range(i + 1, len(team_2_array)):
+                        if (team_2_array[i] == team_2_array[j]):
+                            dupe = True
+                if dupe == True:
+                    team_2_array = []
+                    error = Label(t2_input, text = "Error").grid(row = 5, column = 1)
+                    display_num2 = 1
+                    player_num2 = 0
+                    sleep(4)
+                    t2_input.destroy()
+                    input_stub_2()
+                if dupe == False:
+                    t2_confirm = Toplevel(master)
+                    t2_input.withdraw()
+                    t2_confirm.geometry("200x200")
+                    player_count2 = 1
+                    for i in range(len(team_1_array)):
+                        exec('Label%d=Label(t2_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count2) + " : " + team_2_array[i], i))
+                        player_count2 = player_count2 + 1
+                    confirm_button = Button(t2_confirm, text = "Confirm Team 2", command = full_confirm).pack()
 
 
 
@@ -247,7 +285,7 @@ def full_confirm():
 
 
 
-
+#ADD A FEATURE AFTER THE USER HAS FINSIHED INPUTTING ARRAY TO COMPRE THE ARRY FOR REPEEATS
 
 
 
