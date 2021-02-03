@@ -4,7 +4,6 @@ from time import sleep
 
 team_1_array= []
 team_2_array = []
-double = False
 t1_amount = 0
 t2_amount = 0
 
@@ -343,9 +342,9 @@ def t2_batting(Batting,Fielding):
 
     list_teams(batting_team, fielding_team)
 
-player_count_3 = 1
-player_count_4 = 1
 def list_teams(bt, ft):
+    player_count_3 = 1
+    player_count_4 = 1
     list_teams = Toplevel(master)
     choosing_sides.withdraw()
     batting = Label(list_teams, text = "Batting Team:").pack()
