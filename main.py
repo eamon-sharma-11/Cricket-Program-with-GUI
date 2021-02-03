@@ -295,7 +295,7 @@ def choosing_sides_func():
     full_confirm.withdraw()
     title = Label(choosing_sides, text = "Which team is batting first?").grid(row = 0, column = 1)
     t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: t1_batting(team_1_array, team_2_array)).grid(row = 1,column = 1)
-    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: t2_batting(team_2_array, team_1_array)).grid(row=1, column=2)
+    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: t1_batting(team_2_array, team_1_array)).grid(row=1, column=2)
 
 def t1_batting(Batting, Fielding):
     global batting_team
@@ -320,27 +320,6 @@ def t1_batting(Batting, Fielding):
     list_teams(batting_team, fielding_team)
 
 
-
-def t2_batting(Batting,Fielding):
-    global batting_team
-    global fielding_team
-    global batting_team_copy
-
-    fielding_team = [None] * len(Fielding)
-    for i in range(0, len(Fielding)):
-        fielding_team[i] = Fielding[i]
-
-    ###COPY OF BATTING TEAM
-    batting_team_copy = [None] * len(Batting)
-    for i in range(0, len(Batting)):
-        batting_team_copy[i] = Batting[i]
-
-    # Batting Team set
-    batting_team = [None] * len(Batting)
-    for i in range(0, len(Batting)):
-        batting_team[i] = Batting[i]
-
-    list_teams(batting_team, fielding_team)
 
 def list_teams(bt, ft):
     player_count_3 = 1
