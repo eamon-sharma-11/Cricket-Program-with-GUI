@@ -1,11 +1,11 @@
 from tkinter import *
 import sys
-from time import sleep
 
 team_1_array= []
 team_2_array = []
 t1_amount = 0
 t2_amount = 0
+batsmen = []
 
 
 
@@ -212,9 +212,9 @@ display_num2 = 1
 ##TEAM 1 Input
 def input_stub_2():
     print("Flag")
-    global player_num
+    global player_num2
     global name_entry
-    global display_num
+    global display_num2
     global dupe
     global t2_input
     if player_num2 != t2_amount:
@@ -225,7 +225,7 @@ def input_stub_2():
         request = Label(t2_input, text = "Please enter player " + str(display_num2) + " name").grid(row = 1, column = 1)
         name_entry = Entry(t2_input)
         name_entry.grid(row = 2, column = 1)
-        display_num = display_num + 1
+        display_num2 = display_num2 + 1
         valid_button = Button(t2_input, text = "Submit", command = lambda: t2_validation(team_2_array)).grid(row = 4, column = 1)
 def t2_validation(current_team):
             global t2_confirm
@@ -329,6 +329,7 @@ def t1_batting(Batting, Fielding):
 
 
 def list_teams_stub(bt, ft):
+    global list_teams
     player_count_3 = 1
     player_count_4 = 1
     list_teams = Toplevel(master)
@@ -342,7 +343,7 @@ def list_teams_stub(bt, ft):
     for i in range(len(ft)):
         exec('Label%d=Label(list_teams,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count_4) + " : " + ft[i], i))
         player_count_4 = player_count_4 + 1
-    next = Button(list_teams, text = "Confirm").pack()
+    next = Button(list_teams, text = "Confirm", command = match_type_stub()).pack()
 
 
 
@@ -350,41 +351,89 @@ def list_teams_stub(bt, ft):
 def match_type_stub():
     global match_type
     match_type = Toplevel(master)
-    list_team.withdraw()
+    list_teams.withdraw()
     title_1 = Label(match_type, text = "What type of game").grid(row = 0, column = 1)
-    title_2 = Label(match_type, text = "do you want to play?").gird(row = 1, column =1)
-    T20 = Button(match_type, text = "T20", command = lambda: match_type_set(T)).grid(row = 2, column = 1)
-    One_day = Button(match_type, text="One Day", command = lambda: match_type_set(D)).grid(row=3, column=1)
+    title_2 = Label(match_type, text = "do you want to play?").grid(row = 1, column =1)
+    T20 = Button(match_type, text = "T20", command = lambda: match_type_set(20)).grid(row = 2, column = 1)
+    One_day = Button(match_type, text="One Day", command = lambda: match_type_set(50)).grid(row=3, column=1)
     Custom = Button(match_type, text="Custom", command= custom_over).grid(row=4, column=1)
 
 
 def match_type_set(type):
-    if type == T:
+    if type == 20:
         over_amount = 20
-    elif type == D:
+    elif type == 50:
         over_amount = 50
-        batsmen()
+    batsmen_1()
     return over_amount
 
 
 co_flag = False
 def custom_over():
-    global cus_over
+    global cust_over
     global amount
     global co_flag
     co_flag = True
-    cus_over = Toplevel(master)
+    cust_over = Toplevel(master)
     match_type.withdraw()
-    title = Label(cus_over, text = "Input custom over amount").grid(row = 0, column = 1)
-    title = Label(cus_over, text="(Between 10-50)").grid(row=1, column=1)
-    amount = Entry(cus_over)
+    title = Label(cust_over, text = "Input custom over amount").grid(row = 0, column = 1)
+    title = Label(cust_over, text="(Between 10-50)").grid(row=1, column=1)
+    amount = Entry(cust_over)
     amount.grid(row = 2, column = 1)
-    submit = Button(cus_over, text = "Submit", command = batsmen).grid(row = 3, column = 1)
+    submit = Button(cust_over, text = "Submit", command = batsmen_1).grid(row = 3, column = 1)
 
 
-def batsmen():
+def batsmen_1():
+    global batsmen_win
+    global batsmen
     if co_flag == True:
         over_amount = amount.get()
+        over_amount = int(over_amount)
+        if over_amount < 10 or over_amount > 50:
+            error = Label(cust_over, text = "Error, out of range").grid(row = 4, column = 1)
+        elif co_flag == False:
+            cust_over.withdraw()
+    batsmen_win = Toplevel(master)
+    match_type.withdraw()
+    variable = StringVar(batsmen_win)
+    variable.set(batting_team[0])  # default value
+
+    w = OptionMenu(batsmen_win, variable, *batting_team)
+    w.grid(row = 0, column = 1)
+
+    def ok():
+        batsmen[0] = variable.get()
+        for players in batting_team:
+            if players == batsmen[0]:
+                batting_team.remove(batsmen[0])
+        batsmen_2()
+
+    button = Button(batsmen_win, text="OK", command=ok).grid(row = 1, column = 1)
+
+
+def batsmen_2():
+    global batsmen_win_2
+    global batsmen
+    batsmen_win_2 = Toplevel(master)
+    batsmen_win.withdraw()
+    variable = StringVar(batsmen_win_2)
+    variable.set(batting_team[0])  # default value
+
+    w = OptionMenu(batsmen_win_2, variable, *batting_team)
+    w.pack()
+
+    def ok():
+        batsmen[1] = variable.get()
+        for players in batting_team:
+            if players == batsmen[1]:
+                batting_team.remove(batsmen[1])
+        bowler()
+
+    button = Button(batsmen_win_2, text="OK", command=ok).grid(row = 1, column = 1)
+
+def bowler():
+    print(batting_team)
+    print(batsmen)
 
 
 
@@ -394,9 +443,6 @@ def batsmen():
 
 
 
-
-
-#TEST COMMIT
 
 
 
