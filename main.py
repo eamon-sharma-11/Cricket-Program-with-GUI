@@ -287,6 +287,13 @@ def full_confirm_func():
         i, "Player " + str(player_count_2) + " : " + team_2_array[i], i))
         player_count_2 = player_count_2 + 1
     submit = Button(full_confirm, text = "Submit", command = choosing_sides_func).pack()
+    back = Button(full_confirm, text="Redo Name input", command= lambda: [input_stub(), reset_player_num(player_num, display_num, player_num2, display_num2)]).pack()
+
+def reset_player_num(player1, display1, display2, player2):
+    player1 = 0
+    display1 = 1
+    player2 = 0
+    display2 = 1
 
 
 def choosing_sides_func():
@@ -317,11 +324,11 @@ def t1_batting(Batting, Fielding):
     for i in range(0, len(Batting)):
         batting_team[i] = Batting[i]
 
-    list_teams(batting_team, fielding_team)
+    list_teams_stub(batting_team, fielding_team)
 
 
 
-def list_teams(bt, ft):
+def list_teams_stub(bt, ft):
     player_count_3 = 1
     player_count_4 = 1
     list_teams = Toplevel(master)
@@ -335,7 +342,49 @@ def list_teams(bt, ft):
     for i in range(len(ft)):
         exec('Label%d=Label(list_teams,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count_4) + " : " + ft[i], i))
         player_count_4 = player_count_4 + 1
+    next = Button(list_teams, text = "Confirm").pack()
 
+
+
+
+def match_type_stub():
+    global match_type
+    match_type = Toplevel(master)
+    list_team.withdraw()
+    title_1 = Label(match_type, text = "What type of game").grid(row = 0, column = 1)
+    title_2 = Label(match_type, text = "do you want to play?").gird(row = 1, column =1)
+    T20 = Button(match_type, text = "T20", command = lambda: match_type_set(T)).grid(row = 2, column = 1)
+    One_day = Button(match_type, text="One Day", command = lambda: match_type_set(D)).grid(row=3, column=1)
+    Custom = Button(match_type, text="Custom", command= custom_over).grid(row=4, column=1)
+
+
+def match_type_set(type):
+    if type == T:
+        over_amount = 20
+    elif type == D:
+        over_amount = 50
+        batsmen()
+    return over_amount
+
+
+co_flag = False
+def custom_over():
+    global cus_over
+    global amount
+    global co_flag
+    co_flag = True
+    cus_over = Toplevel(master)
+    match_type.withdraw()
+    title = Label(cus_over, text = "Input custom over amount").grid(row = 0, column = 1)
+    title = Label(cus_over, text="(Between 10-50)").grid(row=1, column=1)
+    amount = Entry(cus_over)
+    amount.grid(row = 2, column = 1)
+    submit = Button(cus_over, text = "Submit", command = batsmen).grid(row = 3, column = 1)
+
+
+def batsmen():
+    if co_flag == True:
+        over_amount = amount.get()
 
 
 
