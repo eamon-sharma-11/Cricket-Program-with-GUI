@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import sys
 
 team_1_array= []
@@ -146,6 +147,18 @@ def final_confirm():
         button_redo = Button(final_confirm, text="Redo", command = save_team2_names).grid(row=3, column=2)
 
 
+
+def error_popup_teams():
+    global response
+    response = messagebox.showerror("Error Popup", "Duplicate player found, please re-enter names")
+    return response
+
+
+
+
+
+
+
 player_num = 0
 display_num = 1
 ##TEAM 1 Input
@@ -185,13 +198,15 @@ def t1_validation(current_team):
                         if (team_1_array[i] == team_1_array[j]):
                             dupe = True
                 if dupe == True:
-                    team_1_array.clear()
-                    error = Toplevel(t1_input)
-                    display_num = 1
-                    player_num = 0
-                    error.destroy()
-                    t1_input.destroy()
-                    input_stub()
+                    error_popup_teams()
+                    if response == "ok":
+                        team_1_array.clear()
+                        error = Toplevel(t1_input)
+                        display_num = 1
+                        player_num = 0
+                        error.destroy()
+                        t1_input.destroy()
+                        input_stub()
                 elif dupe == False:
                     t1_confirm = Toplevel(master)
                     t1_input.withdraw()
@@ -247,13 +262,15 @@ def t2_validation(current_team):
                         if (team_2_array[i] == team_2_array[j]):
                             dupe = True
                 if dupe == True:
-                    team_2_array.clear()
-                    error = Toplevel(t2_input)
-                    display_num2 = 1
-                    player_num2 = 0
-                    error.destroy()
-                    t2_input.destroy()
-                    input_stub_2()
+                    error_popup_teams()
+                    if response == "ok":
+                        team_2_array.clear()
+                        error = Toplevel(t2_input)
+                        display_num2 = 1
+                        player_num2 = 0
+                        error.destroy()
+                        t2_input.destroy()
+                        input_stub_2()
                 elif dupe == False:
                     t2_confirm = Toplevel(master)
                     t2_input.withdraw()
