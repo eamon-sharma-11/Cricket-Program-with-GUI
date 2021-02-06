@@ -395,20 +395,21 @@ def batsmen_1():
             cust_over.withdraw()
     batsmen_win = Toplevel(master)
     match_type.withdraw()
+    itle = Label(batsmen_win, text="Choose the first batsmen").grid(row=0, column=1)
     variable = StringVar(batsmen_win)
     variable.set(batting_team[0])  # default value
 
     w = OptionMenu(batsmen_win, variable, *batting_team)
-    w.grid(row = 0, column = 1)
+    w.grid(row = 1, column = 1)
 
     def ok():
-        batsmen[0] = variable.get()
+        batsmen.append(variable.get())
         for players in batting_team:
             if players == batsmen[0]:
                 batting_team.remove(batsmen[0])
         batsmen_2()
 
-    button = Button(batsmen_win, text="OK", command=ok).grid(row = 1, column = 1)
+    button = Button(batsmen_win, text="OK", command=ok).grid(row = 2, column = 1)
 
 
 def batsmen_2():
@@ -418,22 +419,41 @@ def batsmen_2():
     batsmen_win.withdraw()
     variable = StringVar(batsmen_win_2)
     variable.set(batting_team[0])  # default value
+    title = Label(batsmen_win_2, text = "Choose the second batsmen").grid(row =0, column = 1)
+
 
     w = OptionMenu(batsmen_win_2, variable, *batting_team)
-    w.pack()
+    w.grid(row = 1, column = 1)
 
-    def ok():
-        batsmen[1] = variable.get()
+    def ok1():
+        batsmen.append(variable.get())
         for players in batting_team:
             if players == batsmen[1]:
                 batting_team.remove(batsmen[1])
         bowler()
 
-    button = Button(batsmen_win_2, text="OK", command=ok).grid(row = 1, column = 1)
+    button = Button(batsmen_win_2, text="OK", command=ok1).grid(row = 2, column = 1)
 
 def bowler():
-    print(batting_team)
-    print(batsmen)
+    global bowler_win
+    bowler_win = Toplevel(master)
+    batsmen_win_2.withdraw()
+    variable = StringVar(bowler_win)
+    variable.set(fielding_team[0])
+    title = Label(bowler_win, text = "Please choose the bowler").grid(row = 0, column = 1)
+
+    w = OptionMenu(bowler_win, variable, *fielding_team)
+    w.grid(row = 1, column = 1)
+
+    def ok2():
+        current_bowler = variable.get()
+        for players in batting_team:
+            if players == current_bowler:
+                fielding_team.remove(current_bowler)
+        bowler()
+
+    button = Button(bowler_win, text="OK", command=ok2).grid(row = 2, column = 1)
+
 
 
 
