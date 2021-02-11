@@ -1,18 +1,24 @@
 from tkinter import *
 from tkinter import messagebox
-import sys
+
 
 team_1_array= []
 team_2_array = []
 t1_amount = 0
 t2_amount = 0
 batsmen = []
-
+innings = 1
+runs = 0
+out = 0
+over = 0
+partnership_runs = 0
+ball = 0
+out_full = False
 
 
 master = Tk()
 
-master.attributes("-topmost", True)
+
 
 ###WS = White space
 ####HELP MENU
@@ -226,7 +232,6 @@ player_num2 = 0
 display_num2 = 1
 ##TEAM 1 Input
 def input_stub_2():
-    print("Flag")
     global player_num2
     global name_entry
     global display_num2
@@ -377,6 +382,7 @@ def match_type_stub():
 
 
 def match_type_set(type):
+    global over_amount
     if type == 20:
         over_amount = 20
     elif type == 50:
@@ -397,12 +403,16 @@ def custom_over():
     title = Label(cust_over, text="(Between 10-50)").grid(row=1, column=1)
     amount = Entry(cust_over)
     amount.grid(row = 2, column = 1)
-    submit = Button(cust_over, text = "Submit", command = batsmen_1).grid(row = 3, column = 1)
+    submit = Button(cust_over, text = "Submit", command = lambda: [batsmen_1(), clear_win()]).grid(row = 3, column = 1)
 
+
+def clear_win():
+    cust_over.withdraw()
 
 def batsmen_1():
     global batsmen_win
     global batsmen
+    global over_amount
     if co_flag == True:
         over_amount = amount.get()
         over_amount = int(over_amount)
@@ -453,6 +463,7 @@ def batsmen_2():
 
 def bowler():
     global bowler_win
+    global batsmen
     bowler_win = Toplevel(master)
     batsmen_win_2.withdraw()
     variable = StringVar(bowler_win)
@@ -467,9 +478,74 @@ def bowler():
         for players in batting_team:
             if players == current_bowler:
                 fielding_team.remove(current_bowler)
-        bowler()
+        main_play()
 
     button = Button(bowler_win, text="OK", command=ok2).grid(row = 2, column = 1)
+
+facing_length = len(batsmen)
+
+def main_play():
+    main_win = Toplevel(master)
+    bowler_win.withdraw()
+    ws = Label(main_win, text = "  ").grid(row = 1, column = 1)
+    title = Label(main_win, text = "Current Game").grid(row = 0, column = 1)
+    score = Label(main_win, text = "Current Score:").grid(row = 2, column = 1)
+    line = Label(main_win, text = "--------------").grid(row = 1, column = 1)
+    score = Label(main_win, text = str(runs) + "/" + str(out)).grid(row = 3, column = 1)
+    line = Label(main_win, text="--------------").grid(row=4, column=1)
+    cur_bat = Label(main_win, text = "Facing Batsmen: " + batsmen[0]).grid(row = 5, column = 1)
+    other_bat = Label(main_win, text = "Other Batsmen: " + batsmen[1]).grid(row = 6, column = 1)
+    current_patner = Label(main_win, text = "Patnership: " + str(partnership_runs)).grid(row = 7, column = 1)
+    button_func = Button(main_win, text = "Play", command = play_func).grid(row = 8, column = 1)
+
+def play_func():
+    global ball
+    global play_win
+    play_win = Toplevel(master)
+    ball = ball + 1
+    title = Label(play_win, text = "Select Outcome of play").grid(row = 0, column = 1)
+    run_button = Button(play_win, text = "Runs", command = run_function).grid(row = 1, column = 1)
+    run_button = Button(play_win, text="Out", command= out_function).grid(row=1, column=1)
+
+def run_function():
+    global run_win
+    global run_entry
+    run_win = Toplevel(master)
+    play_win.withdraw()
+    title = Label(run_win, text = "Enter amount of runs scored").grid(row = 0, column = 1)
+    run_entry = Entry(run_win)
+    run_entry.grid(row = 1, column = 1)
+    submit_runs = Button(run_win, text = "Submit", command = run_submit).grid(row = 2, column = 1)
+
+def run_submit():
+    global runs
+    new_run = run_entry.get()
+    new_run = int(new_run)
+    runs = new_run + runs
+    over_or_fin_check()
+
+
+def over_or_fin_check():
+    if ball % 6 == 0:
+        over = over + 1
+        change_bowler()
+    else:
+        innings_over_check()
+
+def change_bowler():
+    nb_win = Toplevel(master)
+    run_win.withdraw()
+    title = Label(nb_win, text = "Please choose new bowler").pack()
+    player_count_5
+    for i in range(len(fielding_team)):
+        exec('Label%d=Label(nb_win,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count_5) + " : " + fielding_team[i], i))
+        player_count_5 = player_count_5 + 1
+
+
+
+
+
+
 
 
 
