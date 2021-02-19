@@ -22,11 +22,20 @@ master = Tk()
 
 
 
+
+
 ###WS = White space
 ####HELP MENU
 
 def help_menu():
     top = Toplevel(master)
+    w = top.winfo_width()
+    h = top.winfo_height()
+    ws = top.winfo_screenwidth()
+    hs = top.winfo_screenheight()
+    x = (ws / 2) - (w / 2)
+    y = (hs / 2) - (h / 2)
+    top.geometry('%dx%d+%d+%d' % (w, h, x, y))
     top.title("Help Menu")
     heading = Label(top, text = "Help Menu").grid(row = 0, column = 1)
     headin_ws = Label(top, text = " ").grid(row = 1, column = 1)
@@ -44,6 +53,13 @@ def start_team1():
     global t1_entry
     top_1 = Toplevel(master)
     master.withdraw()
+    w = 150
+    h = 70
+    ws = top_1.winfo_screenwidth()
+    hs = top_1.winfo_screenheight()
+    x = (ws / 2) - (w / 2)
+    y = (hs / 2) - (h / 2)
+    top_1.geometry('%dx%d+%d+%d' % (w, h, x, y))
     top_1.title("Hows That?")
     def start_team2():
         global team_1
@@ -52,14 +68,20 @@ def start_team1():
         team_1 = t1_entry.get()
         top_2 = Toplevel(master)
         top_1.withdraw()
+        w = 150
+        h = 90
+        ws = top_2.winfo_screenwidth()
+        hs = top_2.winfo_screenheight()
+        x = (ws / 2) - (w / 2)
+        y = (hs / 2) - (h / 2)
+        top_2.geometry('%dx%d+%d+%d' % (w, h, x, y))
         top_2.title("Hows That?")
         team2_name = Label(top_2, text="Enter Team 2's team name: ").grid(row=0, column=1)
         previous = "Team 1: " + team_1
         previouslb = Label(top_2, text = previous).grid(row=2, column=1)
         t2_entry = Entry(top_2, width=20)
         t2_entry.grid(row=1, column=1)
-        ws_2 = Label(top_2, text=" ").grid(row=3, column=1)
-        submit_button = Button(top_2, text="SUBMIT", command=save_team2_names).grid(row=4, column=1)
+        submit_button = Button(top_2, text="SUBMIT", command=save_team2_names).grid(row=3, column=1)
 
     team1_name = Label(top_1, text = "Enter Team 1's team name: ").grid(row = 0, column = 1)
     t1_entry = Entry(top_1, width = 20)
@@ -78,6 +100,13 @@ def save_team2_names():
         team_2 = t2_entry.get()
         top_2.withdraw()
         confirm_screen = Toplevel(master)
+        w = 160 + len(team_2) + len(team_1)
+        h = 50
+        ws = confirm_screen.winfo_screenwidth()
+        hs = confirm_screen.winfo_screenheight()
+        x = (ws / 2) - (w / 2)
+        y = (hs / 2) - (h / 2)
+        confirm_screen.geometry('%dx%d+%d+%d' % (w, h, x, y))
         t1_name = Label(confirm_screen, text = "Team 1: " + team_1).grid(row = 1, column = 1)
         t2_name = Label(confirm_screen, text="Team 2: " + team_2).grid(row = 1, column = 2)
         confirm_button = Button(confirm_screen, text = "Submit", width = 10, command = team_name_1).grid(row = 4, column = 1)
@@ -115,6 +144,13 @@ def team_name_1():
     global team_amount_test
     team_name_input = Toplevel(master)
     confirm_screen.withdraw()
+    w = 175
+    h = 90
+    ws = team_name_input.winfo_screenwidth()
+    hs = team_name_input.winfo_screenheight()
+    x = (ws / 2) - (w / 2)
+    y = (hs / 2) - (h / 2)
+    team_name_input.geometry('%dx%d+%d+%d' % (w, h, x, y))
     enter_names = Label(team_name_input, text = "Enter amount of players in " + team_1).grid(row = 0, column = 1)
     enter_names2 = Label(team_name_input, text="(Between 2 and 11)").grid(row=1, column=1)
     team_amount_test = Entry(team_name_input, width = 20)
@@ -531,16 +567,33 @@ def play_func():
     run_button = Button(play_win, text="Out", command= out_function).grid(row=2, column=1)
 
 def out_function():
+    global facing
     print("Out function")
-    over_or_fin_check()
+    if len(batting_team) == 0:
+        change_sides()
+    else:
+        out_win = Toplevel(master)
+        play_win.withdraw()
+        out_players.append(facing)
+        facing = other
+        variable = StringVar(out_win)
+        variable.set(batting_team[0])  # default value
+        title = Label(out_win, text="Choose the new batsmen").grid(row=0, column=1)
 
+        w = OptionMenu(out_win, variable, *batting_team)
+        w.grid(row=1, column=1)
 
+        def ok5():
+            global batsmen
+            global other
+            other = variable.get()
+            for players in batting_team:
+                if players == other:
+                    batting_team.remove(other)
+            out_win.destroy()
+            over_or_fin_check()
 
-    
-
-
-
-
+        button = Button(out_win, text="OK", command=ok5).grid(row=2, column=1)
 
 
 def run_function():
@@ -583,6 +636,7 @@ def change_facing_players():
 
 
 def over_or_fin_check():
+    global over
     if ball % 6 == 0:
         over = over + 1
         change_bowler(current_bowler)
