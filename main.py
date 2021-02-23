@@ -27,16 +27,24 @@ master = Tk()
 ###WS = White space
 ####HELP MENU
 
-def help_menu():
-    top = Toplevel(master)
-    w = top.winfo_width()
-    h = top.winfo_height()
-    ws = top.winfo_screenwidth()
-    hs = top.winfo_screenheight()
+
+def sizing(window):
+    window.update()
+    w = window.winfo_width()
+    h = window.winfo_height()
+    ws = window.winfo_screenwidth()
+    hs = window.winfo_screenheight()
     x = (ws / 2) - (w / 2)
     y = (hs / 2) - (h / 2)
-    top.geometry('%dx%d+%d+%d' % (w, h, x, y))
-    top.title("Help Menu")
+    window.geometry('+%d+%d' % (x, y))
+
+
+
+
+
+def help_menu():
+    top = Toplevel(master)
+    sizing(top)
     heading = Label(top, text = "Help Menu").grid(row = 0, column = 1)
     headin_ws = Label(top, text = " ").grid(row = 1, column = 1)
     help_1 = Label(top, text = "-This program is designed to keep track").grid(row = 2, column = 1)
@@ -53,13 +61,7 @@ def start_team1():
     global t1_entry
     top_1 = Toplevel(master)
     master.withdraw()
-    w = 150
-    h = 70
-    ws = top_1.winfo_screenwidth()
-    hs = top_1.winfo_screenheight()
-    x = (ws / 2) - (w / 2)
-    y = (hs / 2) - (h / 2)
-    top_1.geometry('%dx%d+%d+%d' % (w, h, x, y))
+    sizing(top_1)
     top_1.title("Hows That?")
     def start_team2():
         global team_1
@@ -68,13 +70,7 @@ def start_team1():
         team_1 = t1_entry.get()
         top_2 = Toplevel(master)
         top_1.withdraw()
-        w = 150
-        h = 90
-        ws = top_2.winfo_screenwidth()
-        hs = top_2.winfo_screenheight()
-        x = (ws / 2) - (w / 2)
-        y = (hs / 2) - (h / 2)
-        top_2.geometry('%dx%d+%d+%d' % (w, h, x, y))
+        sizing(top_2)
         top_2.title("Hows That?")
         team2_name = Label(top_2, text="Enter Team 2's team name: ").grid(row=0, column=1)
         previous = "Team 1: " + team_1
@@ -100,13 +96,7 @@ def save_team2_names():
         team_2 = t2_entry.get()
         top_2.withdraw()
         confirm_screen = Toplevel(master)
-        w = 160 + len(team_2) + len(team_1)
-        h = 50
-        ws = confirm_screen.winfo_screenwidth()
-        hs = confirm_screen.winfo_screenheight()
-        x = (ws / 2) - (w / 2)
-        y = (hs / 2) - (h / 2)
-        confirm_screen.geometry('%dx%d+%d+%d' % (w, h, x, y))
+        sizing(confirm_screen)
         t1_name = Label(confirm_screen, text = "Team 1: " + team_1).grid(row = 1, column = 1)
         t2_name = Label(confirm_screen, text="Team 2: " + team_2).grid(row = 1, column = 2)
         confirm_button = Button(confirm_screen, text = "Submit", width = 10, command = team_name_1).grid(row = 4, column = 1)
@@ -144,13 +134,7 @@ def team_name_1():
     global team_amount_test
     team_name_input = Toplevel(master)
     confirm_screen.withdraw()
-    w = 175
-    h = 90
-    ws = team_name_input.winfo_screenwidth()
-    hs = team_name_input.winfo_screenheight()
-    x = (ws / 2) - (w / 2)
-    y = (hs / 2) - (h / 2)
-    team_name_input.geometry('%dx%d+%d+%d' % (w, h, x, y))
+    sizing(team_name_input)
     enter_names = Label(team_name_input, text = "Enter amount of players in " + team_1).grid(row = 0, column = 1)
     enter_names2 = Label(team_name_input, text="(Between 2 and 11)").grid(row=1, column=1)
     team_amount_test = Entry(team_name_input, width = 20)
@@ -169,6 +153,7 @@ def amount_validation_1():
         global team_amount_test2
         team_name_input2 = Toplevel(master)
         team_name_input.withdraw()
+        sizing(team_name_input2)
         enter_names = Label(team_name_input2, text="Enter amount of players in " + team_2).grid(row=0, column=1)
         enter_names2 = Label(team_name_input2, text="(Between 2 and 11)").grid(row=1, column=1)
         team_amount_test2 = Entry(team_name_input2, width=20)
@@ -184,6 +169,7 @@ def final_confirm():
     elif t2_amount > 2 or t2_amount < 11:
         final_confirm = Toplevel(master)
         team_name_input2.withdraw()
+        sizing(final_confirm)
         con_title = Label(final_confirm, text = "Please ensure that all information is correct").grid(row = 0, column = 1)
         t1_con = Label(final_confirm, text = str(team_1) + ": " + str(t1_amount) + " players").grid(row = 1, column = 1)
         t2_con = Label(final_confirm, text = str(team_2) + ": " + str(t2_amount) + " players").grid(row = 2, column = 1)
@@ -216,6 +202,7 @@ def input_stub():
         dupe = False
         t1_input = Toplevel(master)
         final_confirm.withdraw()
+        sizing(t1_input)
         title = Label(t1_input, text = "Team 1 Input").grid(row = 0, column = 1)
         request = Label(t1_input, text = "Please enter player " + str(display_num) + " name").grid(row = 1, column = 1)
         name_entry = Entry(t1_input)
@@ -254,6 +241,7 @@ def t1_validation(current_team):
                 elif dupe == False:
                     t1_confirm = Toplevel(master)
                     t1_input.withdraw()
+                    sizing(t1_confirm)
                     t1_confirm.geometry("200x200")
                     player_count = 1
                     for i in range(len(team_1_array)):
@@ -279,6 +267,7 @@ def input_stub_2():
         dupe = False
         t2_input = Toplevel(master)
         t1_confirm.withdraw()
+        sizing(t2_input)
         title = Label(t2_input, text = "Team 2 Input").grid(row = 0, column = 1)
         request = Label(t2_input, text = "Please enter player " + str(display_num2) + " name").grid(row = 1, column = 1)
         name_entry = Entry(t2_input)
@@ -317,6 +306,7 @@ def t2_validation(current_team):
                 elif dupe == False:
                     t2_confirm = Toplevel(master)
                     t2_input.withdraw()
+                    sizing(t2_confirm)
                     t2_confirm.geometry("200x200")
                     player_count = 1
                     for i in range(len(team_2_array)):
@@ -335,6 +325,7 @@ def full_confirm_func():
     player_count_2 = 1
     full_confirm = Toplevel(master)
     t2_confirm.withdraw()
+    sizing(full_confirm)
     t1_label = Label(full_confirm, text = "Team: " + team_1).pack()
     for i in range(len(team_1_array)):
         exec('Label%d=Label(full_confirm,text="%s")\nLabel%d.pack()' % (
@@ -360,6 +351,7 @@ def choosing_sides_func():
     global choosing_sides
     choosing_sides = Toplevel(master)
     full_confirm.withdraw()
+    sizing(choosing_sides)
     title = Label(choosing_sides, text = "Which team is batting first?").grid(row = 0, column = 1)
     t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: t1_batting(team_1_array, team_2_array)).grid(row = 1,column = 1)
     t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: t1_batting(team_2_array, team_1_array)).grid(row=2, column=1)
@@ -394,6 +386,7 @@ def list_teams_stub(bt, ft):
     player_count_4 = 1
     list_teams = Toplevel(master)
     choosing_sides.withdraw()
+    sizing(list_teams)
     batting = Label(list_teams, text = "Batting Team:").pack()
     for i in range(len(bt)):
         exec('Label%d=Label(list_teams,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count_3) + " : " + bt[i], i))
@@ -412,6 +405,7 @@ def match_type_stub():
     global match_type
     match_type = Toplevel(master)
     list_teams.withdraw()
+    sizing(match_type)
     title_1 = Label(match_type, text = "What type of game").grid(row = 0, column = 1)
     title_2 = Label(match_type, text = "do you want to play?").grid(row = 1, column =1)
     T20 = Button(match_type, text = "T20", command = lambda: match_type_set(20)).grid(row = 2, column = 1)
@@ -437,6 +431,7 @@ def custom_over():
     co_flag = True
     cust_over = Toplevel(master)
     match_type.withdraw()
+    sizing(cust_over)
     title = Label(cust_over, text = "Input custom over amount").grid(row = 0, column = 1)
     title = Label(cust_over, text="(Between 10-50)").grid(row=1, column=1)
     amount = Entry(cust_over)
@@ -460,6 +455,7 @@ def batsmen_1():
             cust_over.withdraw()
     batsmen_win = Toplevel(master)
     match_type.withdraw()
+    sizing(batsmen_win)
     itle = Label(batsmen_win, text="Choose the first batsmen").grid(row=0, column=1)
     variable = StringVar(batsmen_win)
     variable.set(batting_team[0])  # default value
@@ -484,6 +480,7 @@ def batsmen_2():
     global other_batsmen
     batsmen_win_2 = Toplevel(master)
     batsmen_win.withdraw()
+    sizing(batsmen_win_2)
     variable = StringVar(batsmen_win_2)
     variable.set(batting_team[0])  # default value
     title = Label(batsmen_win_2, text = "Choose the second batsmen").grid(row =0, column = 1)
@@ -508,6 +505,7 @@ def bowler():
     global current_bowler
     bowler_win = Toplevel(master)
     batsmen_win_2.withdraw()
+    sizing(bowler_win)
     variable = StringVar(bowler_win)
     variable.set(fielding_team[0])
     title = Label(bowler_win, text = "Please choose the bowler").grid(row = 0, column = 1)
@@ -517,6 +515,7 @@ def bowler():
 
     def ok2():
         global current_bowler
+        global fielding_team
         current_bowler = variable.get()
         for players in batting_team:
             if players == current_bowler:
@@ -543,7 +542,7 @@ def main_play():
     print(batsmen)
     main_win = Toplevel(master)
     bowler_win.withdraw()
-    main_win.geometry("65x250")
+    sizing(main_win)
     title = Label(main_win, text = "Current Game").grid(row = 0, column = 1)
     score = Label(main_win, text = "Current Score:").grid(row = 2, column = 1)
     line = Label(main_win, text = "--------------").grid(row = 1, column = 1)
@@ -561,6 +560,7 @@ def play_func():
     global ball
     global play_win
     play_win = Toplevel(master)
+    sizing(play_win)
     ball = ball + 1
     title = Label(play_win, text = "Select Outcome of play").grid(row = 0, column = 1)
     run_button = Button(play_win, text = "Runs", command = run_function).grid(row = 1, column = 1)
@@ -574,6 +574,7 @@ def out_function():
     else:
         out_win = Toplevel(master)
         play_win.withdraw()
+        sizing(out_win)
         out_players.append(facing)
         facing = other
         variable = StringVar(out_win)
@@ -601,6 +602,7 @@ def run_function():
     global run_entry
     run_win = Toplevel(master)
     play_win.withdraw()
+    sizing(run_win)
     title = Label(run_win, text = "Enter amount of runs scored").grid(row = 0, column = 1)
     run_entry = Entry(run_win)
     run_entry.grid(row = 1, column = 1)
@@ -646,6 +648,7 @@ def over_or_fin_check():
 def change_bowler(old_bowler):
     nb_win = Toplevel(master)
     run_win.withdraw()
+    sizing(nb_win)
     variable = StringVar(nb_win)
     variable.set(fielding_team[0])
     title = Label(nb_win, text="Please choose the new bowler").grid(row=0, column=1)
@@ -659,23 +662,54 @@ def change_bowler(old_bowler):
         bowler_moving_out = old_bowler
         current_bowler = new_bowler
         fielding_team.append(bowler_moving_out)
+        nb_win.destroy()
         innings_over_check()
 
 
-    button = Button(bowler_win, text="Submit", command=submit_func).grid(row=2, column=1)
+    button = Button(nb_win, text="Submit", command=submit_func).grid(row=2, column=1)
 
 
 
 def innings_over_check():
+    global innings
     if over == over_amount:
         innings = innings + 1
         main_win.destroy()
         change_sides()
+    elif innings == 3:
+        end_game()
     else:
         main_win.destroy()
         main_play()
 
 
+def change_sides():
+    global fielding_team
+    global batting_team
+    global batting_team_copy
+    fielding_team.append(current_bowler)
+
+    ###MOVING CURRENT BATTING TEAM INTO TEMP LIST BEFORE MOVING TO MAIN LIST OF FIELDING TEAM
+    new_fielding_team = [None] * len(batting_team_copy)
+    for i in range(0, len(batting_team_copy)):
+        new_fielding_team[i] = batting_team_copy[i]
+
+    ###MOVING CURRENT FIELDING TEAM INTO TEMP LIST BEFORE MOVING TO MAIN LIST OF BATTING TEAM
+    new_batting_team = [None] * len(fielding_team)
+    for i in range(0, len(fielding_team)):
+        new_batting_team[i] = fielding_team[i]
+
+    ###MOVING NEW FIELDING TEAM FROM LIST "NEW FIELDING TEAM"
+    fielding_team = [None] * len(new_fielding_team)
+    for i in range(0, len(new_fielding_team)):
+        fielding_team[i] = new_fielding_team[i]
+
+    ###MOVING NEW BATTING TEAM FROM LIST "NEW BATTING TEAM"
+    batting_team = [None] * len(new_batting_team)
+    for i in range(0, len(new_batting_team)):
+        batting_team[i] = new_batting_team[i]
+
+    batsmen_1()
 
 
 
