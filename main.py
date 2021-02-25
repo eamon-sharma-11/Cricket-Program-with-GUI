@@ -106,27 +106,40 @@ def clear():
     confirm_screen.withdraw()
 
 
+sizing(master)
+master.title("How's That")
+label_ = Label(master, text = "Hows that is").pack()
+label_2 = Label(master, text = "now loading").pack()
+
+
+
+
+
 
 #SETTING UP MAIN SCREEN
-welcome_label = Label(master, text = 'Welcome to "Hows That?"')
-white_space_welcome = Label(master, text = " ")
-white_space_welcome2 = Label(master, text = " ")
-white_space_welcome3 = Label(master, text = " ")
+def main():
+    master.withdraw()
+    main_win = Toplevel(master)
+    sizing(main_win)
+    welcome_label = Label(main_win, text = 'Welcome to "Hows That?"')
+    white_space_welcome = Label(main_win, text = " ")
+    white_space_welcome2 = Label(main_win, text = " ")
+    white_space_welcome3 = Label(main_win, text = " ")
 
-help_menu_button = Button(master, text = "HELP", command = help_menu)
-start_button = Button(master, text = "START", command = start_team1)
-exit_button = Button(master, text = "EXIT", command = sys.exit)
-
-
-welcome_label.grid(row = 0, column = 1)
-white_space_welcome.grid(row = 1, column = 1)
-white_space_welcome2.grid(row = 2, column = 1)
-white_space_welcome3.grid(row = 3, column = 1)
-help_menu_button.grid(row = 4, column = 0)
-start_button.grid(row = 4, column = 1)
-exit_button.grid(row = 4, column = 2)
+    help_menu_button = Button(main_win, text = "HELP", command = help_menu)
+    start_button = Button(main_win, text = "START", command = start_team1)
+    exit_button = Button(main_win, text = "EXIT", command = sys.exit)
 
 
+    welcome_label.grid(row = 0, column = 1)
+    white_space_welcome.grid(row = 1, column = 1)
+    white_space_welcome2.grid(row = 2, column = 1)
+    white_space_welcome3.grid(row = 3, column = 1)
+    help_menu_button.grid(row = 4, column = 0)
+    start_button.grid(row = 4, column = 1)
+    exit_button.grid(row = 4, column = 2)
+
+master.after(3000, main())
 ####AFTER CONFIRMING TEAMS
 
 def team_name_1():
@@ -353,8 +366,8 @@ def choosing_sides_func():
     full_confirm.withdraw()
     sizing(choosing_sides)
     title = Label(choosing_sides, text = "Which team is batting first?").grid(row = 0, column = 1)
-    t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: t1_batting(team_1_array, team_2_array)).grid(row = 1,column = 1)
-    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: t1_batting(team_2_array, team_1_array)).grid(row=2, column=1)
+    t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: [t1_batting(team_1_array, team_2_array), team_set(team__1)]).grid(row = 1,column = 1)
+    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: [t1_batting(team_2_array, team_1_array), team_set(team__2)]).grid(row=2, column=1)
 
 def t1_batting(Batting, Fielding):
     global batting_team
@@ -378,6 +391,12 @@ def t1_batting(Batting, Fielding):
 
     list_teams_stub(batting_team, fielding_team)
 
+def team_set(team):
+    global first_team
+    if team == team__1:
+        first_team = t1
+    if team == team__2:
+        first_team = t2
 
 
 def list_teams_stub(bt, ft):
@@ -539,10 +558,11 @@ def main_play():
     global main_win
     global facing
     global other
+    global partnership_runs
     print(batsmen)
     main_win = Toplevel(master)
-    bowler_win.withdraw()
     sizing(main_win)
+    bowler_win.withdraw()
     title = Label(main_win, text = "Current Game").grid(row = 0, column = 1)
     score = Label(main_win, text = "Current Score:").grid(row = 2, column = 1)
     line = Label(main_win, text = "--------------").grid(row = 1, column = 1)
@@ -554,7 +574,8 @@ def main_play():
     line = Label(main_win, text="--------------").grid(row=8, column=1)
     bowler = Label(main_win, text = "Bowler: " + current_bowler).grid(row = 9, column = 1)
     line = Label(main_win, text="--------------").grid(row=10, column=1)
-    button_func = Button(main_win, text = "Play", command = play_func).grid(row = 11, column = 1)
+    over = Label(main_win, text = "Over: " + over + "| Ball: " + ball).grid(row = 11, column = 1)
+    button_func = Button(main_win, text = "Play", command = play_func).grid(row = 12, column = 1)
 
 def play_func():
     global ball
@@ -568,6 +589,8 @@ def play_func():
 
 def out_function():
     global facing
+    global partnership_runs
+    partnership_runs = 0
     print("Out function")
     if len(batting_team) == 0:
         change_sides()
@@ -614,9 +637,11 @@ def clear_win():
 def run_submit():
     global new_run
     global runs
+    global partnership_runs
     new_run = run_entry.get()
     new_run = int(new_run)
     runs = new_run + runs
+    partnership_runs = new_run + partnership_runs
     change_facing_players()
 
 def change_facing_players():
@@ -687,7 +712,26 @@ def change_sides():
     global fielding_team
     global batting_team
     global batting_team_copy
+    global team_1_runs_final
+    global team_1_out_final
+    global team_1_overs_final
+    global team_2_runs_final
+    global team_2_out_final
+    global team_2_overs_final
+    global first_team
     fielding_team.append(current_bowler)
+
+    ###FIRST TEAM SAVE SCORE
+    if first_team == t1:
+        team_1_runs_final = runs
+        team_1_out_final = out
+        team_1_overs_final = over
+        first_team = t2
+    if first_team == t2:
+        team_2_runs_final = runs
+        team_2_out_final = out
+        team_2_overs_final = over
+        first_team = t1
 
     ###MOVING CURRENT BATTING TEAM INTO TEMP LIST BEFORE MOVING TO MAIN LIST OF FIELDING TEAM
     new_fielding_team = [None] * len(batting_team_copy)
@@ -709,8 +753,34 @@ def change_sides():
     for i in range(0, len(new_batting_team)):
         batting_team[i] = new_batting_team[i]
 
+
+    ###RESTING VALUES
+    runs = 0
+    out = 0
+    ball = 0
+    patnership
+
     batsmen_1()
 
+
+
+def end_game():
+    end_win = Toplevel(master)
+    main_win.withdraw()
+    sizing(end_win)
+    print("Endgame")
+    sizing(end_win)
+    Title = Label(end_win, text = "Results").grid(row = 0, column = 1)
+    T1_results = Label(end_win, text = team_1).grid(row = 1, column = 0)
+    T1_results2 = Label(end_win, text = "Runs: " + team_1_runs_final).grid(row = 2, column = 0)
+    T1_results3 = Label(end_win, text = "Outs: " + team_1_out_final).grid(row = 3, column = 0)
+    T1_results3 = Label(end_win, text = "Overs: " + team_1_overs_final).grid(row = 4, column = 0)
+    T2_results = Label(end_win, text=team_2).grid(row=1, column=2)
+    T2_results2 = Label(end_win, text="Runs: " + team_2_runs_final).grid(row=2, column=2)
+    T2_results3 = Label(end_win, text="Outs: " + team_2_out_final).grid(row=3, column=2)
+    T2_results3 = Label(end_win, text="Overs: " + team_2_overs_final).grid(row=4, column=2)
+    exit = Button(end_win, text = "Exit", command = sys.exit).grid(row = 5, column = 0)
+    main = Button(end_win, text = "Menu", command = start_team1()).grid(row = 5, column = 2)
 
 
 
