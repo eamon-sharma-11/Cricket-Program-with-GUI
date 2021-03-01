@@ -60,7 +60,7 @@ def help_menu():
 def start_team1():
     global t1_entry
     top_1 = Toplevel(master)
-    master.withdraw()
+    main_win.withdraw()
     sizing(top_1)
     top_1.title("Hows That?")
     def start_team2():
@@ -118,6 +118,7 @@ label_2 = Label(master, text = "now loading").pack()
 
 #SETTING UP MAIN SCREEN
 def main():
+    global main_win
     master.withdraw()
     main_win = Toplevel(master)
     sizing(main_win)
@@ -288,6 +289,7 @@ def input_stub_2():
         display_num2 = display_num2 + 1
         valid_button = Button(t2_input, text = "Submit", command = lambda: t2_validation(team_2_array)).grid(row = 4, column = 1)
 def t2_validation(current_team):
+            global display_num2
             global t2_confirm
             global player_num2
             global display_num
@@ -366,8 +368,8 @@ def choosing_sides_func():
     full_confirm.withdraw()
     sizing(choosing_sides)
     title = Label(choosing_sides, text = "Which team is batting first?").grid(row = 0, column = 1)
-    t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: [t1_batting(team_1_array, team_2_array), team_set(team__1)]).grid(row = 1,column = 1)
-    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: [t1_batting(team_2_array, team_1_array), team_set(team__2)]).grid(row=2, column=1)
+    t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: [t1_batting(team_1_array, team_2_array), team_set(1)]).grid(row = 1,column = 1)
+    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: [t1_batting(team_2_array, team_1_array), team_set(2)]).grid(row=2, column=1)
 
 def t1_batting(Batting, Fielding):
     global batting_team
@@ -393,9 +395,9 @@ def t1_batting(Batting, Fielding):
 
 def team_set(team):
     global first_team
-    if team == team__1:
+    if team == 1:
         first_team = t1
-    if team == team__2:
+    if team == 2:
         first_team = t2
 
 
@@ -559,6 +561,7 @@ def main_play():
     global facing
     global other
     global partnership_runs
+    global over
     print(batsmen)
     main_win = Toplevel(master)
     sizing(main_win)
@@ -574,7 +577,7 @@ def main_play():
     line = Label(main_win, text="--------------").grid(row=8, column=1)
     bowler = Label(main_win, text = "Bowler: " + current_bowler).grid(row = 9, column = 1)
     line = Label(main_win, text="--------------").grid(row=10, column=1)
-    over = Label(main_win, text = "Over: " + over + "| Ball: " + ball).grid(row = 11, column = 1)
+    over_label = Label(main_win, text = "Over: " + str(over) + "| Ball: " + str(ball)).grid(row = 11, column = 1)
     button_func = Button(main_win, text = "Play", command = play_func).grid(row = 12, column = 1)
 
 def play_func():
