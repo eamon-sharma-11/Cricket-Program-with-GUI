@@ -23,7 +23,6 @@ master = Tk()
 
 
 
-
 ###WS = White space
 ####HELP MENU
 
@@ -188,7 +187,7 @@ def final_confirm():
         t1_con = Label(final_confirm, text = str(team_1) + ": " + str(t1_amount) + " players").grid(row = 1, column = 1)
         t2_con = Label(final_confirm, text = str(team_2) + ": " + str(t2_amount) + " players").grid(row = 2, column = 1)
         button_con = Button(final_confirm, text = "Confirm", command = input_stub).grid(row = 3, column = 1)
-        button_redo = Button(final_confirm, text="Redo", command = save_team2_names).grid(row=3, column=2)
+        button_redo = Button(final_confirm, text="Redo", command = save_team2_names).grid(row=4, column=1)
 
 
 
@@ -396,9 +395,9 @@ def t1_batting(Batting, Fielding):
 def team_set(team):
     global first_team
     if team == 1:
-        first_team = t1
+        first_team = "t1"
     if team == 2:
-        first_team = t2
+        first_team = "t2"
 
 
 def list_teams_stub(bt, ft):
@@ -567,18 +566,19 @@ def main_play():
     sizing(main_win)
     bowler_win.withdraw()
     title = Label(main_win, text = "Current Game").grid(row = 0, column = 1)
+    innings_label = Label(main_win, text = "Current Innings: " + str(innings)).grid(row = 1, column = 1)
     score = Label(main_win, text = "Current Score:").grid(row = 2, column = 1)
-    line = Label(main_win, text = "--------------").grid(row = 1, column = 1)
-    score = Label(main_win, text = str(runs) + "/" + str(out)).grid(row = 3, column = 1)
-    line = Label(main_win, text="--------------").grid(row=4, column=1)
-    cur_bat = Label(main_win, text = "Facing Batsmen: " + facing).grid(row = 5, column = 1)
-    other_bat = Label(main_win, text = "Other Batsmen: " + other).grid(row = 6, column = 1)
-    current_patner = Label(main_win, text = "Patnership: " + str(partnership_runs)).grid(row = 7, column = 1)
-    line = Label(main_win, text="--------------").grid(row=8, column=1)
-    bowler = Label(main_win, text = "Bowler: " + current_bowler).grid(row = 9, column = 1)
-    line = Label(main_win, text="--------------").grid(row=10, column=1)
-    over_label = Label(main_win, text = "Over: " + str(over) + "| Ball: " + str(ball)).grid(row = 11, column = 1)
-    button_func = Button(main_win, text = "Play", command = play_func).grid(row = 12, column = 1)
+    line = Label(main_win, text = "--------------").grid(row = 3, column = 1)
+    score = Label(main_win, text = str(runs) + "/" + str(out)).grid(row = 4, column = 1)
+    line = Label(main_win, text="--------------").grid(row=5, column=1)
+    cur_bat = Label(main_win, text = "Facing Batsmen: " + facing).grid(row = 6, column = 1)
+    other_bat = Label(main_win, text = "Other Batsmen: " + other).grid(row = 7, column = 1)
+    current_patner = Label(main_win, text = "Patnership: " + str(partnership_runs)).grid(row = 8, column = 1)
+    line = Label(main_win, text="--------------").grid(row=9, column=1)
+    bowler = Label(main_win, text = "Bowler: " + current_bowler).grid(row = 10, column = 1)
+    line = Label(main_win, text="--------------").grid(row=11, column=1)
+    over_label = Label(main_win, text = "Over: " + str(over) + "| Ball: " + str(ball)).grid(row = 12, column = 1)
+    button_func = Button(main_win, text = "Play", command = play_func).grid(row = 13, column = 1)
 
 def play_func():
     global ball
@@ -725,12 +725,12 @@ def change_sides():
     fielding_team.append(current_bowler)
 
     ###FIRST TEAM SAVE SCORE
-    if first_team == t1:
+    if first_team == "t1":
         team_1_runs_final = runs
         team_1_out_final = out
         team_1_overs_final = over
         first_team = t2
-    if first_team == t2:
+    if first_team == "t2":
         team_2_runs_final = runs
         team_2_out_final = out
         team_2_overs_final = over
