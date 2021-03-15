@@ -565,20 +565,58 @@ def main_play():
     main_win = Toplevel(master)
     sizing(main_win)
     bowler_win.withdraw()
-    title = Label(main_win, text = "Current Game").grid(row = 0, column = 1)
-    innings_label = Label(main_win, text = "Current Innings: " + str(innings)).grid(row = 1, column = 1)
-    score = Label(main_win, text = "Current Score:").grid(row = 2, column = 1)
-    line = Label(main_win, text = "--------------").grid(row = 3, column = 1)
-    score = Label(main_win, text = str(runs) + "/" + str(out)).grid(row = 4, column = 1)
-    line = Label(main_win, text="--------------").grid(row=5, column=1)
-    cur_bat = Label(main_win, text = "Facing Batsmen: " + facing).grid(row = 6, column = 1)
-    other_bat = Label(main_win, text = "Other Batsmen: " + other).grid(row = 7, column = 1)
-    current_patner = Label(main_win, text = "Patnership: " + str(partnership_runs)).grid(row = 8, column = 1)
-    line = Label(main_win, text="--------------").grid(row=9, column=1)
-    bowler = Label(main_win, text = "Bowler: " + current_bowler).grid(row = 10, column = 1)
-    line = Label(main_win, text="--------------").grid(row=11, column=1)
-    over_label = Label(main_win, text = "Over: " + str(over) + "| Ball: " + str(ball)).grid(row = 12, column = 1)
-    button_func = Button(main_win, text = "Play", command = play_func).grid(row = 13, column = 1)
+    #Defining Frame
+    top_frame = Frame(main_win, bg='cyan', width=450, height=50, pady=3)
+    center = Frame(main_win, bg='gray2', width=50, height=40, padx=3, pady=3)
+    btm_frame = Frame(main_win, bg='white', width=450, height=45, pady=3)
+    btm_frame2 = Frame(main_win, bg='lavender', width=450, height=60, pady=3)
+
+    # layout all of the main containers
+    main_win.grid_rowconfigure(1, weight=1)
+    main_win.grid_columnconfigure(0, weight=1)
+
+    top_frame.grid(row=0, sticky="ew")
+    center.grid(row=1, sticky="nsew")
+    btm_frame.grid(row=3, sticky="ew")
+    btm_frame2.grid(row=4, sticky="ew")
+
+    # create the widgets for the top frame
+    model_label = Label(top_frame, text='Model Dimensions')
+
+
+    # layout the widgets in the top frame
+    model_label.grid(row=0, column = 3)
+
+
+    # create the center widgets
+    center.grid_rowconfigure(0, weight=1)
+    center.grid_columnconfigure(1, weight=1)
+
+    ctr_left = Frame(center, bg='lavender', width=100, height=145)
+    ctr_mid = Frame(center, bg='light green', width=250, height=145, padx=3, pady=3)
+    ctr_right = Frame(center, bg='lavender', width=100, height=145, padx=3, pady=3)
+
+    ctr_left.grid(row=0, column=0, sticky="ns")
+    ctr_mid.grid(row=0, column=1, sticky="nsew")
+    ctr_right.grid(row=0, column=2, sticky="ns")
+
+    ##CENTER FRAME INFO
+    over_label = Label(ctr_mid, text = "Over: " + str(over), font = 25, bg = "light green")
+    over_label.grid(row = 1, column = 5, pady = 5, padx = 110)
+    ball_over = Label(ctr_mid, text = "Ball: " + str(ball), font = 25, bg = "light green")
+    ball_over.grid(row = 20, column = 5, pady = 100, padx = 110)
+    bowler_title = Label(ctr_mid, text = "Current Bowler: " + current_bowler, font = 10, bg = "light green")
+    bowler_title.grid(row = 30, column = 5, pady = 100, padx = 110)
+
+
+    #Bottom frame button
+    move_on = Button(btm_frame, text = "Play!", command = play_func, height = 5, width = 40)
+    move_on.grid(column = 1, row = 1,)
+    move_on = Button(btm_frame, text="Exit!", command=sys.exit, height=5, width=42)
+    move_on.grid(column=2, row=1, )
+
+
+
 
 def play_func():
     global ball
