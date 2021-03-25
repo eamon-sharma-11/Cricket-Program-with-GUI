@@ -216,7 +216,7 @@ def input_stub():
         t1_input = Toplevel(master)
         final_confirm.withdraw()
         sizing(t1_input)
-        title = Label(t1_input, text = "Team 1 Input").grid(row = 0, column = 1)
+        title = Label(t1_input, text = team_1 + " Input").grid(row = 0, column = 1)
         request = Label(t1_input, text = "Please enter player " + str(display_num) + " name").grid(row = 1, column = 1)
         name_entry = Entry(t1_input)
         name_entry.grid(row = 2, column = 1)
@@ -281,7 +281,7 @@ def input_stub_2():
         t2_input = Toplevel(master)
         t1_confirm.withdraw()
         sizing(t2_input)
-        title = Label(t2_input, text = "Team 2 Input").grid(row = 0, column = 1)
+        title = Label(t2_input, text = team_2 + " Input").grid(row = 0, column = 1)
         request = Label(t2_input, text = "Please enter player " + str(display_num2) + " name").grid(row = 1, column = 1)
         name_entry = Entry(t2_input)
         name_entry.grid(row = 2, column = 1)
@@ -394,10 +394,16 @@ def t1_batting(Batting, Fielding):
 
 def team_set(team):
     global first_team
+    global team_facing
+    global team_not
     if team == 1:
         first_team = "t1"
+        team_facing = team_1
+        team_not = team_2
     if team == 2:
         first_team = "t2"
+        team_facing = team_2
+        team_not = team_1
 
 
 def list_teams_stub(bt, ft):
@@ -571,8 +577,6 @@ def main_play():
     btm_frame = Frame(main_win, bg='white', width=450, height=45, pady=3)
     btm_frame2 = Frame(main_win, bg='lavender', width=450, height=60, pady=3)
 
-
-
     # layout all of the main containers
     main_win.grid_rowconfigure(1, weight=1)
     main_win.grid_columnconfigure(0, weight=1)
@@ -585,10 +589,8 @@ def main_play():
     # create the widgets for the top frame
     model_label = Label(top_frame, text='Model Dimensions')
 
-
     # layout the widgets in the top frame
-    model_label.grid(row=0, column = 3)
-
+    model_label.grid(row=0, column=3)
 
     # create the center widgets
     center.grid_rowconfigure(0, weight=1)
@@ -603,36 +605,39 @@ def main_play():
     ctr_right.grid(row=0, column=2, sticky="ns")
 
     ##CENTER FRAME INFO
-    facing_label = Label(ctr_mid, text = "Facing: " + str(facing), font = 25, bg = "light green")
-    facing_label.grid(row = 1, column = 5, pady = 5, padx = 110)
-    ws = Label(ctr_mid, text = "    ", bg = "light green")
-    ws.grid(row = 2, column = 1, pady = 70)
-    other_title = Label(ctr_mid, text = "Other Batsmen: " + other, font = 10, bg = "light green")
-    other_title.grid(row = 30, column = 5, padx = 110)
-    bowler_title = Label(ctr_mid, text = "Bowler: " + current_bowler, font = 10, bg = "light green")
-    bowler_title.grid(row = 40, column = 5, padx = 100)
+    facing_label = Label(ctr_mid, text="Facing: " + str(facing), font=25, bg="light green")
+    facing_label.grid(row=1, column=5, pady=5, padx=110)
+    ws = Label(ctr_mid, text="    ", bg="light green")
+    ws.grid(row=2, column=1, pady=70)
+    other_title = Label(ctr_mid, text="Other Batsmen: " + other, font=10, bg="light green")
+    other_title.grid(row=30, column=5, padx=110, pady=60)
+    bowler_title = Label(ctr_mid, text="Bowler: " + current_bowler, font=10, bg="light green")
+    bowler_title.grid(row=40, column=5, padx=110, )
 
+    score_title = Label(ctr_left, text="Score:", font=10)
+    score_title.grid(row=0, column=1, pady=60, padx=20)
+    score = Label(ctr_left, text="Runs: " + str(runs), font=10)
+    score.grid(row=1, column=1, padx=20)
+    out_label = Label(ctr_left, text="Outs: " + str(out), font=10)
+    out_label.grid(row=2, column=1, pady=60)
 
-    score_title = Label(ctr_left, text = "Score", font = 10)
-    score_title.grid(row = 0, column = 1, pady = 50, padx = 20)
-    score = Label(ctr_left, text = str(out) + "/" + str(runs), font = 10)
-    score.grid(row = 1, column = 1, padx = 20)
+    info_title = Label(ctr_right, text="Info:", font=10)
+    info_title.grid(row=0, column=1, pady=60, padx=20)
+    ball_amount = Label(ctr_right, text="Balls: " + str(ball), font=10)
+    ball_amount.grid(row=1, column=1, padx=20)
+    over_label = Label(ctr_right, text="Over: " + str(over), font=10)
+    over_label.grid(row=2, column=1, pady=60)
 
-
-    info_title = Label(ctr_right, text = "Stats", font = 10)
-    info_title.grid(row = 0, column = 1, pady = 50, padx = 20)
-    ball_amount = Label(ctr_right, text = "Balls:  " + str(ball), font = 10)
-    ball_amount.grid(row = 1, column = 1, padx = 20)
-
-
-
-
-
-    #Bottom frame button
-    move_on = Button(btm_frame, text = "Play!", command = play_func, height = 5, width = 45)
-    move_on.grid(column = 1, row = 1,)
-    move_on = Button(btm_frame, text="Exit!", command=sys.exit, height=5, width=45)
+    # Bottom frame button
+    move_on = Button(btm_frame, text="Play!", command=sys.exit, height=5, width=30, font=10)
+    move_on.grid(column=1, row=1, )
+    move_on = Button(btm_frame, text="Exit!", command=sys.exit, height=5, width=30, font=10)
     move_on.grid(column=2, row=1, )
+
+    current_facing = Label(btm_frame2, text="Batting: " + team_facing, font=20)
+    other_facing = Label(btm_frame2, text="Bowling: " + team_not, font=20)
+    current_facing.grid(row=0, column=1, padx=130, pady=18)
+    other_facing.grid(row=0, column=2)
 
 
 
@@ -779,6 +784,8 @@ def change_sides():
     global team_2_out_final
     global team_2_overs_final
     global first_team
+    global team_not
+    global team_facing
     team_1_runs_final = 0
     team_2_runs_final = 0
     fielding_team.append(current_bowler)
@@ -789,11 +796,15 @@ def change_sides():
         team_1_out_final = out
         team_1_overs_final = over
         first_team = t2
+        team_facing = team_2
+        team_not = team_1
     if first_team == "t2":
         team_2_runs_final = runs
         team_2_out_final = out
         team_2_overs_final = over
         first_team = t1
+        team_facing = team_1
+        team_not = team_2
 
     ###MOVING CURRENT BATTING TEAM INTO TEMP LIST BEFORE MOVING TO MAIN LIST OF FIELDING TEAM
     new_fielding_team = [None] * len(batting_team_copy)
