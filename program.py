@@ -546,27 +546,23 @@ def bowler():
         for players in batting_team:
             if players == current_bowler:
                 fielding_team.remove(current_bowler)
-        setting_batsmen()
+        setting_batsmen(current_bowler)
 
     button = Button(bowler_win, text="OK", command=ok2).grid(row = 2, column = 1)
 
 
-def setting_batsmen():
+def setting_batsmen(bol):
     global facing_player_in_list
     global facing
     global other
     facing = batsmen[0]
     other = batsmen[1]
     facing_player_in_list = 1
-    main_play()
+    main_play(0, facing, other, 0, 0, current_bowler = bol)
 
 
-def main_play():
+def main_play(runs, facing, other, over, ball, current_bowler):
     global main_win
-    global facing
-    global other
-    global partnership_runs
-    global over
     print(batsmen)
     main_win = Toplevel(master)
     sizing(main_win)
@@ -630,7 +626,8 @@ def main_play():
     over_label.grid(row=2, column=1, pady=60)
 
     # Bottom frame button
-    move_on = Button(btm_frame, text="Play!", command=sys.exit, height=5, width=30, font=10)
+
+    move_on = Button(btm_frame, text="Play!", command= lambda: play_func(ball, runs, facing, other, over, current_bowler), height=5, width=30, font=10)
     move_on.grid(column=1, row=1, )
     move_on = Button(btm_frame, text="Exit!", command=sys.exit, height=5, width=30, font=10)
     move_on.grid(column=2, row=1, )
@@ -643,18 +640,17 @@ def main_play():
 
 
 
-def play_func():
-    global ball
+def play_func(balls, run, facing, other, over, current_bowler):
     global play_win
     play_win = Toplevel(master)
     sizing(play_win)
-    ball = ball + 1
+    ball = balls + 1
     title = Label(play_win, text = "Select Outcome of play").grid(row = 0, column = 1)
-    run_button = Button(play_win, text = "Runs", command = run_function).grid(row = 1, column = 1)
-    run_button = Button(play_win, text="Out", command= out_function).grid(row=2, column=1)
+    run_button = Button(play_win, text = "Runs", command = lambda: run_function(ball, run, facing, other, over, current_bowler)).grid(row = 1, column = 1)
+    run_button = Button(play_win, text="Out", command= lambda: out_function(ball, run, facing, other, over, current_bowler)).grid(row=2, column=1)
+    return ball
 
-def out_function():
-    global facing
+def out_function(ball, run, facing, other, over, current_bowler):
     global partnership_runs
     partnership_runs = 0
     print("Out function")
@@ -673,70 +669,66 @@ def out_function():
         w = OptionMenu(out_win, variable, *batting_team)
         w.grid(row=1, column=1)
 
-        def ok5():
-            global batsmen
-            global other
+        def ok5(ball, run, facing, other, over, current_bowler):
             other = variable.get()
             for players in batting_team:
                 if players == other:
                     batting_team.remove(other)
             out_win.destroy()
-            over_or_fin_check()
+            over_or_fin_check(ball, run, facing, other, over, current_bowler)
 
-        button = Button(out_win, text="OK", command=ok5).grid(row=2, column=1)
+        button = Button(out_win, text="OK", command=lambda: ok5(ball, run, facing, other, over, current_bowler)).grid(row=2, column=1)
 
 
-def run_function():
+def run_function(balls, run, facing, other, over, current_bowler):
     global run_win
-    global run_entry
     run_win = Toplevel(master)
     play_win.withdraw()
     sizing(run_win)
     title = Label(run_win, text = "Enter amount of runs scored").grid(row = 0, column = 1)
     run_entry = Entry(run_win)
     run_entry.grid(row = 1, column = 1)
-    submit_runs = Button(run_win, text = "Submit", command = lambda:[run_submit(), clear_win()]).grid(row = 2, column = 1)
+    submit_runs = Button(run_win, text = "Submit", command = lambda:[run_submit(run_entry, balls, run, facing, other, over, current_bowler), clear_win()]).grid(row = 2, column = 1)
 
 def clear_win():
     run_win.destroy()
 
-def run_submit():
-    global new_run
-    global runs
+def run_submit(entry, balls, run, facing, other, over, current_bowler):
     global partnership_runs
-    new_run = run_entry.get()
+    new_run = entry.get()
     new_run = int(new_run)
-    runs = new_run + runs
+    runs = new_run + run
     partnership_runs = new_run + partnership_runs
-    change_facing_players()
+    change_facing_players(balls, runs, facing, other, over, new_run, current_bowler)
 
-def change_facing_players():
+def change_facing_players(balls, run, facing, other, over, new_run, current_bowler):
     global facing_player_in_list
-    global facing
-    global other
     if new_run % 2 != 0:
         if facing_player_in_list == 1:
             facing = batsmen[0]
             other = batsmen[1]
             facing_player_in_list = 2
+            return facing
+            return other
         if facing_player_in_list == 2:
             facing = batsmen[1]
             other = batsmen[0]
             facing_player_in_list = 1
+            return facing
+            return other
     if new_run % 2 == 0:
         print("Facing is same")
-    over_or_fin_check()
+    over_or_fin_check(balls, run, facing, other, over, current_bowler)
 
 
-def over_or_fin_check():
-    global over
+def over_or_fin_check(ball, run, facing, other, over, current_bowler):
     if ball % 6 == 0:
-        over = over + 1
-        change_bowler(current_bowler)
+        updated_over = over + 1
+        change_bowler(current_bowler, ball, run, facing, other, updated_over)
     else:
-        innings_over_check()
+        innings_over_check(ball, run, facing, other, over, current_bowler)
 
-def change_bowler(old_bowler):
+def change_bowler(old_bowler, balls, run, facing, other, over):
     nb_win = Toplevel(master)
     run_win.withdraw()
     sizing(nb_win)
@@ -747,21 +739,21 @@ def change_bowler(old_bowler):
     w = OptionMenu(nb_win, variable, *fielding_team)
     w.grid(row=1, column=1)
 
-    def submit_func():
+    def submit_func(old_bowler, balls, run, facing, other, over):
         new_bowler = variable.get()
         bowler_moving_in = new_bowler
         bowler_moving_out = old_bowler
         current_bowler = new_bowler
         fielding_team.append(bowler_moving_out)
         nb_win.destroy()
-        innings_over_check()
+        innings_over_check(balls, run, facing, other, over, current_bowler)
 
 
-    button = Button(nb_win, text="Submit", command=submit_func).grid(row=2, column=1)
+    button = Button(nb_win, text="Submit", command= lambda: submit_func(old_bowler, balls, run, facing, other)).grid(row=2, column=1)
 
 
 
-def innings_over_check():
+def innings_over_check(ball, run, facing, other, over, current_bowler):
     global innings
     if over == over_amount:
         innings = innings + 1
@@ -771,7 +763,7 @@ def innings_over_check():
         end_game()
     else:
         main_win.destroy()
-        main_play()
+        main_play(run, facing, other, over, ball, current_bowler)
 
 
 def change_sides():
@@ -787,6 +779,7 @@ def change_sides():
     global first_team
     global team_not
     global team_facing
+    global runs
     team_1_runs_final = 0
     team_2_runs_final = 0
     fielding_team.append(current_bowler)
