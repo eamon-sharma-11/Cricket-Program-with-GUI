@@ -53,7 +53,8 @@ def help_menu():
     help_2 = Label(top, text=" the developer").grid(row = 6, column = 1)
     help_3 = Label(top, text= "-Please reffer to the included").grid(row = 7, column = 1)
     help_3 = Label(top, text=" instruction guide for more help").grid(row = 8, column = 1)
-    leave_button = Button(top, text = "EXIT", command = top.destroy).grid(row = 9, column = 1)
+    help_3 = Label(top, text="Current Version: 1.0.4 Dev Build").grid(row=9, column=1)
+    leave_button = Button(top, text = "EXIT", command = top.destroy).grid(row = 10, column = 1)
 
 
 def start_team1():
@@ -121,23 +122,28 @@ def main():
     master.withdraw()
     main_win = Toplevel(master)
     sizing(main_win)
-    welcome_label = Label(main_win, text = 'Welcome to "Hows That?"')
-    white_space_welcome = Label(main_win, text = " ")
-    white_space_welcome2 = Label(main_win, text = " ")
-    white_space_welcome3 = Label(main_win, text = " ")
+    welcome_label = Label(main_win, text = 'Welcome to "Hows That?"', font = "bold")
+    with open('test.txt', 'w+') as f:
+        pass
+    ws2 = Label(main_win, text=" ").grid(row=1, column=1)
+    version = Label(main_win, text = "Version 1.0.3 Dev Build").grid(column = 1, row = 2)
+    updates = Label(main_win, text = "Whats New:").grid(row = 3, column = 1)
+    new = Label(main_win, text = "A file will be created to record the").grid(row = 4, column = 1)
+    new2 = Label(main_win, text = "action after each ball. The file can be found").grid(row = 5, column = 1)
+    new3 = Label(main_win, text="in the same location as this program").grid(row=6, column=1)
+    ws = Label(main_win, text = " ").grid(row = 7, column = 1)
+    ws2 = Label(main_win, text = " ").grid(row = 8, column = 1)
 
-    help_menu_button = Button(main_win, text = "HELP", command = help_menu)
-    start_button = Button(main_win, text = "START", command = start_team1)
-    exit_button = Button(main_win, text = "EXIT", command = sys.exit)
+
+    help_menu_button = Button(main_win, text = "HELP", command = help_menu, font = "bold")
+    start_button = Button(main_win, text = "START", command = start_team1, font = "bold")
+    exit_button = Button(main_win, text = "EXIT", command = sys.exit, font = "bold")
 
 
     welcome_label.grid(row = 0, column = 1)
-    white_space_welcome.grid(row = 1, column = 1)
-    white_space_welcome2.grid(row = 2, column = 1)
-    white_space_welcome3.grid(row = 3, column = 1)
-    help_menu_button.grid(row = 4, column = 0)
-    start_button.grid(row = 4, column = 1)
-    exit_button.grid(row = 4, column = 2)
+    help_menu_button.grid(row = 9, column = 0)
+    start_button.grid(row =9, column = 1)
+    exit_button.grid(row = 9, column = 2)
 
 master.after(3000, main())
 ####AFTER CONFIRMING TEAMS
@@ -255,7 +261,6 @@ def t1_validation(current_team):
                     t1_confirm = Toplevel(master)
                     t1_input.withdraw()
                     sizing(t1_confirm)
-                    t1_confirm.geometry("200x200")
                     player_count = 1
                     for i in range(len(team_1_array)):
                         exec('Label%d=Label(t1_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_1_array[i], i))
@@ -321,7 +326,6 @@ def t2_validation(current_team):
                     t2_confirm = Toplevel(master)
                     t2_input.withdraw()
                     sizing(t2_confirm)
-                    t2_confirm.geometry("200x200")
                     player_count = 1
                     for i in range(len(team_2_array)):
                         exec('Label%d=Label(t2_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_2_array[i], i))
@@ -462,10 +466,10 @@ def custom_over():
     title = Label(cust_over, text="(Between 10-50)").grid(row=1, column=1)
     amount = Entry(cust_over)
     amount.grid(row = 2, column = 1)
-    submit = Button(cust_over, text = "Submit", command = lambda: [batsmen_1(0, 0, None, None, 0, None, 0, 0), clear_win()]).grid(row = 3, column = 1)
+    submit = Button(cust_over, text = "Submit", command = lambda: [batsmen_1(0, 0, None, None, 0, None, 0, 0), clear_win_1()]).grid(row = 3, column = 1)
 
 
-def clear_win():
+def clear_win_1():
     cust_over.withdraw()
 
 def batsmen_1(balls, run, facing, other, over, current_bowler, patnership, out):
@@ -566,6 +570,12 @@ def main_play(run, facing, other, over, ball, current_bowler, patnership, out):
     global ctr_mid
     global btm_frame
     global btm_frame2
+    with open('test.txt', 'a') as f:
+        f.write(f"Ball: {ball}\n")
+        f.write(f"Over: {over}\n")
+        f.write(f'Current Runs: {run}\n')
+        f.write(f'Current Partnership: {patnership}\n')
+        f.write(f"Current Bowler: {current_bowler}\n")
     print(batsmen)
     main_win = Toplevel(master)
     sizing(main_win)
@@ -648,16 +658,22 @@ def play_func(balls, run, facing, other, over, current_bowler, patnership, out):
     play_win = Toplevel(master)
     sizing(play_win)
     ball = balls + 1
+    with open('test.txt', "a") as f:
+        f.write(f'{current_bowler} has bowled to {facing}\n')
     title = Label(play_win, text = "Select Outcome of play").grid(row = 0, column = 1)
     run_button = Button(play_win, text = "Runs", command = lambda: run_function(ball, run, facing, other, over, current_bowler, patnership, out)).grid(row = 1, column = 1)
     run_button = Button(play_win, text="Out", command= lambda: out_function(ball, run, facing, other, over, current_bowler, patnership, out)).grid(row=2, column=1)
     return ball
 
+
+##ADD FUNCTION FOR METHOD OF GETTING OUT
 def out_function(ball, run, facing, other, over, current_bowler, patnership, out):
     global out_win
     global innings
     partnership = 0
     out = out + 1
+    with open('test.txt', 'a') as f:
+        f.write("Out\n")
     print("Out function")
     if len(batting_team) == 0:
         innings = innings + 1
@@ -697,6 +713,8 @@ def run_function(balls, run, facing, other, over, current_bowler, patnership, ou
 
     def run_submit(balls, run, facing, other, over, current_bowler, patnership, out):
         new_run = int(run_entry.get())
+        with open("test.txt", "a") as f:
+            f.write(f"{facing} and {other} scored a total of {new_run} runs\n")
         run = new_run + run
         patnership = patnership + new_run
         print(run)
@@ -742,6 +760,8 @@ def change_bowler(old_bowler, balls, run, facing, other, over, patnership, out):
             if players == current_bowler:
                 fielding_team.remove(current_bowler)
         nb_win.destroy()
+        with open("test.txt", "a") as f:
+            f.write(f"Bowler has been changed to {current_bowler}\n")
         innings_over_check(balls, run, facing, other, over, current_bowler, patnership, out)
 
 
@@ -751,14 +771,15 @@ def change_bowler(old_bowler, balls, run, facing, other, over, patnership, out):
 
 def innings_over_check(ball, run, facing, other, over, current_bowler, patnership, out):
     global innings
-    if over == over_amount:
+    if over == over_amount or innings == 3:
         innings = innings + 1
         main_win.destroy()
         change_sides(ball, run, facing, other, over, current_bowler, patnership, out)
-    elif innings == 3:
-        change_sides(ball, run, facing, other, over, current_bowler, patnership, out)
     else:
         main_win.destroy()
+        with open("test.txt", "a") as f:
+            f.write(f"End of Play\n")
+            f.write(f"------------------------\n")
         main_play(run, facing, other, over, ball, current_bowler, patnership, out)
 
 
@@ -834,6 +855,10 @@ def change_sides(balls, run, facing, other, over, current_bowler, patnership, ou
         ball = 0
         patnership = 0
         batsmen = []
+        with open("test.txt", "a") as f:
+            f.write(f" \n")
+            f.write("Innings Change\n")
+            f.write(f" \n")
         batsmen_1(balls, run, facing, other, over, current_bowler, patnership, out)
         main_win.destroy()
         ctr_right.destroy()
@@ -858,13 +883,13 @@ def end_game():
     sizing(end_win)
     Title = Label(end_win, text = "Results").grid(row = 0, column = 1)
     T1_results = Label(end_win, text = team_1).grid(row = 1, column = 0)
-    T1_results2 = Label(end_win, text = "Runs: " + team_1_runs_final).grid(row = 2, column = 0)
-    T1_results3 = Label(end_win, text = "Outs: " + team_1_out_final).grid(row = 3, column = 0)
-    T1_results3 = Label(end_win, text = "Overs: " + team_1_overs_final).grid(row = 4, column = 0)
+    T1_results2 = Label(end_win, text = "Runs: " + str(team_1_runs_final)).grid(row = 2, column = 0)
+    T1_results3 = Label(end_win, text = "Outs: " + str(team_1_out_final)).grid(row = 3, column = 0)
+    T1_results3 = Label(end_win, text = "Overs: " + str(team_1_overs_final)).grid(row = 4, column = 0)
     T2_results = Label(end_win, text=team_2).grid(row=1, column=2)
-    T2_results2 = Label(end_win, text="Runs: " + team_2_runs_final).grid(row=2, column=2)
-    T2_results3 = Label(end_win, text="Outs: " + team_2_out_final).grid(row=3, column=2)
-    T2_results3 = Label(end_win, text="Overs: " + team_2_overs_final).grid(row=4, column=2)
+    T2_results2 = Label(end_win, text="Runs: " + str(team_2_runs_final)).grid(row=2, column=2)
+    T2_results3 = Label(end_win, text="Outs: " + str(team_2_out_final)).grid(row=3, column=2)
+    T2_results3 = Label(end_win, text="Overs: " + str(team_2_overs_final)).grid(row=4, column=2)
     exit = Button(end_win, text = "Exit", command = sys.exit).grid(row = 5, column = 0)
     main = Button(end_win, text = "Menu", command = start_team1()).grid(row = 5, column = 2)
 
