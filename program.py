@@ -44,22 +44,24 @@ def sizing(window):
 def help_menu():
     top = Toplevel(master)
     sizing(top)
-    heading = Label(top, text = "Help Menu").grid(row = 0, column = 1)
-    headin_ws = Label(top, text = " ").grid(row = 1, column = 1)
-    help_1 = Label(top, text = "-This program is designed to keep track").grid(row = 2, column = 1)
-    help_1 = Label(top, text=" of scores during a cricket game").grid(row = 3, column = 1)
-    help_2 = Label(top, text = "-Any issues that you may think").grid(row = 4, column = 1)
-    help_2 = Label(top, text=" areise from the code of the game, contact").grid(row = 5, column = 1)
-    help_2 = Label(top, text=" the developer").grid(row = 6, column = 1)
-    help_3 = Label(top, text= "-Please reffer to the included").grid(row = 7, column = 1)
-    help_3 = Label(top, text=" instruction guide for more help").grid(row = 8, column = 1)
-    help_3 = Label(top, text="Current Version: 1.0.4 Dev Build").grid(row=9, column=1)
-    leave_button = Button(top, text = "EXIT", command = top.destroy).grid(row = 10, column = 1)
+    top.configure(bg = "DarkSlateGrey")
+    heading = Label(top, text = "Help Menu", font = "Bold", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+    headin_ws = Label(top, text = " ", bg = "DarkSlateGrey").grid(row = 1, column = 1)
+    help_1 = Label(top, text = "-This program is designed to keep track", bg = "DarkSlateGrey").grid(row = 2, column = 1)
+    help_1 = Label(top, text=" of scores during a cricket game", bg = "DarkSlateGrey").grid(row = 3, column = 1)
+    help_2 = Label(top, text = "-Any issues that you may think", bg = "DarkSlateGrey").grid(row = 4, column = 1)
+    help_2 = Label(top, text=" areise from the code of the game, contact", bg = "DarkSlateGrey").grid(row = 5, column = 1)
+    help_2 = Label(top, text=" the developer", bg = "DarkSlateGrey").grid(row = 6, column = 1)
+    help_3 = Label(top, text= "-Please reffer to the included", bg = "DarkSlateGrey").grid(row = 7, column = 1)
+    help_3 = Label(top, text=" instruction guide for more help", bg = "DarkSlateGrey").grid(row = 8, column = 1)
+    help_3 = Label(top, text="Current Version: 1.0.4 Dev Build", bg = "DarkSlateGrey").grid(row=9, column=1)
+    leave_button = Button(top, text = "EXIT", command = top.destroy, bg = "SpringGreen3").grid(row = 10, column = 1)
 
 
 def start_team1():
     global t1_entry
     top_1 = Toplevel(master)
+    top_1.configure(bg = "DarkSlateGrey")
     main_win.withdraw()
     sizing(top_1)
     top_1.title("Hows That?")
@@ -69,21 +71,21 @@ def start_team1():
         global top_2
         team_1 = t1_entry.get()
         top_2 = Toplevel(master)
+        top_2.configure(bg = "DarkSlateGrey")
         top_1.withdraw()
         sizing(top_2)
         top_2.title("Hows That?")
-        team2_name = Label(top_2, text="Enter Team 2's team name: ").grid(row=0, column=1)
-        previous = "Team 1: " + team_1
-        previouslb = Label(top_2, text = previous).grid(row=2, column=1)
-        t2_entry = Entry(top_2, width=20)
+        team2_name = Label(top_2, text="Enter Team 2's team name: ", bg = "DarkSlateGrey").grid(row=0, column=1)
+        previouslb = Label(top_2, text = "Team 1: " + team_1, bg = "DarkSlateGrey").grid(row=2, column=1)
+        t2_entry = Entry(top_2, width=20, bg = "DimGrey")
         t2_entry.grid(row=1, column=1)
-        submit_button = Button(top_2, text="SUBMIT", command=save_team2_names).grid(row=3, column=1)
+        submit_button = Button(top_2, text="SUBMIT", command=save_team2_names, bg = "SpringGreen3").grid(row=3, column=1)
 
-    team1_name = Label(top_1, text = "Enter Team 1's team name: ").grid(row = 0, column = 1)
-    t1_entry = Entry(top_1, width = 20)
+    team1_name = Label(top_1, text = "Enter Team 1's team name: ", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+    t1_entry = Entry(top_1, width = 20, bg = "DimGrey")
     t1_entry.grid(row = 1, column = 1)
     #ws_1 = Label(top_1, text = " ").grid(row = 2, column = 1)
-    submit_button = Button(top_1, text = "SUBMIT", command = start_team2).grid(row = 3, column = 1)
+    submit_button = Button(top_1, text = "SUBMIT", command = start_team2, bg = "SpringGreen3").grid(row = 3, column = 1)
 
 
 
@@ -91,16 +93,17 @@ def save_team2_names():
     global team_2
     global confirm_screen
     if t2_entry.get() == team_1:
-        error = Label(top_2, text = "Invalid Team Name, try again").grid(row = 2, column = 1)
+        error = Label(top_2, text = "Invalid Team Name, try again", bg = "DarkSlateGrey").grid(row = 2, column = 1)
     elif t2_entry.get() != team_1:
         team_2 = t2_entry.get()
         top_2.withdraw()
         confirm_screen = Toplevel(master)
+        confirm_screen.configure(bg = "DarkSlateGrey")
         sizing(confirm_screen)
-        t1_name = Label(confirm_screen, text = "Team 1: " + team_1).grid(row = 1, column = 1)
-        t2_name = Label(confirm_screen, text="Team 2: " + team_2).grid(row = 1, column = 2)
-        confirm_button = Button(confirm_screen, text = "Submit", width = 10, command = team_name_1).grid(row = 4, column = 1)
-        redo = Button(confirm_screen, text="Redo", width=10, command= lambda: [start_team1(), clear()]).grid(row=4, column=2)
+        t1_name = Label(confirm_screen, text = "Team 1: " + team_1, bg = "DarkSlateGrey").grid(row = 1, column = 1)
+        t2_name = Label(confirm_screen, text="Team 2: " + team_2, bg = "DarkSlateGrey").grid(row = 1, column = 2)
+        confirm_button = Button(confirm_screen, text = "Submit", width = 10, command = team_name_1, bg = "SpringGreen3").grid(row = 4, column = 1)
+        redo = Button(confirm_screen, text="Redo", width=10, command= lambda: [start_team1(), clear()], bg = "red2").grid(row=4, column=2)
 
 def clear():
     confirm_screen.withdraw()
@@ -122,22 +125,23 @@ def main():
     master.withdraw()
     main_win = Toplevel(master)
     sizing(main_win)
-    welcome_label = Label(main_win, text = 'Welcome to "Hows That?"', font = "bold")
+    main_win.configure(bg = "DarkSlateGrey")
+    welcome_label = Label(main_win, text = 'Welcome to "Hows That?"', font = "bold", bg = "DarkSlateGrey")
     with open('test.txt', 'w+') as f:
         pass
-    ws2 = Label(main_win, text=" ").grid(row=1, column=1)
-    version = Label(main_win, text = "Version 1.0.3 Dev Build").grid(column = 1, row = 2)
-    updates = Label(main_win, text = "Whats New:").grid(row = 3, column = 1)
-    new = Label(main_win, text = "A file will be created to record the").grid(row = 4, column = 1)
-    new2 = Label(main_win, text = "action after each ball. The file can be found").grid(row = 5, column = 1)
-    new3 = Label(main_win, text="in the same location as this program").grid(row=6, column=1)
-    ws = Label(main_win, text = " ").grid(row = 7, column = 1)
-    ws2 = Label(main_win, text = " ").grid(row = 8, column = 1)
+    ws2 = Label(main_win, text=" ", bg = "DarkSlateGrey").grid(row=1, column=1)
+    version = Label(main_win, text = "Version 1.0.3 Dev Build", bg = "DarkSlateGrey").grid(column = 1, row = 2)
+    updates = Label(main_win, text = "Whats New:", bg = "DarkSlateGrey").grid(row = 3, column = 1)
+    new = Label(main_win, text = "A file will be created to record the", bg = "DarkSlateGrey").grid(row = 4, column = 1)
+    new2 = Label(main_win, text = "action after each ball. The file can be found", bg = "DarkSlateGrey").grid(row = 5, column = 1)
+    new3 = Label(main_win, text="in the same location as this program",bg = "DarkSlateGrey").grid(row=6, column=1)
+    ws = Label(main_win, text = " ",bg = "DarkSlateGrey").grid(row = 7, column = 1)
+    ws2 = Label(main_win, text = " ", bg = "DarkSlateGrey").grid(row = 8, column = 1)
 
 
-    help_menu_button = Button(main_win, text = "HELP", command = help_menu, font = "bold")
-    start_button = Button(main_win, text = "START", command = start_team1, font = "bold")
-    exit_button = Button(main_win, text = "EXIT", command = sys.exit, font = "bold")
+    help_menu_button = Button(main_win, text = "HELP", command = help_menu, font = "bold", bg = "yellow")
+    start_button = Button(main_win, text = "START", command = start_team1, font = "bold", bg = "SpringGreen3")
+    exit_button = Button(main_win, text = "EXIT", command = sys.exit, font = "bold", bg = "OrangeRed")
 
 
     welcome_label.grid(row = 0, column = 1)
@@ -153,31 +157,33 @@ def team_name_1():
     global team_amount_test
     team_name_input = Toplevel(master)
     confirm_screen.withdraw()
+    team_name_input.configure(bg = "DarkSlateGrey")
     sizing(team_name_input)
-    enter_names = Label(team_name_input, text = "Enter amount of players in " + team_1).grid(row = 0, column = 1)
-    enter_names2 = Label(team_name_input, text="(Between 2 and 11)").grid(row=1, column=1)
-    team_amount_test = Entry(team_name_input, width = 20)
+    enter_names = Label(team_name_input, text = "Enter amount of players in " + team_1, bg = "DarkSlateGrey").grid(row = 0, column = 1)
+    enter_names2 = Label(team_name_input, text="(Between 2 and 11)", bg = "DarkSlateGrey").grid(row=1, column=1)
+    team_amount_test = Entry(team_name_input, width = 20, bg = "DimGrey")
     team_amount_test.grid(row = 2, column = 1)
-    submit_amount = Button(team_name_input, text="Submit", command= amount_validation_1).grid(row=3, column=1)
+    submit_amount = Button(team_name_input, text="Submit", command= amount_validation_1, bg = "SpringGreen3").grid(row=3, column=1)
 
 
 def amount_validation_1():
     global t1_amount
     team_amount = int(team_amount_test.get())
     if team_amount < 2 or team_amount > 11:
-        error = Label(team_name_input, text = "Invalid amount, try again").grid(row = 4, column = 1)
+        error = Label(team_name_input, text = "Invalid amount, try again", bg = "DarkSlateGrey").grid(row = 4, column = 1)
     elif team_amount > 2 or team_amount < 11:
         t1_amount = team_amount
         global team_name_input2
         global team_amount_test2
         team_name_input2 = Toplevel(master)
         team_name_input.withdraw()
+        team_name_input2.configure(bg = "DarkSlateGrey")
         sizing(team_name_input2)
-        enter_names = Label(team_name_input2, text="Enter amount of players in " + team_2).grid(row=0, column=1)
-        enter_names2 = Label(team_name_input2, text="(Between 2 and 11)").grid(row=1, column=1)
-        team_amount_test2 = Entry(team_name_input2, width=20)
+        enter_names = Label(team_name_input2, text="Enter amount of players in " + team_2, bg = "DarkSlateGrey").grid(row=0, column=1)
+        enter_names2 = Label(team_name_input2, text="(Between 2 and 11)", bg = "DarkSlateGrey").grid(row=1, column=1)
+        team_amount_test2 = Entry(team_name_input2, width=20, bg = "DimGrey")
         team_amount_test2.grid(row=2, column=1)
-        submit_amount = Button(team_name_input2, text="Submit", command= final_confirm).grid(row=3, column=1)
+        submit_amount = Button(team_name_input2, text="Submit", command= final_confirm, bg = "SpringGreen3").grid(row=3, column=1)
 
 def final_confirm():
     global final_confirm
@@ -188,12 +194,13 @@ def final_confirm():
     elif t2_amount > 2 or t2_amount < 11:
         final_confirm = Toplevel(master)
         team_name_input2.withdraw()
+        final_confirm.configure(bg = "DarkSlateGrey")
         sizing(final_confirm)
-        con_title = Label(final_confirm, text = "Please ensure that all information is correct").grid(row = 0, column = 1)
-        t1_con = Label(final_confirm, text = str(team_1) + ": " + str(t1_amount) + " players").grid(row = 1, column = 1)
-        t2_con = Label(final_confirm, text = str(team_2) + ": " + str(t2_amount) + " players").grid(row = 2, column = 1)
-        button_con = Button(final_confirm, text = "Confirm", command = input_stub).grid(row = 3, column = 1)
-        button_redo = Button(final_confirm, text="Redo", command = save_team2_names).grid(row=4, column=1)
+        con_title = Label(final_confirm, text = "Please ensure that all information is correct", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+        t1_con = Label(final_confirm, text = str(team_1) + ": " + str(t1_amount) + " players", bg = "DarkSlateGrey").grid(row = 1, column = 1)
+        t2_con = Label(final_confirm, text = str(team_2) + ": " + str(t2_amount) + " players", bg = "DarkSlateGrey").grid(row = 2, column = 1)
+        button_con = Button(final_confirm, text = "Confirm", command = input_stub, bg = "SpringGreen3").grid(row = 3, column = 1)
+        button_redo = Button(final_confirm, text="Redo", command = save_team2_names, bg = "Red2").grid(row=4, column=1)
 
 
 
@@ -220,14 +227,15 @@ def input_stub():
     if player_num != t1_amount:
         dupe = False
         t1_input = Toplevel(master)
+        t1_input.configure(bg = "DarkSlateGrey")
         final_confirm.withdraw()
         sizing(t1_input)
-        title = Label(t1_input, text = team_1 + " Input").grid(row = 0, column = 1)
-        request = Label(t1_input, text = "Please enter player " + str(display_num) + " name").grid(row = 1, column = 1)
-        name_entry = Entry(t1_input)
+        title = Label(t1_input, text = team_1 + " Input", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+        request = Label(t1_input, text = "Please enter player " + str(display_num) + " name", bg = "DarkSlateGrey").grid(row = 1, column = 1)
+        name_entry = Entry(t1_input, bg = "DimGrey")
         name_entry.grid(row = 2, column = 1)
         display_num = display_num + 1
-        valid_button = Button(t1_input, text = "Submit", command = lambda: t1_validation(team_1_array)).grid(row = 4, column = 1)
+        valid_button = Button(t1_input, text = "Submit", command = lambda: t1_validation(team_1_array), bg = "SpringGreen3").grid(row = 4, column = 1)
 def t1_validation(current_team):
             global t1_confirm
             global player_num
@@ -261,11 +269,12 @@ def t1_validation(current_team):
                     t1_confirm = Toplevel(master)
                     t1_input.withdraw()
                     sizing(t1_confirm)
+                    t1_confirm.configure(bg = "DarkSlateGrey")
                     player_count = 1
                     for i in range(len(team_1_array)):
-                        exec('Label%d=Label(t1_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_1_array[i], i))
+                        exec('Label%d=Label(t1_confirm,text="%s", bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_1_array[i], i))
                         player_count = player_count + 1
-                    confirm_button = Button(t1_confirm, text = "Confirm Team 1", command = input_stub_2).pack()
+                    confirm_button = Button(t1_confirm, text = "Confirm Team 1", command = input_stub_2, bg = "SpringGreen3").pack()
 
 
 
@@ -285,13 +294,14 @@ def input_stub_2():
         dupe = False
         t2_input = Toplevel(master)
         t1_confirm.withdraw()
+        t2_input.configure(bg = "DarkSlateGrey")
         sizing(t2_input)
-        title = Label(t2_input, text = team_2 + " Input").grid(row = 0, column = 1)
-        request = Label(t2_input, text = "Please enter player " + str(display_num2) + " name").grid(row = 1, column = 1)
-        name_entry = Entry(t2_input)
+        title = Label(t2_input, text = team_2 + " Input", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+        request = Label(t2_input, text = "Please enter player " + str(display_num2) + " name", bg = "DarkSlateGrey").grid(row = 1, column = 1)
+        name_entry = Entry(t2_input, bg = "DimGrey")
         name_entry.grid(row = 2, column = 1)
         display_num2 = display_num2 + 1
-        valid_button = Button(t2_input, text = "Submit", command = lambda: t2_validation(team_2_array)).grid(row = 4, column = 1)
+        valid_button = Button(t2_input, text = "Submit", command = lambda: t2_validation(team_2_array), bg = "SpringGreen3").grid(row = 4, column = 1)
 def t2_validation(current_team):
             global display_num2
             global t2_confirm
@@ -325,12 +335,13 @@ def t2_validation(current_team):
                 elif dupe == False:
                     t2_confirm = Toplevel(master)
                     t2_input.withdraw()
+                    t2_confirm.configure(bg = "DarkSlateGrey")
                     sizing(t2_confirm)
                     player_count = 1
                     for i in range(len(team_2_array)):
-                        exec('Label%d=Label(t2_confirm,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_2_array[i], i))
+                        exec('Label%d=Label(t2_confirm,text="%s",bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_2_array[i], i))
                         player_count = player_count + 1
-                    confirm_button = Button(t2_confirm, text = "Confirm Team 2", command = full_confirm_func).pack()
+                    confirm_button = Button(t2_confirm, text = "Confirm Team 2", command = full_confirm_func, bg = "SpringGreen3").pack()
 
 
 
@@ -343,20 +354,21 @@ def full_confirm_func():
     player_count_2 = 1
     full_confirm = Toplevel(master)
     t2_confirm.withdraw()
+    full_confirm.configure(bg = "DarkSlateGrey")
     sizing(full_confirm)
-    t1_label = Label(full_confirm, text = "Team: " + team_1).pack()
+    t1_label = Label(full_confirm, text = "Team: " + team_1, bg = "DarkSlateGrey").pack()
     for i in range(len(team_1_array)):
-        exec('Label%d=Label(full_confirm,text="%s")\nLabel%d.pack()' % (
+        exec('Label%d=Label(full_confirm,text="%s", bg = "DarkSlateGrey")\nLabel%d.pack()' % (
         i, "Player " + str(player_count_1) + " : " + team_1_array[i], i))
         player_count_1 = player_count_1 + 1
     line = Label(full_confirm, text = "------------").pack()
-    t2_label = Label(full_confirm, text= "Team: " + team_2).pack()
+    t2_label = Label(full_confirm, text= "Team: " + team_2, bg = "DarkSlateGrey").pack()
     for i in range(len(team_2_array)):
-        exec('Label%d=Label(full_confirm,text="%s")\nLabel%d.pack()' % (
+        exec('Label%d=Label(full_confirm,text="%s", bg = "DarkSlateGrey")\nLabel%d.pack()' % (
         i, "Player " + str(player_count_2) + " : " + team_2_array[i], i))
         player_count_2 = player_count_2 + 1
-    submit = Button(full_confirm, text = "Submit", command = choosing_sides_func).pack()
-    back = Button(full_confirm, text="Redo Name input", command= lambda: reset_player_num(player_num, display_num, player_num2, display_num2)).pack()
+    submit = Button(full_confirm, text = "Submit", command = choosing_sides_func, bg = "SpringGreen3").pack()
+    back = Button(full_confirm, text="Redo Name input", command= lambda: reset_player_num(player_num, display_num, player_num2, display_num2), bg = "Red2").pack()
 
 def reset_player_num(player1, display1, display2, player2):
     player1 = 0
@@ -370,10 +382,11 @@ def choosing_sides_func():
     global choosing_sides
     choosing_sides = Toplevel(master)
     full_confirm.withdraw()
+    choosing_sides.configure(bg = "DarkSlateGrey")
     sizing(choosing_sides)
-    title = Label(choosing_sides, text = "Which team is batting first?").grid(row = 0, column = 1)
-    t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: [t1_batting(team_1_array, team_2_array), team_set(1)]).grid(row = 1,column = 1)
-    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: [t1_batting(team_2_array, team_1_array), team_set(2)]).grid(row=2, column=1)
+    title = Label(choosing_sides, text = "Which team is batting first?", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+    t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: [t1_batting(team_1_array, team_2_array), team_set(1)], bg = "LimeGreen").grid(row = 1,column = 1)
+    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: [t1_batting(team_2_array, team_1_array), team_set(2)], bg = "Cyan2").grid(row=2, column=1)
 
 def t1_batting(Batting, Fielding):
     global batting_team
@@ -417,17 +430,18 @@ def list_teams_stub(bt, ft):
     player_count_4 = 1
     list_teams = Toplevel(master)
     choosing_sides.withdraw()
+    list_teams.configure(bg = "DarkSlateGrey")
     sizing(list_teams)
-    batting = Label(list_teams, text = "Batting Team:").pack()
+    batting = Label(list_teams, text = "Batting Team:", bg = "DarkSlateGrey").pack()
     for i in range(len(bt)):
-        exec('Label%d=Label(list_teams,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count_3) + " : " + bt[i], i))
+        exec('Label%d=Label(list_teams,text="%s",bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count_3) + " : " + bt[i], i))
         player_count_3 = player_count_3 + 1
-    line = Label(list_teams, text="------------").pack()
-    fielding = Label(list_teams, text="Fielding Team:").pack()
+    line = Label(list_teams, text="------------", bg = "DarkSlateGrey").pack()
+    fielding = Label(list_teams, text="Fielding Team:", bg = "DarkSlateGrey").pack()
     for i in range(len(ft)):
-        exec('Label%d=Label(list_teams,text="%s")\nLabel%d.pack()' % (i, "Player " + str(player_count_4) + " : " + ft[i], i))
+        exec('Label%d=Label(list_teams,text="%s",bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count_4) + " : " + ft[i], i))
         player_count_4 = player_count_4 + 1
-    next = Button(list_teams, text = "Confirm", command = match_type_stub()).pack()
+    next = Button(list_teams, text = "Confirm", command = match_type_stub(), bg = "SpringGreen3").pack()
 
 
 
@@ -435,13 +449,14 @@ def list_teams_stub(bt, ft):
 def match_type_stub():
     global match_type
     match_type = Toplevel(master)
+    match_type.configure(bg = "DarkSlateGrey")
     list_teams.withdraw()
     sizing(match_type)
-    title_1 = Label(match_type, text = "What type of game").grid(row = 0, column = 1)
-    title_2 = Label(match_type, text = "do you want to play?").grid(row = 1, column =1)
-    T20 = Button(match_type, text = "T20", command = lambda: match_type_set(20)).grid(row = 2, column = 1)
-    One_day = Button(match_type, text="One Day", command = lambda: match_type_set(50)).grid(row=3, column=1)
-    Custom = Button(match_type, text="Custom", command= custom_over).grid(row=4, column=1)
+    title_1 = Label(match_type, text = "What type of game", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+    title_2 = Label(match_type, text = "do you want to play?", bg = "DarkSlateGrey").grid(row = 1, column =1)
+    T20 = Button(match_type, text = "T20", command = lambda: match_type_set(20), bg = "RoyalBlue1").grid(row = 2, column = 1)
+    One_day = Button(match_type, text="One Day", command = lambda: match_type_set(50), bg = "SpringGreen2").grid(row=3, column=1)
+    Custom = Button(match_type, text="Custom", command= custom_over, bg = "Red2").grid(row=4, column=1)
 
 
 def match_type_set(type):
@@ -460,13 +475,14 @@ def custom_over():
     global co_flag
     co_flag = True
     cust_over = Toplevel(master)
+    cust_over.configure(bg = "DarkSlateGrey")
     match_type.withdraw()
     sizing(cust_over)
-    title = Label(cust_over, text = "Input custom over amount").grid(row = 0, column = 1)
-    title = Label(cust_over, text="(Between 10-50)").grid(row=1, column=1)
-    amount = Entry(cust_over)
+    title = Label(cust_over, text = "Input custom over amount", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+    title = Label(cust_over, text="(Between 10-50)", bg = "DarkSlateGrey").grid(row=1, column=1)
+    amount = Entry(cust_over, bg = "DimGrey")
     amount.grid(row = 2, column = 1)
-    submit = Button(cust_over, text = "Submit", command = lambda: [batsmen_1(0, 0, None, None, 0, None, 0, 0), clear_win_1()]).grid(row = 3, column = 1)
+    submit = Button(cust_over, text = "Submit", command = lambda: [batsmen_1(0, 0, None, None, 0, None, 0, 0), clear_win_1()], bg = "SpringGreen3").grid(row = 3, column = 1)
 
 
 def clear_win_1():
@@ -481,13 +497,14 @@ def batsmen_1(balls, run, facing, other, over, current_bowler, patnership, out):
         over_amount = amount.get()
         over_amount = int(over_amount)
         if over_amount < 10 or over_amount > 50:
-            error = Label(cust_over, text = "Error, out of range").grid(row = 4, column = 1)
+            error = Label(cust_over, text = "Error, out of range", bg = "DarkSlateGrey").grid(row = 4, column = 1)
         elif co_flag == False:
             cust_over.withdraw()
     batsmen_win = Toplevel(master)
     match_type.withdraw()
+    batsmen_win.configure(bg = "DarkSlateGrey")
     sizing(batsmen_win)
-    itle = Label(batsmen_win, text="Choose the first batsmen").grid(row=0, column=1)
+    itle = Label(batsmen_win, text="Choose the first batsmen", bg = "DarkSlateGrey").grid(row=0, column=1)
     variable = StringVar(batsmen_win)
     variable.set(batting_team[0])  # default value
 
@@ -502,7 +519,7 @@ def batsmen_1(balls, run, facing, other, over, current_bowler, patnership, out):
                 batting_team.remove(batsmen[0])
         batsmen_2(balls, run, facing, other, over, current_bowler, patnership, out)
 
-    button = Button(batsmen_win, text="OK", command=lambda: ok(balls, run, facing, other, over, current_bowler, patnership, out)).grid(row = 2, column = 1)
+    button = Button(batsmen_win, text="OK", command=lambda: ok(balls, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3").grid(row = 2, column = 1)
 
 
 def batsmen_2(balls, run, facing, other, over, current_bowler, patnership, out):
@@ -510,11 +527,12 @@ def batsmen_2(balls, run, facing, other, over, current_bowler, patnership, out):
     global batsmen
     global other_batsmen
     batsmen_win_2 = Toplevel(master)
+    batsmen_win_2.configure(bg = "DarkSlateGrey")
     batsmen_win.withdraw()
     sizing(batsmen_win_2)
     variable = StringVar(batsmen_win_2)
     variable.set(batting_team[0])  # default value
-    title = Label(batsmen_win_2, text = "Choose the second batsmen").grid(row =0, column = 1)
+    title = Label(batsmen_win_2, text = "Choose the second batsmen", bg = "DarkSlateGrey").grid(row =0, column = 1)
 
 
     w = OptionMenu(batsmen_win_2, variable, *batting_team)
@@ -528,16 +546,19 @@ def batsmen_2(balls, run, facing, other, over, current_bowler, patnership, out):
                 batting_team.remove(batsmen[1])
         bowler(balls, run, facing, other, over, current_bowler, patnership, out)
 
-    button = Button(batsmen_win_2, text="OK", command= lambda: ok1(balls, run, facing, other, over, current_bowler, patnership, out)).grid(row = 2, column = 1)
+    button = Button(batsmen_win_2, text="OK", command= lambda: ok1(balls, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3").grid(row = 2, column = 1)
+
+
 
 def bowler(balls, run, facing, other, over, current_bowler, patnership, out):
     global bowler_win
     bowler_win = Toplevel(master)
+    bowler_win.configure(bg = "DarkSlateGrey")
     batsmen_win_2.withdraw()
     sizing(bowler_win)
     variable = StringVar(bowler_win)
     variable.set(fielding_team[0])
-    title = Label(bowler_win, text = "Please choose the bowler").grid(row = 0, column = 1)
+    title = Label(bowler_win, text = "Please choose the bowler", bg = "DarkSlateGrey").grid(row = 0, column = 1)
 
     w = OptionMenu(bowler_win, variable, *fielding_team)
     w.grid(row = 1, column = 1)
@@ -550,7 +571,7 @@ def bowler(balls, run, facing, other, over, current_bowler, patnership, out):
                 fielding_team.remove(current_bowler)
         setting_batsmen(balls, run, facing, other, over, current_bowler, patnership, out)
 
-    button = Button(bowler_win, text="OK", command= lambda: ok2(balls, run, facing, other, over, current_bowler, patnership, out)).grid(row = 2, column = 1)
+    button = Button(bowler_win, text="OK", command= lambda: ok2(balls, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3").grid(row = 2, column = 1)
 
 
 def setting_batsmen(balls, run, facing, other, over, current_bowler, patnership, out):
@@ -656,13 +677,14 @@ def main_play(run, facing, other, over, ball, current_bowler, patnership, out):
 def play_func(balls, run, facing, other, over, current_bowler, patnership, out):
     global play_win
     play_win = Toplevel(master)
+    play_win.configure(bg = "DarkSlateGrey")
     sizing(play_win)
     ball = balls + 1
     with open('test.txt', "a") as f:
         f.write(f'{current_bowler} has bowled to {facing}\n')
-    title = Label(play_win, text = "Select Outcome of play").grid(row = 0, column = 1)
-    run_button = Button(play_win, text = "Runs", command = lambda: run_function(ball, run, facing, other, over, current_bowler, patnership, out)).grid(row = 1, column = 1)
-    run_button = Button(play_win, text="Out", command= lambda: out_function(ball, run, facing, other, over, current_bowler, patnership, out)).grid(row=2, column=1)
+    title = Label(play_win, text = "Select Outcome of play", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+    run_button = Button(play_win, text = "Runs", command = lambda: run_function(ball, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3").grid(row = 1, column = 1)
+    run_button = Button(play_win, text="Out", command= lambda: out_function(ball, run, facing, other, over, current_bowler, patnership, out), bg = "Red2").grid(row=2, column=1)
     return ball
 
 
@@ -680,13 +702,14 @@ def out_function(ball, run, facing, other, over, current_bowler, patnership, out
         change_sides(ball, run, facing, other, over, current_bowler, patnership, out)
     else:
         out_win = Toplevel(master)
+        out_win.configure(bg = "DarkSlateGrey")
         play_win.withdraw()
         sizing(out_win)
         out_players.append(facing)
         facing = other
         variable = StringVar(out_win)
         variable.set(batting_team[0])  # default value
-        title = Label(out_win, text="Choose the new batsmen").grid(row=0, column=1)
+        title = Label(out_win, text="Choose the new batsmen", bg = "DarkSlateGrey").grid(row=0, column=1)
 
         w = OptionMenu(out_win, variable, *batting_team)
         w.grid(row=1, column=1)
@@ -699,16 +722,17 @@ def out_function(ball, run, facing, other, over, current_bowler, patnership, out
             out_win.destroy()
             over_or_fin_check(ball, run, facing, other, over, current_bowler, patnership, out)
 
-        button = Button(out_win, text="OK", command=lambda: ok5(ball, run, facing, other, over, current_bowler, patnership, out)).grid(row=2, column=1)
+        button = Button(out_win, text="OK", command=lambda: ok5(ball, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3").grid(row=2, column=1)
 
 
 def run_function(balls, run, facing, other, over, current_bowler, patnership, out):
     global run_win
     run_win = Toplevel(master)
+    run_win.configure(bg = "DarkSlateGrey")
     play_win.withdraw()
     sizing(run_win)
-    title = Label(run_win, text = "Enter amount of runs scored").grid(row = 0, column = 1)
-    run_entry = Entry(run_win)
+    title = Label(run_win, text = "Enter amount of runs scored", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+    run_entry = Entry(run_win, bg = "DimGrey")
     run_entry.grid(row = 1, column = 1)
 
     def run_submit(balls, run, facing, other, over, current_bowler, patnership, out):
@@ -725,7 +749,7 @@ def run_function(balls, run, facing, other, over, current_bowler, patnership, ou
             print("Same")
         over_or_fin_check(balls, run, facing, other, over, current_bowler, patnership, out)
 
-    submit_runs = Button(run_win, text = "Submit", command = lambda:[run_submit(balls, run, facing, other, over, current_bowler, patnership, out), clear_win()]).grid(row = 2, column = 1)
+    submit_runs = Button(run_win, text = "Submit", command = lambda:[run_submit(balls, run, facing, other, over, current_bowler, patnership, out), clear_win()], bg = "SpringGreen3").grid(row = 2, column = 1)
 
 def clear_win():
     run_win.destroy()
@@ -742,10 +766,11 @@ def over_or_fin_check(ball, run, facing, other, over, current_bowler, patnership
 def change_bowler(old_bowler, balls, run, facing, other, over, patnership, out):
     nb_win = Toplevel(master)
     run_win.withdraw()
+    nb_win.configure(bg = "DarkSlateGrey")
     sizing(nb_win)
     variable = StringVar(nb_win)
     variable.set(fielding_team[0])
-    title = Label(nb_win, text="Please choose the new bowler").grid(row=0, column=1)
+    title = Label(nb_win, text="Please choose the new bowler", bg = "DarkSlateGrey").grid(row=0, column=1)
 
     w = OptionMenu(nb_win, variable, *fielding_team)
     w.grid(row=1, column=1)
@@ -765,7 +790,7 @@ def change_bowler(old_bowler, balls, run, facing, other, over, patnership, out):
         innings_over_check(balls, run, facing, other, over, current_bowler, patnership, out)
 
 
-    button = Button(nb_win, text="Submit", command= lambda: submit_func(old_bowler, balls, run, facing, other, over, patnership, out)).grid(row=2, column=1)
+    button = Button(nb_win, text="Submit", command= lambda: submit_func(old_bowler, balls, run, facing, other, over, patnership, out), bg = "SpringGreen3").grid(row=2, column=1)
 
 
 
