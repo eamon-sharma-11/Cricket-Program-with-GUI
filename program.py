@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+import os
 
 
 team_1_array= []
@@ -54,7 +55,7 @@ def help_menu():
     help_2 = Label(top, text=" the developer", bg = "DarkSlateGrey").grid(row = 6, column = 1)
     help_3 = Label(top, text= "-Please reffer to the included", bg = "DarkSlateGrey").grid(row = 7, column = 1)
     help_3 = Label(top, text=" instruction guide for more help", bg = "DarkSlateGrey").grid(row = 8, column = 1)
-    help_3 = Label(top, text="Current Version: 1.0.4 Dev Build", bg = "DarkSlateGrey").grid(row=9, column=1)
+    help_3 = Label(top, text="Current Version: 1.0.5 Dev Build", bg = "DarkSlateGrey").grid(row=9, column=1)
     leave_button = Button(top, text = "EXIT", command = top.destroy, bg = "SpringGreen3").grid(row = 10, column = 1)
 
 
@@ -121,6 +122,10 @@ label_2 = Label(master, text = "now loading").pack()
 
 #SETTING UP MAIN SCREEN
 def main():
+    try:
+        os.remove("test.txt")
+    except OSError:
+        pass
     global main_win
     master.withdraw()
     main_win = Toplevel(master)
@@ -130,11 +135,8 @@ def main():
     with open('test.txt', 'w+') as f:
         pass
     ws2 = Label(main_win, text=" ", bg = "DarkSlateGrey").grid(row=1, column=1)
-    version = Label(main_win, text = "Version 1.0.3 Dev Build", bg = "DarkSlateGrey").grid(column = 1, row = 2)
-    updates = Label(main_win, text = "Whats New:", bg = "DarkSlateGrey").grid(row = 3, column = 1)
-    new = Label(main_win, text = "A file will be created to record the", bg = "DarkSlateGrey").grid(row = 4, column = 1)
-    new2 = Label(main_win, text = "action after each ball. The file can be found", bg = "DarkSlateGrey").grid(row = 5, column = 1)
-    new3 = Label(main_win, text="in the same location as this program",bg = "DarkSlateGrey").grid(row=6, column=1)
+    version = Label(main_win, text = "Version 1.0.5 Dev Build", bg = "Red2", relief = "ridge", borderwidth = 2, font = 9).grid(column = 1, row = 2)
+    new = Label(main_win, text = "Whats New:\n If the exisiting text file is found\n it will be deleted and replaced with a fresh one\n Revamped UI ", bg = "DarkSlateGrey", borderwidth = 2, relief = "solid").grid(row = 4, column = 1)
     ws = Label(main_win, text = " ",bg = "DarkSlateGrey").grid(row = 7, column = 1)
     ws2 = Label(main_win, text = " ", bg = "DarkSlateGrey").grid(row = 8, column = 1)
 
@@ -436,7 +438,7 @@ def list_teams_stub(bt, ft):
     for i in range(len(bt)):
         exec('Label%d=Label(list_teams,text="%s",bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count_3) + " : " + bt[i], i))
         player_count_3 = player_count_3 + 1
-    line = Label(list_teams, text="------------", bg = "DarkSlateGrey").pack()
+    line = Label(list_teams, text="Test", bg = "DarkSlateGrey").pack()
     fielding = Label(list_teams, text="Fielding Team:", bg = "DarkSlateGrey").pack()
     for i in range(len(ft)):
         exec('Label%d=Label(list_teams,text="%s",bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count_4) + " : " + ft[i], i))
@@ -602,7 +604,7 @@ def main_play(run, facing, other, over, ball, current_bowler, patnership, out):
     sizing(main_win)
     bowler_win.withdraw()
     #Defining Frame
-    top_frame = Frame(main_win, bg='lavender', width=450, height=50, pady=3)
+    top_frame = Frame(main_win, bg='DarkSlateGrey', width=450, height=50, pady=3)
     center = Frame(main_win, bg='gray2', width=50, height=40, padx=3, pady=3)
     btm_frame = Frame(main_win, bg='white', width=450, height=45, pady=3)
     btm_frame2 = Frame(main_win, bg='lavender', width=450, height=60, pady=3)
@@ -661,9 +663,9 @@ def main_play(run, facing, other, over, ball, current_bowler, patnership, out):
 
     # Bottom frame button
 
-    move_on = Button(btm_frame, text="Play!", command= lambda: play_func(ball, run, facing, other, over, current_bowler, patnership, out), height=5, width=30, font=10)
+    move_on = Button(btm_frame, text="Play!", command= lambda: play_func(ball, run, facing, other, over, current_bowler, patnership, out), height=5, width=27, font=10)
     move_on.grid(column=1, row=1, )
-    move_on = Button(btm_frame, text="Exit!", command=sys.exit, height=5, width=30, font=10)
+    move_on = Button(btm_frame, text="Exit!", command=sys.exit, height=5, width=27, font=10)
     move_on.grid(column=2, row=1, )
 
     current_facing = Label(btm_frame2, text="Batting: " + team_facing, font=20)
@@ -904,19 +906,19 @@ def end_game():
     end_win = Toplevel(master)
     main_win.withdraw()
     sizing(end_win)
-    print("Endgame")
-    sizing(end_win)
-    Title = Label(end_win, text = "Results").grid(row = 0, column = 1)
-    T1_results = Label(end_win, text = team_1).grid(row = 1, column = 0)
-    T1_results2 = Label(end_win, text = "Runs: " + str(team_1_runs_final)).grid(row = 2, column = 0)
-    T1_results3 = Label(end_win, text = "Outs: " + str(team_1_out_final)).grid(row = 3, column = 0)
-    T1_results3 = Label(end_win, text = "Overs: " + str(team_1_overs_final)).grid(row = 4, column = 0)
-    T2_results = Label(end_win, text=team_2).grid(row=1, column=2)
-    T2_results2 = Label(end_win, text="Runs: " + str(team_2_runs_final)).grid(row=2, column=2)
-    T2_results3 = Label(end_win, text="Outs: " + str(team_2_out_final)).grid(row=3, column=2)
-    T2_results3 = Label(end_win, text="Overs: " + str(team_2_overs_final)).grid(row=4, column=2)
-    exit = Button(end_win, text = "Exit", command = sys.exit).grid(row = 5, column = 0)
-    main = Button(end_win, text = "Menu", command = start_team1()).grid(row = 5, column = 2)
+
+
+    #DEFINING SPECIFIC WINDOWS
+    top_frame_end = Frame(end_win, bg='DarkSlateGrey', width=450, height=50, pady=3)
+    center_end = Frame(end_win, bg='gray2', width=50, height=40, padx=3, pady=3)
+    btm_frame_end = Frame(end_win, bg='white', width=50, height=40, pady=3)
+
+    end_win.grid_rowconfigure(1, weight=1)
+    end_win.grid_columnconfigure(0, weight=1)
+
+    top_frame_end.grid(row=0, sticky="ew")
+    center_end.grid(row=1, sticky="nsew")
+    btm_frame_end.grid(row=3, sticky="ew")
 
 
 
