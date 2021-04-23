@@ -605,7 +605,7 @@ def main_play(run, facing, other, over, ball, current_bowler, patnership, out):
     bowler_win.withdraw()
     #Defining Frame
     top_frame = Frame(main_win, bg='DarkSlateGrey', width=450, height=50, pady=3)
-    center = Frame(main_win, bg='gray2', width=50, height=40, padx=3, pady=3)
+    center = Frame(main_win, bg='gray2', width=50, height=40, padx=3, pady=3, relief = "solid")
     btm_frame = Frame(main_win, bg='white', width=450, height=45, pady=3)
     btm_frame2 = Frame(main_win, bg='lavender', width=450, height=60, pady=3)
 
@@ -629,9 +629,9 @@ def main_play(run, facing, other, over, ball, current_bowler, patnership, out):
     center.grid_rowconfigure(0, weight=1)
     center.grid_columnconfigure(1, weight=1)
 
-    ctr_left = Frame(center, bg='lavender', width=100, height=145)
-    ctr_mid = Frame(center, bg='light green', width=250, height=145, padx=3, pady=3)
-    ctr_right = Frame(center, bg='lavender', width=100, height=145, padx=3, pady=3)
+    ctr_left = Frame(center, bg='lavender', width=100, height=145, relief = "solid", borderwidth = 2)
+    ctr_mid = Frame(center, bg='light green', width=250, height=145, padx=3, pady=3, relief = "solid", borderwidth = 2)
+    ctr_right = Frame(center, bg='lavender', width=100, height=145, padx=3, pady=3, relief = "solid", borderwidth = 2)
 
     ctr_left.grid(row=0, column=0, sticky="ns")
     ctr_mid.grid(row=0, column=1, sticky="nsew")
@@ -647,31 +647,33 @@ def main_play(run, facing, other, over, ball, current_bowler, patnership, out):
     bowler_title = Label(ctr_mid, text="Bowler: " + current_bowler, font=10, bg="light green")
     bowler_title.grid(row=40, column=5, padx=110, )
 
-    score_title = Label(ctr_left, text="Score:", font=10)
+    score_title = Label(ctr_left, text="Score:", font=10, relief = "ridge")
     score_title.grid(row=0, column=1, pady=60, padx=20)
-    score = Label(ctr_left, text="Runs: " + str(run), font=10)
+    score = Label(ctr_left, text="Runs: " + str(run), font=10, relief = "ridge")
     score.grid(row=1, column=1, padx=20)
-    out_label = Label(ctr_left, text="Outs: " + str(out), font=10)
+    out_label = Label(ctr_left, text="Outs: " + str(out), font=10, relief = "ridge")
     out_label.grid(row=2, column=1, pady=60)
 
-    info_title = Label(ctr_right, text="Info:", font=10)
+    info_title = Label(ctr_right, text="Info:", font=10, relief = "ridge")
     info_title.grid(row=0, column=1, pady=60, padx=20)
-    ball_amount = Label(ctr_right, text="Balls: " + str(ball), font=10)
+    ball_amount = Label(ctr_right, text="Balls: " + str(ball), font=10, relief = "ridge")
     ball_amount.grid(row=1, column=1, padx=20)
-    over_label = Label(ctr_right, text="Over: " + str(over), font=10)
+    over_label = Label(ctr_right, text="Over: " + str(over), font=10, relief = "ridge")
     over_label.grid(row=2, column=1, pady=60)
 
     # Bottom frame button
 
-    move_on = Button(btm_frame, text="Play!", command= lambda: play_func(ball, run, facing, other, over, current_bowler, patnership, out), height=5, width=27, font=10)
+    move_on = Button(btm_frame, text="Play!", command= lambda: play_func(ball, run, facing, other, over, current_bowler, patnership, out), height=5, width= int(main_win.winfo_width() / 6.6), font=10)
     move_on.grid(column=1, row=1, )
-    move_on = Button(btm_frame, text="Exit!", command=sys.exit, height=5, width=27, font=10)
+    move_on = Button(btm_frame, text="Exit!", command=sys.exit, height=5, width= int(main_win.winfo_width() / 6.6), font=10)
     move_on.grid(column=2, row=1, )
 
-    current_facing = Label(btm_frame2, text="Batting: " + team_facing, font=20)
-    other_facing = Label(btm_frame2, text="Bowling: " + team_not, font=20)
+    current_facing = Label(btm_frame2, text="Batting: " + team_facing, font=20, relief = "ridge")
+    other_facing = Label(btm_frame2, text="Bowling: " + team_not, font=20, relief = "ridge")
     current_facing.grid(row=0, column=1, padx=130, pady=18)
     other_facing.grid(row=0, column=2)
+
+
 
 
 
