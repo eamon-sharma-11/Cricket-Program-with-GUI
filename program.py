@@ -451,7 +451,7 @@ def choosing_sides_func():
     choosing_sides.configure(bg = "DarkSlateGrey")
     sizing(choosing_sides)
     title = Label(choosing_sides, text = "Which team is batting first?", bg = "DarkSlateGrey", font = "bold").grid(row = 0, column = 1)
-    ws = Label(choosing_sides, text = " ", bg = "DarkSlateBlue").grid(row = 1, column = 1)
+    ws = Label(choosing_sides, text = " ", bg = "DarkSlateGrey").grid(row = 1, column = 1)
     t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: [t1_batting(team_1_array, team_2_array), team_set(1)], bg = "LimeGreen", font = "bold")
     t1_batting_button.grid(row = 2,column = 1)
     t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: [t1_batting(team_2_array, team_1_array), team_set(2)], bg = "Cyan2", font = "bold")
@@ -512,12 +512,12 @@ def list_teams_stub(bt, ft):
     for i in range(len(bt)):
         exec('Label%d=Label(list_teams,text="%s",bg = "DarkSlateGrey", font = 10)\nLabel%d.pack()' % (i, "Player " + str(player_count_3) + " : " + bt[i], i))
         player_count_3 = player_count_3 + 1
-    line = Label(list_teams, text="----------", bg = "DarkSlateGrey", font = "Bold").pack()
-    fielding = Label(list_teams, text="Fielding Team:", bg = "DarkSlateGrey").pack()
+    line = Label(list_teams, text="----------", bg = "DarkSlateGrey").pack()
+    fielding = Label(list_teams, text="Fielding Team:", bg = "DarkSlateGrey", font = "bold").pack()
     for i in range(len(ft)):
-        exec('Label%d=Label(list_teams,text="%s",bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count_4) + " : " + ft[i], i))
+        exec('Label%d=Label(list_teams,text="%s",bg = "DarkSlateGrey", font = 10)\nLabel%d.pack()' % (i, "Player " + str(player_count_4) + " : " + ft[i], i))
         player_count_4 = player_count_4 + 1
-    next = Button(list_teams, text = "Confirm", command = match_type_stub(), bg = "SpringGreen3")
+    next = Button(list_teams, text = "Confirm", command = match_type_stub(), bg = "SpringGreen3", font = "bold")
     next.pack()
     hover(next, "PaleGreen", "SpringGreen3")
 
@@ -529,13 +529,13 @@ def match_type_stub():
     match_type.configure(bg = "DarkSlateGrey")
     list_teams.withdraw()
     sizing(match_type)
-    title_1 = Label(match_type, text = "What type of game", bg = "DarkSlateGrey").grid(row = 0, column = 1)
-    title_2 = Label(match_type, text = "do you want to play?", bg = "DarkSlateGrey").grid(row = 1, column =1)
-    T20 = Button(match_type, text = "T20", command = lambda: match_type_set(20), bg = "RoyalBlue1")
+    title_1 = Label(match_type, text = "What type of game", bg = "DarkSlateGrey", font = "bold").grid(row = 0, column = 1)
+    title_2 = Label(match_type, text = "do you want to play?", bg = "DarkSlateGrey", font = "bold").grid(row = 1, column =1)
+    T20 = Button(match_type, text = "T20", command = lambda: match_type_set(20), bg = "RoyalBlue1", font = "bold")
     T20.grid(row = 2, column = 1)
-    One_day = Button(match_type, text="One Day", command = lambda: match_type_set(50), bg = "SpringGreen2")
+    One_day = Button(match_type, text="One Day", command = lambda: match_type_set(50), bg = "SpringGreen2", font = "bold")
     One_day.grid(row=3, column=1)
-    Custom = Button(match_type, text="Custom", command= custom_over, bg = "Red2")
+    Custom = Button(match_type, text="Custom", command= custom_over, bg = "Red2", font = "bold")
     Custom.grid(row=4, column=1)
     hover(T20, "dodgerBlue", "RoyalBlue1")
     hover(One_day, "PaleGreen", "SpringGreen2")
@@ -563,11 +563,11 @@ def custom_over():
     cust_over.configure(bg = "DarkSlateGrey")
     match_type.withdraw()
     sizing(cust_over)
-    title = Label(cust_over, text = "Input custom over amount", bg = "DarkSlateGrey").grid(row = 0, column = 1)
-    title = Label(cust_over, text="(Between 10-50)", bg = "DarkSlateGrey").grid(row=1, column=1)
-    amount = Entry(cust_over, bg = "DimGrey")
+    title = Label(cust_over, text = "Input custom over amount", bg = "DarkSlateGrey", font = "bold").grid(row = 0, column = 1)
+    title = Label(cust_over, text="(Between 10-50)", bg = "DarkSlateGrey", font = "bold").grid(row=1, column=1)
+    amount = Entry(cust_over, bg = "DimGrey", font = 20)
     amount.grid(row = 2, column = 1)
-    submit = Button(cust_over, text = "Submit", command = lambda: [batsmen_1(0, 0, None, None, 0, None, 0, 0), clear_win_1()], bg = "SpringGreen3")
+    submit = Button(cust_over, text = "Submit", command = lambda: [batsmen_1(0, 0, None, None, 0, None, 0, 0), clear_win_1()], bg = "SpringGreen3", font = 20)
     submit.grid(row = 3, column = 1)
     hover(submit, "PaleGreen", "SpringGreen3")
 
@@ -587,14 +587,14 @@ def batsmen_1(balls, run, facing, other, over, current_bowler, patnership, out):
         over_amount = amount.get()
         over_amount = int(over_amount)
         if over_amount < 10 or over_amount > 50:
-            error = Label(cust_over, text = "Error, out of range", bg = "DarkSlateGrey").grid(row = 4, column = 1)
+            error = Label(cust_over, text = "Error, out of range", bg = "DarkSlateGrey", font = "bold").grid(row = 4, column = 1)
         elif co_flag == False:
             cust_over.withdraw()
     batsmen_win = Toplevel(master)
     match_type.withdraw()
     batsmen_win.configure(bg = "DarkSlateGrey")
     sizing(batsmen_win)
-    itle = Label(batsmen_win, text="Choose the first batsmen", bg = "DarkSlateGrey").grid(row=0, column=1)
+    itle = Label(batsmen_win, text="Choose the first batsmen", bg = "DarkSlateGrey", font = "bold").grid(row=0, column=1)
     variable = StringVar(batsmen_win)
     variable.set(batting_team[0])  # default value
 
@@ -609,7 +609,7 @@ def batsmen_1(balls, run, facing, other, over, current_bowler, patnership, out):
                 batting_team.remove(batsmen[0])
         batsmen_2(balls, run, facing, other, over, current_bowler, patnership, out)
 
-    button = Button(batsmen_win, text="OK", command=lambda: ok(balls, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3")
+    button = Button(batsmen_win, text="OK", command=lambda: ok(balls, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3", font = "bold")
     button.grid(row = 2, column = 1)
     hover(button, "PaleGreen", "SpringGreen3")
 
@@ -625,7 +625,7 @@ def batsmen_2(balls, run, facing, other, over, current_bowler, patnership, out):
     sizing(batsmen_win_2)
     variable = StringVar(batsmen_win_2)
     variable.set(batting_team[0])  # default value
-    title = Label(batsmen_win_2, text = "Choose the second batsmen", bg = "DarkSlateGrey").grid(row =0, column = 1)
+    title = Label(batsmen_win_2, text = "Choose the second batsmen", bg = "DarkSlateGrey", font = "bold").grid(row =0, column = 1)
 
 
     w = OptionMenu(batsmen_win_2, variable, *batting_team)
@@ -639,7 +639,7 @@ def batsmen_2(balls, run, facing, other, over, current_bowler, patnership, out):
                 batting_team.remove(batsmen[1])
         bowler(balls, run, facing, other, over, current_bowler, patnership, out)
 
-    button = Button(batsmen_win_2, text="OK", command= lambda: ok1(balls, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3")
+    button = Button(batsmen_win_2, text="OK", command= lambda: ok1(balls, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3", font = "bold")
     button.grid(row = 2, column = 1)
     hover(button, "PaleGreen", "SpringGreen3")
 
@@ -653,7 +653,7 @@ def bowler(balls, run, facing, other, over, current_bowler, patnership, out):
     sizing(bowler_win)
     variable = StringVar(bowler_win)
     variable.set(fielding_team[0])
-    title = Label(bowler_win, text = "Please choose the bowler", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+    title = Label(bowler_win, text = "Please choose the bowler", bg = "DarkSlateGrey", font = "bold").grid(row = 0, column = 1)
 
     w = OptionMenu(bowler_win, variable, *fielding_team)
     w.grid(row = 1, column = 1)
@@ -666,7 +666,7 @@ def bowler(balls, run, facing, other, over, current_bowler, patnership, out):
                 fielding_team.remove(current_bowler)
         setting_batsmen(balls, run, facing, other, over, current_bowler, patnership, out)
 
-    button = Button(bowler_win, text="OK", command= lambda: ok2(balls, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3")
+    button = Button(bowler_win, text="OK", command= lambda: ok2(balls, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3", font = "bold")
     button.grid(row = 2, column = 1)
     hover(button, "Palegreen", "SpringGreen3")
 
@@ -782,10 +782,10 @@ def play_func(balls, run, facing, other, over, current_bowler, patnership, out):
     ball = balls + 1
     with open('test.txt', "a") as f:
         f.write(f'{current_bowler} has bowled to {facing}\n')
-    title = Label(play_win, text = "Select Outcome of play", bg = "DarkSlateGrey").grid(row = 0, column = 1)
-    run_button = Button(play_win, text = "Runs", command = lambda: run_function(ball, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3")
+    title = Label(play_win, text = "Select Outcome of play", bg = "DarkSlateGrey", font = "bold").grid(row = 0, column = 1)
+    run_button = Button(play_win, text = "Runs", command = lambda: run_function(ball, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3", font = "bold")
     run_button.grid(row = 1, column = 1)
-    out_button = Button(play_win, text="Out", command= lambda: out_function(ball, run, facing, other, over, current_bowler, patnership, out), bg = "Red2")
+    out_button = Button(play_win, text="Out", command= lambda: out_function(ball, run, facing, other, over, current_bowler, patnership, out), bg = "Red2", font = "bold")
     out_button.grid(row=2, column=1)
     hover(run_button, "palegreen", "SpringGreen3")
     hover(out_button, "tomato", "Red2")
@@ -814,7 +814,7 @@ def out_function(ball, run, facing, other, over, current_bowler, patnership, out
         facing = other
         variable = StringVar(out_win)
         variable.set(batting_team[0])  # default value
-        title = Label(out_win, text="Choose the new batsmen", bg = "DarkSlateGrey").grid(row=0, column=1)
+        title = Label(out_win, text="Choose the new batsmen", bg = "DarkSlateGrey", font = "bold").grid(row=0, column=1)
 
         w = OptionMenu(out_win, variable, *batting_team)
         w.grid(row=1, column=1)
@@ -827,7 +827,7 @@ def out_function(ball, run, facing, other, over, current_bowler, patnership, out
             out_win.destroy()
             over_or_fin_check(ball, run, facing, other, over, current_bowler, patnership, out)
 
-        button = Button(out_win, text="OK", command=lambda: ok5(ball, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3")
+        button = Button(out_win, text="OK", command=lambda: ok5(ball, run, facing, other, over, current_bowler, patnership, out), bg = "SpringGreen3", font = "bold")
         button.grid(row=2, column=1)
         hover(button, "palegreen", "SpringGreen3")
 
@@ -839,7 +839,7 @@ def run_function(balls, run, facing, other, over, current_bowler, patnership, ou
     run_win.configure(bg = "DarkSlateGrey")
     play_win.withdraw()
     sizing(run_win)
-    title = Label(run_win, text = "Enter amount of runs scored", bg = "DarkSlateGrey").grid(row = 0, column = 1)
+    title = Label(run_win, text = "Enter amount of runs scored", bg = "DarkSlateGrey", font = "bold").grid(row = 0, column = 1)
     run_entry = Entry(run_win, bg = "DimGrey")
     run_entry.grid(row = 1, column = 1)
 
@@ -857,7 +857,7 @@ def run_function(balls, run, facing, other, over, current_bowler, patnership, ou
             print("Same")
         over_or_fin_check(balls, run, facing, other, over, current_bowler, patnership, out)
 
-    submit_runs = Button(run_win, text = "Submit", command = lambda:[run_submit(balls, run, facing, other, over, current_bowler, patnership, out), clear_win()], bg = "SpringGreen3")
+    submit_runs = Button(run_win, text = "Submit", command = lambda:[run_submit(balls, run, facing, other, over, current_bowler, patnership, out), clear_win()], bg = "SpringGreen3", font = "bold")
     submit_runs.grid(row = 2, column = 1)
     hover(submit_runs, "PaleGreen", "SpringGreen3")
 
@@ -869,7 +869,6 @@ def clear_win():
 #-----/OVER CALCULATION/-----
 
 def over_or_fin_check(ball, run, facing, other, over, current_bowler, patnership, out):
-    print("Out change function")
     if ball % 6 == 0:
         updated_over = over + 1
         change_bowler(current_bowler, ball, run, facing, other, updated_over, patnership, out)
@@ -885,7 +884,7 @@ def change_bowler(old_bowler, balls, run, facing, other, over, patnership, out):
     sizing(nb_win)
     variable = StringVar(nb_win)
     variable.set(fielding_team[0])
-    title = Label(nb_win, text="Please choose the new bowler", bg = "DarkSlateGrey").grid(row=0, column=1)
+    title = Label(nb_win, text="Please choose the new bowler", bg = "DarkSlateGrey", font = "bold").grid(row=0, column=1)
 
     w = OptionMenu(nb_win, variable, *fielding_team)
     w.grid(row=1, column=1)
@@ -905,7 +904,7 @@ def change_bowler(old_bowler, balls, run, facing, other, over, patnership, out):
         innings_over_check(balls, run, facing, other, over, current_bowler, patnership, out)
 
 
-    button = Button(nb_win, text="Submit", command= lambda: submit_func(old_bowler, balls, run, facing, other, over, patnership, out), bg = "SpringGreen3")
+    button = Button(nb_win, text="Submit", command= lambda: submit_func(old_bowler, balls, run, facing, other, over, patnership, out), bg = "SpringGreen3", font = "bold")
     button.grid(row=2, column=1)
     hover(button, "palegreen", "SpringGreen3")
 
