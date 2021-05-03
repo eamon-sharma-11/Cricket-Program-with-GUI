@@ -92,7 +92,7 @@ def start_team1():
         sizing(top_2)
         top_2.title("Hows That?")
         team2_name = Label(top_2, text="Enter Team 2's team name: ", bg="DarkSlateGrey", font="Bold").grid(row=1, column=1)
-        t2_entry = Entry(top_2, width=20, bg="DimGrey")
+        t2_entry = Entry(top_2, width=20, bg="DimGrey", font = 20)
         ws = Label(top_2, text=" ", bg="DarkSlateGrey").grid(row=0, column=1)
         ws3 = Label(top_2, text=" ", bg="DarkSlateGrey").grid(row=4, column=1)
         ws2 = Label(top_2, text=" ", bg="DarkSlateGrey").grid(row=6, column=1)
@@ -103,7 +103,7 @@ def start_team1():
         hover(submit_button, "palegreen", "SpringGreen3")
 
     team1_name = Label(top_1, text = "Enter Team 1's team name: ", bg = "DarkSlateGrey", font = "Bold").grid(row = 1, column = 1)
-    t1_entry = Entry(top_1, width = 20, bg = "DimGrey")
+    t1_entry = Entry(top_1, width = 20, bg = "DimGrey", font = 20)
     ws = Label(top_1, text=" ", bg="DarkSlateGrey").grid(row=0, column=1)
     ws3 = Label(top_1, text=" ", bg = "DarkSlateGrey").grid(row=4, column=1)
     ws2 = Label(top_1, text = " ", bg = "DarkSlateGrey").grid(row = 6, column = 1)
@@ -200,12 +200,13 @@ def team_name_1():
     confirm_screen.withdraw()
     team_name_input.configure(bg = "DarkSlateGrey")
     sizing(team_name_input)
-    enter_names = Label(team_name_input, text = "Enter amount of players in " + team_1, bg = "DarkSlateGrey", font = 10).grid(row = 0, column = 1)
+    enter_names = Label(team_name_input, text = "Enter amount of players in team: " + team_1, bg = "DarkSlateGrey", font = 10).grid(row = 0, column = 1)
     enter_names2 = Label(team_name_input, text="(Between 2 and 11)", bg = "DarkSlateGrey", font = 5).grid(row=1, column=1)
-    team_amount_test = Entry(team_name_input, width = 20, bg = "DimGrey")
+    ws = Label(team_name_input, text = "", bg = "DarkSlategrey").grid(row = 3, column = 1)
+    team_amount_test = Entry(team_name_input, width = 20, bg = "DimGrey", font = 20)
     team_amount_test.grid(row = 2, column = 1)
     submit_amount = Button(team_name_input, text="Submit", command= amount_validation_1, bg = "SpringGreen3", font = 5)
-    submit_amount.grid(row=3, column=1)
+    submit_amount.grid(row=4, column=1)
     hover(submit_amount, "palegreen", "SpringGreen3")
 
 #-----/CHECKING USER ENTRY IS WITHIN ALLOWED VALUES/-----
@@ -222,12 +223,13 @@ def amount_validation_1():
         team_name_input.withdraw()
         team_name_input2.configure(bg = "DarkSlateGrey")
         sizing(team_name_input2)
-        enter_names = Label(team_name_input2, text="Enter amount of players in " + team_2, bg = "DarkSlateGrey").grid(row=0, column=1)
-        enter_names2 = Label(team_name_input2, text="(Between 2 and 11)", bg = "DarkSlateGrey").grid(row=1, column=1)
-        team_amount_test2 = Entry(team_name_input2, width=20, bg = "DimGrey")
+        enter_names = Label(team_name_input2, text="Enter amount of players in team: " + team_2, bg = "DarkSlateGrey", font = 10).grid(row=0, column=1)
+        enter_names2 = Label(team_name_input2, text="(Between 2 and 11)", bg = "DarkSlateGrey", font = 5).grid(row=1, column=1)
+        team_amount_test2 = Entry(team_name_input2, width=20, bg = "DimGrey", font = 20)
         team_amount_test2.grid(row=2, column=1)
-        submit_amount = Button(team_name_input2, text="Submit", command= final_confirm, bg = "SpringGreen3")
-        submit_amount.grid(row=3, column=1)
+        ws = Label(team_name_input2, text = " ", bg = "DarkSlateGrey").grid(row = 3, column = 1)
+        submit_amount = Button(team_name_input2, text="Submit", command= final_confirm, bg = "SpringGreen3", font = "bold")
+        submit_amount.grid(row=4, column=1)
         hover(submit_amount, "palegreen", "SpringGreen3")
 
 #-----/CONFIRMING AMOUNT OF PLAYERS IN EACH TEAM/-----
@@ -242,12 +244,12 @@ def final_confirm():
         team_name_input2.withdraw()
         final_confirm.configure(bg = "DarkSlateGrey")
         sizing(final_confirm)
-        con_title = Label(final_confirm, text = "Please ensure that all information is correct", bg = "DarkSlateGrey").grid(row = 0, column = 1)
-        t1_con = Label(final_confirm, text = str(team_1) + ": " + str(t1_amount) + " players", bg = "DarkSlateGrey").grid(row = 1, column = 1)
-        t2_con = Label(final_confirm, text = str(team_2) + ": " + str(t2_amount) + " players", bg = "DarkSlateGrey").grid(row = 2, column = 1)
-        button_con = Button(final_confirm, text = "Confirm", command = input_stub, bg = "SpringGreen3")
+        con_title = Label(final_confirm, text = "Please ensure that all information is correct", bg = "DarkSlateGrey", font = "bold").grid(row = 0, column = 1)
+        t1_con = Label(final_confirm, text = str(team_1) + ": " + str(t1_amount) + " players", bg = "DarkSlateGrey", font = 10).grid(row = 1, column = 1)
+        t2_con = Label(final_confirm, text = str(team_2) + ": " + str(t2_amount) + " players", bg = "DarkSlateGrey", font = 10).grid(row = 2, column = 1)
+        button_con = Button(final_confirm, text = "Confirm", command = input_stub, bg = "SpringGreen3", font = "bold")
         button_con.grid(row = 3, column = 1)
-        button_redo = Button(final_confirm, text="Redo", command = save_team2_names, bg = "Red2")
+        button_redo = Button(final_confirm, text="Redo", command = save_team2_names, bg = "Red2", font = "bold")
         button_redo.grid(row=4, column=1)
         hover(button_con, "PaleGreen", "SpringGreen3")
         hover(button_redo, "tomato", "Red2")
@@ -275,13 +277,14 @@ def input_stub():
         t1_input.configure(bg = "DarkSlateGrey")
         final_confirm.withdraw()
         sizing(t1_input)
-        title = Label(t1_input, text = team_1 + " Input", bg = "DarkSlateGrey").grid(row = 0, column = 1)
-        request = Label(t1_input, text = "Please enter player " + str(display_num) + " name", bg = "DarkSlateGrey").grid(row = 1, column = 1)
-        name_entry = Entry(t1_input, bg = "DimGrey")
+        title = Label(t1_input, text = team_1 + " Input", bg = "DarkSlateGrey", font = "bold").grid(row = 0, column = 1)
+        request = Label(t1_input, text = "Please enter player " + str(display_num) + " name", bg = "DarkSlateGrey", font = 10).grid(row = 1, column = 1)
+        name_entry = Entry(t1_input, bg = "DimGrey", font = 20)
         name_entry.grid(row = 2, column = 1)
         display_num = display_num + 1
-        valid_button = Button(t1_input, text = "Submit", command = lambda: t1_validation(team_1_array), bg = "SpringGreen3")
-        valid_button.grid(row = 4, column = 1)
+        ws = Label(t1_input, text = " ", bg = "DarkSlateGrey").grid(row = 4, column = 1)
+        valid_button = Button(t1_input, text = "Submit", command = lambda: t1_validation(team_1_array), bg = "SpringGreen3", font = "bold")
+        valid_button.grid(row = 5, column = 1)
         hover(valid_button, "palegreen", "SpringGreen3")
 
         # -----/VALIDATING THE PLAYERS TO ENSURE NO DUPLICATES/-----
@@ -321,9 +324,10 @@ def t1_validation(current_team):
                     t1_confirm.configure(bg = "DarkSlateGrey")
                     player_count = 1
                     for i in range(len(team_1_array)):
-                        exec('Label%d=Label(t1_confirm,text="%s", bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_1_array[i], i))
+                        exec('Label%d=Label(t1_confirm,text="%s", bg = "DarkSlateGrey", font = "bold")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_1_array[i], i))
                         player_count = player_count + 1
-                    confirm_button = Button(t1_confirm, text = "Confirm Team 1", command = input_stub_2, bg = "SpringGreen3")
+                    ws = Label(t1_confirm, text = " ", bg = "DarkSlateGrey").pack()
+                    confirm_button = Button(t1_confirm, text = "Confirm Team 1", command = input_stub_2, bg = "SpringGreen3", font = "bold")
                     confirm_button.pack()
                     hover(confirm_button, "PaleGreen", "SpringGreen3")
 
@@ -343,12 +347,13 @@ def input_stub_2():
         t1_confirm.withdraw()
         t2_input.configure(bg = "DarkSlateGrey")
         sizing(t2_input)
-        title = Label(t2_input, text = team_2 + " Input", bg = "DarkSlateGrey").grid(row = 0, column = 1)
-        request = Label(t2_input, text = "Please enter player " + str(display_num2) + " name", bg = "DarkSlateGrey").grid(row = 1, column = 1)
-        name_entry = Entry(t2_input, bg = "DimGrey")
+        title = Label(t2_input, text = team_2 + " Input", bg = "DarkSlateGrey", font = "bold").grid(row = 0, column = 1)
+        request = Label(t2_input, text = "Please enter player " + str(display_num2) + " name", bg = "DarkSlateGrey", font = 10).grid(row = 1, column = 1)
+        name_entry = Entry(t2_input, bg = "DimGrey", font = 20)
         name_entry.grid(row = 2, column = 1)
         display_num2 = display_num2 + 1
-        valid_button = Button(t2_input, text = "Submit", command = lambda: t2_validation(team_2_array), bg = "SpringGreen3")
+        ws = Label(t2_input, text = " ", bg = "DarkSlateGrey").grid(row = 3, column = 1)
+        valid_button = Button(t2_input, text = "Submit", command = lambda: t2_validation(team_2_array), bg = "SpringGreen3", font = "bold")
         valid_button.grid(row = 4, column = 1)
         hover(valid_button, "PaleGreen", "SpringGreen3")
 
@@ -391,9 +396,10 @@ def t2_validation(current_team):
                     sizing(t2_confirm)
                     player_count = 1
                     for i in range(len(team_2_array)):
-                        exec('Label%d=Label(t2_confirm,text="%s",bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_2_array[i], i))
+                        exec('Label%d=Label(t2_confirm,text="%s",bg = "DarkSlateGrey", font = "bold")\nLabel%d.pack()' % (i, "Player " + str(player_count) + " : " + team_2_array[i], i))
                         player_count = player_count + 1
-                    confirm_button = Button(t2_confirm, text = "Confirm Team 2", command = full_confirm_func, bg = "SpringGreen3")
+                    ws = Label(t2_confirm, text = " ", bg = "DarkSlateGrey").pack()
+                    confirm_button = Button(t2_confirm, text = "Confirm Team 2", command = full_confirm_func, bg = "SpringGreen3", font = "bold")
                     confirm_button.pack()
                     hover(confirm_button, "PaleGreen", "SpringGreen3")
 
@@ -409,20 +415,20 @@ def full_confirm_func():
     t2_confirm.withdraw()
     full_confirm.configure(bg = "DarkSlateGrey")
     sizing(full_confirm)
-    t1_label = Label(full_confirm, text = "Team: " + team_1, bg = "DarkSlateGrey").pack()
+    t1_label = Label(full_confirm, text = "Team: " + team_1, bg = "DarkSlateGrey", font = "bold").pack()
     for i in range(len(team_1_array)):
-        exec('Label%d=Label(full_confirm,text="%s", bg = "DarkSlateGrey")\nLabel%d.pack()' % (
+        exec('Label%d=Label(full_confirm,text="%s", bg = "DarkSlateGrey", font = 10)\nLabel%d.pack()' % (
         i, "Player " + str(player_count_1) + " : " + team_1_array[i], i))
         player_count_1 = player_count_1 + 1
-    line = Label(full_confirm, text = "------------").pack()
-    t2_label = Label(full_confirm, text= "Team: " + team_2, bg = "DarkSlateGrey").pack()
+    line = Label(full_confirm, text = "------------", bg = "DarkSlateGrey").pack()
+    t2_label = Label(full_confirm, text= "Team: " + team_2, bg = "DarkSlateGrey", font = "Bold").pack()
     for i in range(len(team_2_array)):
-        exec('Label%d=Label(full_confirm,text="%s", bg = "DarkSlateGrey")\nLabel%d.pack()' % (
+        exec('Label%d=Label(full_confirm,text="%s", bg = "DarkSlateGrey", font = 10)\nLabel%d.pack()' % (
         i, "Player " + str(player_count_2) + " : " + team_2_array[i], i))
         player_count_2 = player_count_2 + 1
-    submit = Button(full_confirm, text = "Submit", command = choosing_sides_func, bg = "SpringGreen3")
+    submit = Button(full_confirm, text = "Submit", command = choosing_sides_func, bg = "SpringGreen3", font = "bold")
     submit.pack()
-    back = Button(full_confirm, text="Redo Name input", command= lambda: reset_player_num(player_num, display_num, player_num2, display_num2), bg = "Red2")
+    back = Button(full_confirm, text="Redo Name input", command= lambda: reset_player_num(player_num, display_num, player_num2, display_num2), bg = "Red2", font = "bold")
     back.pack()
     hover(submit, "PaleGreen", "SpringGreen3")
     hover(back, "tomato", "Red2")
@@ -444,11 +450,12 @@ def choosing_sides_func():
     full_confirm.withdraw()
     choosing_sides.configure(bg = "DarkSlateGrey")
     sizing(choosing_sides)
-    title = Label(choosing_sides, text = "Which team is batting first?", bg = "DarkSlateGrey").grid(row = 0, column = 1)
-    t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: [t1_batting(team_1_array, team_2_array), team_set(1)], bg = "LimeGreen")
-    t1_batting_button.grid(row = 1,column = 1)
-    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: [t1_batting(team_2_array, team_1_array), team_set(2)], bg = "Cyan2")
-    t2_batting_button.grid(row=2, column=1)
+    title = Label(choosing_sides, text = "Which team is batting first?", bg = "DarkSlateGrey", font = "bold").grid(row = 0, column = 1)
+    ws = Label(choosing_sides, text = " ", bg = "DarkSlateBlue").grid(row = 1, column = 1)
+    t1_batting_button = Button(choosing_sides, text = team_1, command = lambda: [t1_batting(team_1_array, team_2_array), team_set(1)], bg = "LimeGreen", font = "bold")
+    t1_batting_button.grid(row = 2,column = 1)
+    t2_batting_button = Button(choosing_sides, text=team_2, command= lambda: [t1_batting(team_2_array, team_1_array), team_set(2)], bg = "Cyan2", font = "bold")
+    t2_batting_button.grid(row=3, column=1)
     hover(t1_batting_button, "LimeGreen", "GreenYellow")
     hover(t2_batting_button, "turquoise1", "Cyan2")
 
@@ -501,11 +508,11 @@ def list_teams_stub(bt, ft):
     choosing_sides.withdraw()
     list_teams.configure(bg = "DarkSlateGrey")
     sizing(list_teams)
-    batting = Label(list_teams, text = "Batting Team:", bg = "DarkSlateGrey").pack()
+    batting = Label(list_teams, text = "Batting Team:", bg = "DarkSlateGrey", font = "Bold").pack()
     for i in range(len(bt)):
-        exec('Label%d=Label(list_teams,text="%s",bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count_3) + " : " + bt[i], i))
+        exec('Label%d=Label(list_teams,text="%s",bg = "DarkSlateGrey", font = 10)\nLabel%d.pack()' % (i, "Player " + str(player_count_3) + " : " + bt[i], i))
         player_count_3 = player_count_3 + 1
-    line = Label(list_teams, text="Test", bg = "DarkSlateGrey").pack()
+    line = Label(list_teams, text="----------", bg = "DarkSlateGrey", font = "Bold").pack()
     fielding = Label(list_teams, text="Fielding Team:", bg = "DarkSlateGrey").pack()
     for i in range(len(ft)):
         exec('Label%d=Label(list_teams,text="%s",bg = "DarkSlateGrey")\nLabel%d.pack()' % (i, "Player " + str(player_count_4) + " : " + ft[i], i))
