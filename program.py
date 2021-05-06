@@ -287,7 +287,7 @@ def input_stub():
         valid_button.grid(row = 5, column = 1)
         hover(valid_button, "palegreen", "SpringGreen3")
 
-        # -----/VALIDATING THE PLAYERS TO ENSURE NO DUPLICATES/-----
+# -----/VALIDATING THE PLAYERS TO ENSURE NO DUPLICATES/-----
 def t1_validation(current_team):
             global t1_confirm
             global player_num
@@ -1018,15 +1018,31 @@ def change_sides(balls, run, facing, other, over, current_bowler, patnership, ou
 #-----/DISPLAYING RESULTS/-----
 
 def end_game():
+    # -----/RECORDING RESUTS IN TXT FILE/-----
+    with open("test.txt", "a") as f:
+        f.write(f"End of game\n")
+        f.write(f"------------------------\n")
+        f.write(f"Team 1 out: {team_1_out_final}\n")
+        f.write(f"Team 1 Runs: {team_1_runs_final}")
+        f.write(f"Team 1 Overs: {team_1_overs_final}")
+        f.write(f"------------------------\n")
+        f.write(f"Team 2 out: {team_2_out_final}\n")
+        f.write(f"Team 2 Runs: {team_2_runs_final}")
+        f.write(f"Team 2 Overs: {team_2_overs_final}")
+
+
+
+
+
+
     end_win = Toplevel(master)
     play_win.withdraw()
     main_win.withdraw()
     sizing(end_win)
 
-
-    #DEFINING SPECIFIC WINDOWS
+    #-----/INIT DISPLAY FOR END WINODW/-----
     top_frame_end = Frame(end_win, bg='DarkSlateGrey', width=450, height=50, pady=3)
-    center_end = Frame(end_win, bg='gray2', width=50, height=40, padx=3, pady=3)
+    center_end = Frame(end_win, bg='lavender', width=50, height=40, padx=3, pady=3)
     btm_frame_end = Frame(end_win, bg='white', width=50, height=40, pady=3)
 
     end_win.grid_rowconfigure(1, weight=1)
@@ -1036,17 +1052,30 @@ def end_game():
     center_end.grid(row=1, sticky="nsew")
     btm_frame_end.grid(row=3, sticky="ew")
 
-    ws = Label(top_frame_end, text = " ").grid(row = 0, column = 1)
-    T1 = Label(top_frame_end, text = "Team: " + team_1).grid(row = 1, column = 1)
-    T1_score = Label(top_frame_end, text = f"Score: {team_1_out_final}/{team_1_runs_final}").grid(row = 1, column = 2)
-    T1_over = Label(top_frame_end, text = f"Overs: {team_1_overs_final}").grid(row = 1, column = 3)
-    ws2 = Label(top_frame_end, text = " ").grid(row = 2, column = 1)
+    ws = Label(top_frame_end, text=" ", bg="DarkSlateGrey").grid(row=0, column=1)
+    T1 = Label(top_frame_end, text=f"Team: {team_1}", font="bold", bg="DarkSlateGrey").grid(row=2, column=1)
+    T1_score = Label(top_frame_end, text=f"Score: {team_1_out_final}/{team_1_runs_final}", bg="DarkSlateGrey", font='Bold').grid(row=1, column=3)
+    T1_over = Label(top_frame_end, text=f"Overs: {team_1_overs_final}", bg="DarkSlateGrey", font='Bold').grid(row=3, column=3)
+    ws2 = Label(top_frame_end, text=" ", bg="DarkSlateGrey").grid(row=4, column=1)
+    border1 = Label(top_frame_end, text="|", bg="DarkSlateGrey").grid(row=0, column=2)
+    border1 = Label(top_frame_end, text="|", bg="DarkSlateGrey").grid(row=1, column=2)
+    border1 = Label(top_frame_end, text="|", bg="DarkSlateGrey").grid(row=2, column=2)
+    border1 = Label(top_frame_end, text="|", bg="DarkSlateGrey").grid(row=3, column=2)
+    border1 = Label(top_frame_end, text="|", bg="DarkSlateGrey").grid(row=4, column=2)
 
-    ws3 = Label(center_end, text=" ").grid(row=0, column=1)
-    T2 = Label(center_end, text="Team: " + team_2).grid(row=1, column=1)
-    T2_score = Label(center_end, text=f"Score: {team_2_out_final}/{team_2_runs_final}").grid(row=1, column=2)
-    T2_over = Label(center_end, text=f"Overs: {team_2_overs_final}").grid(row=1, column=3)
-    ws4 = Label(center_end, text=" ").grid(row=2, column=1)
+    ws3 = Label(center_end, text=" ", bg='lavender').grid(row=0, column=1)
+    T2 = Label(center_end, text=f"Team: {team_2}", font='Bold', bg='lavender').grid(row=2, column=1)
+    T2_score = Label(center_end, text=f"Score: {team_2_out_final}/{team_2_runs_final}", bg='lavender', font="bold").grid(row=1, column=3)
+    T2_over = Label(center_end, text=f"Overs: {team_2_overs_final}", bg='lavender', font="bold").grid(row=3, column=3)
+    ws4 = Label(center_end, text=" ", bg='lavender').grid(row=4, column=1)
+    border1 = Label(center_end, text="|", bg='lavender').grid(row=0, column=2)
+    border1 = Label(center_end, text="|", bg='lavender').grid(row=1, column=2)
+    border1 = Label(center_end, text="|", bg='lavender').grid(row=2, column=2)
+    border1 = Label(center_end, text="|", bg='lavender').grid(row=3, column=2)
+    border1 = Label(center_end, text="|", bg='lavender').grid(row=4, column=2)
+
+    end_btm = Button(btm_frame_end, text="End", command=end, font="Bold", bg = "Red2", width=int(end_win.winfo_width())).grid(row=0, column=1)
+    end_label = Label(btm_frame_end, text = "Remeber to move the text file out of this folder").grid(row = 0, column = 2)
 
 
 mainloop()
